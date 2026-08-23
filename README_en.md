@@ -59,6 +59,53 @@ We don't consider this theory finished. If anything, this is only the starting p
 
 ---
 
+## 🏛️ TTT Governance Model
+
+> Think of three things as four, and a fifth is born. When it becomes five, it divides.
+
+A chapter applying TTT Theory to social institutions.
+
+- **Core idea**: [`docs/Governance/Governance-En.md`](docs/Governance/Governance-En.md) - 3 branches of government + popular sovereignty + AI = a 5th autonomous body, the "verifiable consensus cell"
+- **Implementation blueprint**: [`docs/Governance/5W1H-En.md`](docs/Governance/5W1H-En.md) - the consensus cell's design, unfolded across the 5W1H
+- **Interactive demo**: [`docs/Governance/Governance-5w1h.html`](docs/Governance/Governance-5w1h.html) - visualizing the birth and division of the membrane
+- JA: [`governance.md`](docs/Governance/governance.md) / [`5W1H.md`](docs/Governance/5W1H.md)
+
+[![Open in Browser](https://img.shields.io/badge/Demo-Governance%20Cell-blue?style=for-the-badge)](https://kiki054-n.github.io/cnt34/docs/Governance/Governance-5w1h.html)
+
+### 5W1H mapping
+
+| 5W1H | TTT | Role |
+| :--- | :--- | :--- |
+| Where, What, When | xX, yY, zZ | Position - the coordinates of fact |
+| Why, How | uU, vV, wW | Orientation - popular sovereignty and the field of AI knowledge |
+| Who | P5 | Autonomous body - the verifiable consensus cell |
+
+---
+
+## 📚 Theory Documents
+
+The mathematical foundation of TTT Theory. These are currently Japanese-only.
+
+- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - The principle of dual poles
+- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - The spatial unit system
+- [`theory/OOO-pi.md`](theory/OOO-pi.md) - The energy unit system
+- [`theory/cell-division.md`](theory/cell-division.md) - The geometry of cell division
+- [`theory/euler-connection.md`](theory/euler-connection.md) - Connection to Euler's formula
+
+---
+
+## 🏛️ The Four Pillars & the Circulation of Gratitude
+
+TTT Theory applied to human roles and labor. These are currently Japanese-only; see [`TTT_theory_simulation_en.html`](TTT_theory_simulation_en.html) for the English simulation.
+
+- [`docs/pillars/pillar-01-create.md`](docs/pillars/pillar-01-create.md) - Pillar 1: Creative Labor
+- [`docs/pillars/pillar-02-support.md`](docs/pillars/pillar-02-support.md) - Pillar 2: Support Labor
+- [`docs/pillars/pillar-03-govern.md`](docs/pillars/pillar-03-govern.md) - Pillar 3: Governance Labor
+- [`docs/pillars/pillar-04-invent.md`](docs/pillars/pillar-04-invent.md) - Pillar 4: Invention Labor
+- [`docs/pillars/gratitude.md`](docs/pillars/gratitude.md) - The Gratitude Circulation Protocol
+
+---
+
 ## 🌐 日本語
 
 For the Japanese version → [README.md](./README.md)
