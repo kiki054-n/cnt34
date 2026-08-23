@@ -13,6 +13,7 @@ README.md の「🌐 English」の上あたりにこれを追記してくださ�
 - **思想の核**: [`docs/Governance/governance.md`](docs/Governance/governance.md) - 3権 + 国民主権 + AI = 第5の自律体「検証可能な合意細胞」
 - **実装設計図**: [`docs/Governance/5W1H.md`](docs/Governance/5W1H.md) - 5W1Hで展開する合意細胞の設計
 - **インタラクティブデモ**: [`docs/Governance/simulations/governance_5w1h.html`](docs/Governance/simulations/governance_5w1h.html) - 膜の誕生と分裂を可視化
+- EN: [`governance_en.md`](docs/Governance/governance_en.md) / [`5W1H_en.md`](docs/Governance/5W1H_en.md)
 
 [![Open in Browser](https://img.shields.io/badge/Demo-Governance%20Cell-blue?style=for-the-badge)](https://kiki054-n.github.io/cnt34/docs/Governance/simulations/governance_5w1h.html)
 
