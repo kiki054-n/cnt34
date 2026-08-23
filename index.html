@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三四式 TTT理論 — cnt34</title>
+<meta name="description" content="三四式（Triple-Tetra Theory）— 位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ。理論シミュレーション、ガバナンスモデルの一覧。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e12;
+  --surface: #141820;
+  --surface-2: #1c2030;
+  --ink: #e8e4dc;
+  --ink-dim: #9a958a;
+  --accent: #c9a44a;
+  --accent-dim: #8a7340;
+  --accent-glow: rgba(201, 164, 74, 0.15);
+  --accent-2: #6f9bb0;
+  --line: rgba(232, 228, 220, 0.08);
+  --line-strong: rgba(232, 228, 220, 0.18);
+  --step--1: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --step-0: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --step-1: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  --step-3: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  --space: clamp(1rem, 0.8rem + 1vw, 2rem);
+  --radius: 10px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.9;
+  font-size: var(--step-0);
+  overflow-x: hidden;
+}
+
+a { color: inherit; }
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 var(--space);
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  padding: clamp(4rem, 8vh, 7rem) var(--space) clamp(3rem, 6vh, 5rem);
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 20%, var(--surface) 0%, var(--bg) 70%);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+
+.hero-kicker {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-weight: 900;
+  font-size: var(--step-3);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+}
+
+.hero h1 span { color: var(--accent); }
+
+.hero-sub {
+  font-size: var(--step-1);
+  color: var(--ink-dim);
+  font-weight: 300;
+  margin-bottom: 1.75rem;
+}
+
+.hero-formula {
+  display: inline-block;
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-1);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  padding: 0.6em 1.4em;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--accent-glow);
+  margin-bottom: 1.5rem;
+}
+
+.hero-links {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.hero-links a {
+  font-size: var(--step--1);
+  text-decoration: none;
+  color: var(--ink-dim);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.5em 1.1em;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.hero-links a:hover { color: var(--accent); border-color: var(--accent-dim); }
+
+/* ===== SECTIONS ===== */
+section.list { padding: clamp(3rem, 6vh, 4.5rem) 0; }
+
+.section-head { margin-bottom: 1.75rem; }
+
+.section-head .label {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step--1);
+  letter-spacing: 0.25em;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.section-head h2 {
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 700;
+  font-size: var(--step-2);
+}
+
+.section-head p {
+  color: var(--ink-dim);
+  font-size: var(--step--1);
+  max-width: 640px;
+  margin-top: 0.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.6rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent-dim);
+  background: var(--surface-2);
+}
+
+.card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink-dim);
+}
+
+.tag.accent { color: var(--accent); border-color: var(--accent-dim); background: var(--accent-glow); }
+.tag.accent2 { color: var(--accent-2); border-color: rgba(111,155,176,0.4); background: rgba(111,155,176,0.1); }
+
+.card h3 {
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 700;
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.card p {
+  color: var(--ink-dim);
+  font-size: var(--step--1);
+  line-height: 1.8;
+  flex-grow: 1;
+}
+
+.card .open {
+  font-size: var(--step--1);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 2.5rem var(--space) 3rem;
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: var(--step--1);
+}
+
+footer a {
+  color: var(--ink-dim);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+
+footer a:hover { color: var(--accent); }
+
+footer .footer-links {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-content">
+    <span class="hero-kicker">cnt34 &nbsp;/&nbsp; Code Name Type 34</span>
+    <h1>三四式 <span>TTT理論</span></h1>
+    <p class="hero-sub">位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ</p>
+    <div class="hero-formula">P = xX + yY + zZ + uU + vV + wW</div>
+    <div class="hero-links">
+      <a href="https://github.com/kiki054-n/cnt34" target="_blank" rel="noopener">GitHub リポジトリ</a>
+      <a href="README.md">README（日本語）</a>
+      <a href="README_en.md">README (English)</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="list">
+    <div class="section-head">
+      <span class="label">Theory Simulations</span>
+      <h2>理論シミュレーション</h2>
+      <p>三四式（TTT理論）の中核となる、双極の顕在化を扱うインタラクティブなシミュレーション。</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="TTT_theory_simulation.html">
+        <div class="card-tags">
+          <span class="tag accent">理論</span>
+          <span class="tag">日本語</span>
+        </div>
+        <h3>三四式 TTT理論 — 双双極の顕在化シミュレーション</h3>
+        <p>位置ベクトルと配向ベクトルの相互作用から、対称性の破れと自律的な構造形成が立ち上がる様子を可視化した中心的なシミュレーション。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card" href="TTT_theory_simulation_en.html">
+        <div class="card-tags">
+          <span class="tag accent">Theory</span>
+          <span class="tag">English</span>
+        </div>
+        <h3>Triple-Tetra Theory (TTT) — The Manifestation of Dual Poles</h3>
+        <p>English edition of the core TTT simulation, visualizing how the interaction of position and orientation vectors gives rise to symmetry breaking and self-organized structure.</p>
+        <span class="open">Open →</span>
+      </a>
+
+      <a class="card" href="TTT_4pillars_repository.html">
+        <div class="card-tags">
+          <span class="tag accent">理論</span>
+          <span class="tag">日本語</span>
+        </div>
+        <h3>三式 TTT — 4つの柱と感謝の循環</h3>
+        <p>創造・支援・統治・発明という4つの柱と、それらの間を循環する感謝のプロトコルについてまとめたリファレンスページ。</p>
+        <span class="open">開く →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="list">
+    <div class="section-head">
+      <span class="label">Governance</span>
+      <h2>ガバナンス・モデル</h2>
+      <p>三四式を社会制度に応用した章。3権＋国民主権＋AIからなる「第5の自律体」を扱うデモ。</p>
+    </div>
+    <div class="grid">
+
+      <a class="card" href="docs/Governance/Governance-5w1h.html">
+        <div class="card-tags">
+          <span class="tag accent2">ガバナンス</span>
+          <span class="tag">日本語</span>
+        </div>
+        <h3>検証可能な合意細胞 — 5W1Hインタラクティブデモ</h3>
+        <p>3権・国民主権・AIが結合してできる「検証可能な合意細胞」の、膜の誕生と分裂を可視化したデモンストレーション。</p>
+        <span class="open">開く →</span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://github.com/kiki054-n/cnt34" target="_blank" rel="noopener">GitHub</a>
+    <a href="docs/Governance/governance.md">思想の核（governance.md）</a>
+    <a href="docs/Governance/5W1H.md">実装設計図（5W1H.md）</a>
+    <a href="https://doi.org/10.5281/zenodo.19704117" target="_blank" rel="noopener">DOI (Zenodo)</a>
+  </div>
+  <div>© cnt34 — 川上真潔 &nbsp;|&nbsp; Code: MIT License &nbsp;/&nbsp; Content: CC BY-NC-SA 4.0</div>
+</footer>
+
+</body>
+</html>
