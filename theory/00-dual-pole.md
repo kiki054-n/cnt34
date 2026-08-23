@@ -8,8 +8,8 @@
 
 - 空間の次元をどう数えるかは [`XYZ-pi.md`](XYZ-pi.md)
 - エネルギー（回転・方向）の次元をどう数えるかは [`OOO-pi.md`](OOO-pi.md)
-- 双極が顕在化して2つに分かれる過程は [`cell-division.md`](cell-division.md)
 - 双極の数学的な裏付けは [`euler-connection.md`](euler-connection.md)
+- 双極が顕在化して2つに分かれる過程は [`cell-division.md`](cell-division.md)
 
 がそれぞれ引き継ぐ。ここでは「なぜ双極から始まるのか」だけを扱う。
 
