@@ -84,13 +84,13 @@ A chapter applying TTT Theory to social institutions.
 
 ## 📚 Theory Documents
 
-The mathematical foundation of TTT Theory. These are currently Japanese-only.
+The mathematical foundation of TTT Theory, traced across five documents that follow one sequence of numbers: dual pole (2) → position (3) → orientation (4) → a manifested autonomous unit (5). These are currently Japanese-only.
 
-- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - The principle of dual poles
-- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - The spatial unit system
-- [`theory/OOO-pi.md`](theory/OOO-pi.md) - The energy unit system
-- [`theory/cell-division.md`](theory/cell-division.md) - The geometry of cell division
-- [`theory/euler-connection.md`](theory/euler-connection.md) - Connection to Euler's formula
+- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - The Principle of Dual Poles — why everything starts from "2," not "1." From the minimal distinction "00," dimensions and the geometry of the palm are born
+- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - The Spatial Unit System — the three positional axes X, Y, Z and the unit condition $XYZ\pi=1$ that closes them via the rotation axis π
+- [`theory/OOO-pi.md`](theory/OOO-pi.md) - The Energy Unit System — three spins O, O, O and the unit condition $OOO\pi=1$; maps onto the energy of the Four Pillars
+- [`theory/euler-connection.md`](theory/euler-connection.md) - Connection to Euler's Formula — reading $e^{i\pi}=-1$ as the birth of the dual pole and $e^{i\cdot2\pi}=1$ as the completed cycle of manifestation
+- [`theory/cell-division.md`](theory/cell-division.md) - The Geometry of Cell Division — a methane molecule (5 → 15 → 30 → 15+15) and the sequence "2·3·4·5" that closes the theory as a whole
 
 ---
 
