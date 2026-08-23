@@ -71,6 +71,7 @@ $$P = xX + yY + zZ + uU + vV + wW$$
 ## 📜 ライセンス
 
 本プロジェクトは [MIT License](https://www.google.com/search?q=LICENSE) のもとで公開されています。誰でも自由に学び、使用し、改変し、未来のために広げることができます。
+Tri-Tetra Theory (TTT) は　（https://creativecommons.org/licenses/by/4.0/）のもとで公開されています。どのように使えばよいかを問うプロジェクトでもあると言えます。
 
 ---
 
