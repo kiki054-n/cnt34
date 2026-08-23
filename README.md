@@ -86,13 +86,13 @@ $$P = xX + yY + zZ + uU + vV + wW$$
 
 ## 📚 理論ドキュメント
 
-三四式の数理的な土台となる文書群です。
+三四式の数理的な土台となる文書群です。双極（2）→ 位置（3）→ 方向（4）→ 顕在化した自律体（5）という数の並びを、5本のドキュメントで1つずつ辿ります。
 
-- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - 双極の原理
-- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - 空間単位系
-- [`theory/OOO-pi.md`](theory/OOO-pi.md) - エネルギー単位系
-- [`theory/cell-division.md`](theory/cell-division.md) - 細胞分裂の幾何学
-- [`theory/euler-connection.md`](theory/euler-connection.md) - オイラー公式との接続
+- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - 双極の原理 — なぜ「1」ではなく「2」から始まるのか。00という最小の区別から、次元と手のひらの幾何学が生まれる
+- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - 空間単位系 — 位置の3軸 X, Y, Z と、それを閉じる回転軸πによる単位条件 $XYZ\pi=1$
+- [`theory/OOO-pi.md`](theory/OOO-pi.md) - エネルギー単位系 — 3つのスピン O, O, O と回転軸πによる単位条件 $OOO\pi=1$。4つの柱のエネルギーと対応する
+- [`theory/euler-connection.md`](theory/euler-connection.md) - オイラー公式との接続 — $e^{i\pi}=-1$ を双極の誕生、$e^{i\cdot2\pi}=1$ を顕在化の周期として読み解く
+- [`theory/cell-division.md`](theory/cell-division.md) - 細胞分裂の幾何学 — メタン分子（5 → 15 → 30 → 15+15）と「2・3・4・5」という数の並びで、理論全体を閉じる
 
 ---
 
