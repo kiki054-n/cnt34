@@ -166,6 +166,15 @@ section.list { padding: clamp(3rem, 6vh, 4.5rem) 0; }
   gap: 1.25rem;
 }
 
+.grid-compact { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+
+.card-compact { padding: 1.2rem; gap: 0.6rem; }
+
+.card-compact h3 { font-size: var(--step-0); }
+
+.section-head p a { color: var(--accent-dim); text-decoration-color: var(--line-strong); }
+.section-head p a:hover { color: var(--accent); }
+
 .card {
   display: flex;
   flex-direction: column;
@@ -320,6 +329,118 @@ footer .footer-links {
         </div>
         <h3>検証可能な合意細胞 — 5W1Hインタラクティブデモ</h3>
         <p>3権・国民主権・AIが結合してできる「検証可能な合意細胞」の、膜の誕生と分裂を可視化したデモンストレーション。</p>
+        <span class="open">開く →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="list">
+    <div class="section-head">
+      <span class="label">Theory Documents</span>
+      <h2>理論ドキュメント</h2>
+      <p>三四式の数理的な土台となる文書群。数式による厳密な定式化に踏み込みたい方はこちらから。</p>
+    </div>
+    <div class="grid grid-compact">
+
+      <a class="card card-compact" href="theory/00-dual-pole.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>双極の原理</h3>
+        <p>位置と方向、2つの極の相互作用という、三四式の出発点となる原理。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="theory/XYZ-pi.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>空間単位系</h3>
+        <p>位置を表す x, y, z 軸の単位系の定義。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="theory/OOO-pi.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>エネルギー単位系</h3>
+        <p>方向・回転のエネルギーを扱う単位系の定義。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="theory/cell-division.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>細胞分裂の幾何学</h3>
+        <p>自律したシステムが分裂していく過程を幾何学的に記述。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="theory/euler-connection.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>オイラー公式との接続</h3>
+        <p>オイラーの公式と三四式の状態空間モデルとの接続。</p>
+        <span class="open">開く →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="list">
+    <div class="section-head">
+      <span class="label">Four Pillars</span>
+      <h2>4つの柱と感謝の循環</h2>
+      <p>三四式を人の役割・労働に適用した章。図解版は <a href="TTT_4pillars_repository.html">TTT_4pillars_repository.html</a> をご覧ください。</p>
+    </div>
+    <div class="grid grid-compact">
+
+      <a class="card card-compact" href="docs/pillars/pillar-01-create.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>第1柱・作る労働</h3>
+        <p>双極の間に線を張り、形を与える。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="docs/pillars/pillar-02-support.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>第2柱・支える労働</h3>
+        <p>傾いた極を立て直す。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="docs/pillars/pillar-03-govern.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>第3柱・管理労働</h3>
+        <p>4つの柱のバランスを見渡し、全体のテンセグリティを保つ。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="docs/pillars/pillar-04-invent.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>第4柱・創造労働</h3>
+        <p>既存の双極に新しい方向を与え、社会の回転軸を更新する。</p>
+        <span class="open">開く →</span>
+      </a>
+
+      <a class="card card-compact" href="docs/pillars/gratitude.md">
+        <div class="card-tags">
+          <span class="tag">MD</span>
+        </div>
+        <h3>感謝の循環プロトコル</h3>
+        <p>4柱間を流れるエネルギーとしての感謝。</p>
         <span class="open">開く →</span>
       </a>
 
