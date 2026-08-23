@@ -1,129 +1,122 @@
-# cnt34 Code Name Type ３４ 三四式
+# cnt34 Code Name Type ３４ / Sanshi-shiki (三四式)
 
-〜 位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ 〜
+〜 An open-source research initiative weaving position (3) and orientation (4) toward a better world 〜
 
 [![Code License: MIT](https://img.shields.io/badge/Code_License-MIT-green.svg)](./LICENSE)
 [![Content License: CC BY-NC-SA 4.0](https://img.shields.io/badge/Content_License-CC_BY--NC--SA_4.0-lightgrey.svg)](./LICENSE-CONTENT.md)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19704117.svg)](https://doi.org/10.5281/zenodo.19704117)
 
-[![Author](https://img.shields.io/badge/Author-川上真潔-f39c12?style=for-the-badge)](https://orcid.org/0009-0009-2972-6511)
+[![Author](https://img.shields.io/badge/Author-Naoyuki_Kawakami-f39c12?style=for-the-badge)](https://orcid.org/0009-0009-2972-6511)
 
 ---
 
-# 三四式（TTT理論 / Triple-Tetra Theory）
+# Sanshi-shiki (三四式) — TTT Theory / Triple-Tetra Theory
 
-> **〜 位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ 〜**
+> **〜 An open-source research initiative weaving position (3) and orientation (4) toward a better world 〜**
 
-## 🌟 プロジェクトのビジョン
+## 🌟 Project Vision
 
-自然界や生命、そして宇宙に宿る「幾何学的な調和」を読み解くための、新しい思考の枠組み——それが「三四式（TTT理論）」です。
+TTT Theory (Triple-Tetra Theory, 三四式) proposes a new framework of thought for reading the geometric harmony woven through nature, life, and the cosmos.
 
-異なる要素や次元が結合することで、新しい「自律したシステム（10・細胞・立体）」が生まれ、世界へと広がっていく——。
+When different elements and dimensions combine, a new "autonomous system (10 · cell · solid)" is born, and spreads out into the world——
 
-このリポジトリは、単なる数学や物理の計算式を置く場所ではありません。科学、医療、情報、芸術、そして人間社会がより調和した世界を、世界中の人々と共に描くための、開かれたキャンバスです。
+This repository is not simply a place to store mathematical or physical formulas. It is an open canvas for drawing, together with people around the world, a world in which science, medicine, information, art, and human society exist in greater harmony.
 
 ---
 
-## 💡 三四式（TTT理論）とは？
+## 💡 What Is TTT Theory (Sanshi-shiki)?
 
-「3（空間位置）」と「4（方向・回転／四元数的状態）」の相互作用に着目し、位置ベクトルと配向ベクトルを統合した状態空間モデルです。
+TTT is a unified state-space model integrating position vectors and orientation vectors, built around the interaction between "3 (spatial position)" and "4 (orientation / rotation, a quaternion-like state)."
 
 $$P = xX + yY + zZ + uU + vV + wW$$
 
-* **位置の3次元**（$xX, yY, zZ$）: どこに物質があるか
-* **方向の4/3次元**（$uU, vV, wW$）: どちらを向いているか（極性・回転・場の傾き）
+* **3 dimensions of position** ($xX, yY, zZ$): where matter is
+* **4/3 dimensions of orientation** ($uU, vV, wW$): which way it faces (polarity, rotation, the tilt of the field)
 
-「位置」に「方向」の相互作用が加わることで、システムは自律的に安定したテンセグリティ構造や膜を形成し、生命のように自発的な対称性の破れを起こします。
-
----
-
-## 🚀 期待される応用分野
-
-* 🧬 **人工生命・バイオテクノロジー**: 人工合成セルの自律分裂・自己組織化シミュレーション
-* 🤖 **自律分散ロボティクス**: 群制御やスウォームインテリジェンス
-* 🌌 **新素材・建築トポロジー**: テンセグリティ構造・メタマテリアル
-* 💻 **次世代AI・ベクトル表現**: 高次元埋め込み表現
+When the interaction of "orientation" is added to "position," the system autonomously forms stable tensegrity structures and membranes, giving rise to spontaneous symmetry breaking — much like life itself.
 
 ---
 
-## 🤝 共に良い夢を見よう（Contribution）
+## 🚀 Prospective Application Fields
 
-この理論を完結したものとは考えていません。むしろ、ここからがスタートです。
-
-* **数学・物理が好き:** 数式アプローチや四元数との厳密な定式化
-* **プログラマー:** Pythonや3D可視化シミュレーションコード作成
-* **思想・アート・詩人:** このモデルがもたらす新しい世界観の議論・文書化
-
-> **「一人で見ようとする夢はただの夢。みんなで見ようとする夢は現実となる。」**
-
-
-
----
-# cnt34 に追加するREADMEセクション（コピペ用）
-
-README.md の「🌐 English」の上あたりにこれを追記してください：
+* 🧬 **Artificial Life & Biotechnology**: Simulating the autonomous division and self-organization of synthetic cells
+* 🤖 **Autonomous Distributed Robotics**: Swarm control and swarm intelligence
+* 🌌 **Advanced Materials & Architectural Topology**: Tensegrity structures and metamaterials
+* 💻 **Next-Generation AI & Vector Representation**: High-dimensional embeddings
 
 ---
 
-## 🏛️ 三四式ガバナンス・モデル
+## 🤝 Let's Dream a Good Dream Together (Contribution)
 
-> ３つのものを４で考えてみる、５つになって誕生する。５になると分裂する。
+We don't consider this theory finished. If anything, this is only the starting point.
 
-三四式（TTT理論）を社会制度に適用した新しい章を公開しました。
+* **If you love math or physics:** rigorous formalization, including approaches via quaternions
+* **If you're a programmer:** Python and 3D visualization / simulation code
+* **If you're a thinker, artist, or poet:** discussion and documentation of the new worldview this model opens up
 
-- **思想の核**: [`docs/Governance/governance.md`](docs/Governance/governance.md) - 3権 + 国民主権 + AI = 第5の自律体「検証可能な合意細胞」
-- **実装設計図**: [`docs/Governance/5W1H.md`](docs/Governance/5W1H.md) - 5W1Hで展開する合意細胞の設計
-- **インタラクティブデモ**: [`docs/Governance/simulations/governance_5w1h.html`](docs/Governance/simulations/governance_5w1h.html) - 膜の誕生と分裂を可視化
-- EN: [`governance_en.md`](docs/Governance/governance_en.md) / [`5W1H_en.md`](docs/Governance/5W1H_en.md)
+> **"A dream one person tries to see alone is just a dream. A dream many people try to see together becomes reality."**
 
-[![Open in Browser](https://img.shields.io/badge/Demo-Governance%20Cell-blue?style=for-the-badge)](https://kiki054-n.github.io/cnt34/docs/Governance/simulations/governance_5w1h.html)
+---
 
-### 5W1H対応表
+## 🏛️ TTT Governance Model
 
-| 5W1H | 三四式 | 役割 |
+> Think of three things as four, and a fifth is born. When it becomes five, it divides.
+
+A chapter applying TTT Theory to social institutions.
+
+- **Core idea**: [`docs/Governance/Governance-En.md`](docs/Governance/Governance-En.md) - 3 branches of government + popular sovereignty + AI = a 5th autonomous body, the "verifiable consensus cell"
+- **Implementation blueprint**: [`docs/Governance/5W1H-En.md`](docs/Governance/5W1H-En.md) - the consensus cell's design, unfolded across the 5W1H
+- **Interactive demo**: [`docs/Governance/Governance-5w1h.html`](docs/Governance/Governance-5w1h.html) - visualizing the birth and division of the membrane
+- JA: [`governance.md`](docs/Governance/governance.md) / [`5W1H.md`](docs/Governance/5W1H.md)
+
+[![Open in Browser](https://img.shields.io/badge/Demo-Governance%20Cell-blue?style=for-the-badge)](https://kiki054-n.github.io/cnt34/docs/Governance/Governance-5w1h.html)
+
+### 5W1H mapping
+
+| 5W1H | TTT | Role |
 | :--- | :--- | :--- |
-| Where, What, When | xX, yY, zZ | 位置 - 事実の座標 |
-| Why, How | uU, vV, wW | 方向 - 国民主権とAI知の場 |
-| Who | P5 | 自律体 - 検証可能な合意細胞 |
+| Where, What, When | xX, yY, zZ | Position - the coordinates of fact |
+| Why, How | uU, vV, wW | Orientation - popular sovereignty and the field of AI knowledge |
+| Who | P5 | Autonomous body - the verifiable consensus cell |
 
 ---
 
-### GitHub Pages 有効化手順（1分）
+## 📚 Theory Documents
 
-1. GitHubで cnt34 リポジトリ > Settings > Pages
-2. Source: Deploy from a branch
-3. Branch: main / root を選択して Save
-4. 1分後に https://kiki054-n.github.io/cnt34/docs/Governance/simulations/governance_5w1h.html でデモが公開されます
+The mathematical foundation of TTT Theory. These are currently Japanese-only.
 
-### 置くべきファイル構成
-
-```
-cnt34/
-├─ README.md (上記セクションを追記)
-├─ docs/
-│  └─ Governance/
-│     ├─ governance.md (前に作ったファイル)
-│     ├─ 5W1H.md (前に作ったファイル)
-│     └─ simulations/
-│        └─ governance_5w1h.html (下記HTMLファイル)
-```
-
-全ての理論MDは CC BY-NC-SA 4.0、 simulations/*.html は MIT ライセンスです。
-
-```
-
-## 🌐 English
-
-英語版はこちら → [README_en.md](./README_en.md)
+- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - The principle of dual poles
+- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - The spatial unit system
+- [`theory/OOO-pi.md`](theory/OOO-pi.md) - The energy unit system
+- [`theory/cell-division.md`](theory/cell-division.md) - The geometry of cell division
+- [`theory/euler-connection.md`](theory/euler-connection.md) - Connection to Euler's formula
 
 ---
 
-## 📜 ライセンス
+## 🏛️ The Four Pillars & the Circulation of Gratitude
 
-本プロジェクトは、コードと文章とで異なるライセンスを採用しています。
+TTT Theory applied to human roles and labor. These are currently Japanese-only; see [`TTT_theory_simulation_en.html`](TTT_theory_simulation_en.html) for the English simulation.
 
-* **コード**（シミュレーションHTML/JS、検証スクリプトなど）: [MIT License](./LICENSE) — 自由に使い、改変し、検証・実装に組み込んでいただいて構いません。三四式(TTT理論)を実際に使い、検証・証明につなげてもらうことを最優先しています。
-* **理論の解説文・論文等**（本READMEの本文、Zenodo等で公開している論文類）: [CC BY-NC-SA 4.0](./LICENSE-CONTENT.md) — 出典を明記した引用・議論・非営利利用は歓迎します。商用利用や、同一条件でない形での二次配布はご遠慮ください。
+- [`docs/pillars/pillar-01-create.md`](docs/pillars/pillar-01-create.md) - Pillar 1: Creative Labor
+- [`docs/pillars/pillar-02-support.md`](docs/pillars/pillar-02-support.md) - Pillar 2: Support Labor
+- [`docs/pillars/pillar-03-govern.md`](docs/pillars/pillar-03-govern.md) - Pillar 3: Governance Labor
+- [`docs/pillars/pillar-04-invent.md`](docs/pillars/pillar-04-invent.md) - Pillar 4: Invention Labor
+- [`docs/pillars/gratitude.md`](docs/pillars/gratitude.md) - The Gratitude Circulation Protocol
 
-理論そのもの(数式・アイデア)は著作権の対象外のため、いずれのライセンスも「このテキスト・コードの複製や再配布」に関するルールであり、TTT理論という発想自体を独占するものではありません。
+---
+
+## 🌐 日本語
+
+For the Japanese version → [README.md](./README.md)
+
+---
+
+## 📜 License
+
+This project uses different licenses for code and for written content.
+
+* **Code** (simulation HTML/JS, verification scripts, etc.): [MIT License](./LICENSE) — free to use, modify, and build into your own tools or verification work. Getting TTT actually used, tested, and (dis)proven is the priority here.
+* **Theory write-ups & papers** (this README's body text, papers published on Zenodo, etc.): [CC BY-NC-SA 4.0](./LICENSE-CONTENT.md) — attributed quotation, discussion, and non-commercial use are welcome. Please don't use it commercially or redistribute it under different terms.
+
+Note that the underlying theory itself — the equations and ideas — isn't something copyright (or any license) can cover. Both licenses govern copying/redistributing this specific text and code, not ownership of the idea of TTT itself.
