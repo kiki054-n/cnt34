@@ -1,3 +1,13 @@
+This license applies to the source code and simulation files in this
+repository. Written theory content (README body text, papers) is
+licensed separately — see LICENSE-CONTENT.md.
+
+本ライセンスは、本リポジトリのソースコードおよびシミュレーションファイルに適用されます。
+理論の解説文・論文等の文章コンテンツ(README本文等)は別途ライセンスされています。
+LICENSE-CONTENT.md を参照してください。
+
+---
+
 MIT License
 
 Copyright (c) 2026 川上真潔
