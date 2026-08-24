@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三四式 TTT理論 — 双双極の顕在化シミュレーション</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --bg: #0c0e12;
+  --surface: #141820;
+  --surface-2: #1c2030;
+  --ink: #e8e4dc;
+  --ink-dim: #9a958a;
+  --accent: #c9a44a;
+  --accent-dim: #8a7340;
+  --accent-glow: rgba(201, 164, 74, 0.15);
+  --line: rgba(232, 228, 220, 0.08);
+  --line-strong: rgba(232, 228, 220, 0.18);
+  --step--1: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --step-0: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --step-1: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  --step-3: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  --space: clamp(1rem, 0.8rem + 1vw, 2rem);
+  --radius: 8px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.9;
+  font-size: var(--step-0);
+  overflow-x: hidden;
+}
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: var(--space);
+  background: radial-gradient(ellipse at 50% 30%, var(--surface) 0%, var(--bg) 70%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+
+.hero-kicker {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-3);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-desc {
+  font-size: var(--step-1);
+  color: var(--ink-dim);
+  max-width: 560px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.8;
+}
+
+.hero-equation {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-2);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--ink-dim);
+  font-size: var(--step--1);
+  letter-spacing: 0.15em;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: calc(var(--space) * 3) var(--space);
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section-label {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step--1);
+  color: var(--accent-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+h2 {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--accent);
+  margin: 2.5rem 0 1rem;
+}
+
+p {
+  margin-bottom: 1.25rem;
+}
+
+/* ===== SIMULATION ===== */
+.sim-section {
+  max-width: 1100px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space) * 1.5);
+  margin: calc(var(--space) * 2) auto;
+}
+
+#sim-container {
+  width: 100%;
+  height: 500px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #080a10;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sim-controls button {
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-size: var(--step--1);
+  padding: 0.6rem 1.5rem;
+  border: 1px solid var(--accent-dim);
+  background: transparent;
+  color: var(--accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+.sim-controls button:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.sim-controls button.active {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.sim-status {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step--1);
+  color: var(--ink-dim);
+  margin-left: auto;
+  letter-spacing: 0.05em;
+}
+
+.sim-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: var(--step--1);
+  color: var(--ink-dim);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ===== CARDS ===== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 2rem 0;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  border-color: var(--accent-dim);
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.card h4 {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-0);
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.card p {
+  font-size: var(--step--1);
+  color: var(--ink-dim);
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ===== QUOTE ===== */
+.quote-block {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 2.5rem 0;
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-1);
+  line-height: 1.8;
+  color: var(--ink-dim);
+}
+
+.quote-block em {
+  color: var(--ink);
+  font-style: normal;
+}
+
+/* ===== FORMULA BLOCKS ===== */
+.formula-block {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  text-align: center;
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-1);
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.formula-block .formula-note {
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-size: var(--step--1);
+  color: var(--ink-dim);
+  margin-top: 0.75rem;
+  letter-spacing: normal;
+}
+
+/* ===== DIAGRAM SVG ===== */
+.diagram-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.diagram-wrap svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: calc(var(--space) * 2) var(--space);
+  border-top: 1px solid var(--line);
+  color: var(--ink-dim);
+  font-size: var(--step--1);
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .sim-controls { flex-direction: column; align-items: stretch; }
+  .sim-status { margin: 0 auto; }
+  #sim-container { height: 350px; }
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+  .hero, .sim-section, .card, .diagram-wrap { background: #f5f5f5; border-color: #ccc; }
+  .sim-controls, .scroll-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <span class="hero-kicker">Triple-Tetra Theory</span>
+    <h1>三四式 <em>TTT理論</em></h1>
+    <p class="hero-desc">
+      位置（3）と方向（4）がつむぐ、<br>
+      宇宙と細胞の共通原理
+    </p>
+    <div class="hero-equation">
+      OOOπ = 1 &nbsp;&nbsp;|&nbsp;&nbsp; XYZπ = 1
+    </div>
+  </div>
+  <div class="scroll-hint">▼ スクロール</div>
+</header>
+
+<!-- INTRO -->
+<section>
+  <span class="section-label">01 / 原理</span>
+  <h2>誕生は2から始まる</h2>
+  <p>
+    何もない空間に境界もない。ゆえに「1」という孤立した存在はありえない。
+    ものを認識するには最低限「区別」が必要であり、区別とはつまり<strong>2つの極性の相対関係</strong>である。
+    これが「00（双極）」の起源である。
+  </p>
+  <p>
+    細胞分裂は「1つの細胞が2つに分かれる」のではなく、<strong>元々そこにあった双極性が、エネルギーの流入によって界面（膜・テンセグリティ）を獲得し、2つの「自己」として顕在化する</strong>。
+    これは「分裂」ではなく「顕在化」である。
+  </p>
+
+  <div class="formula-block">
+    P = xX + yY + zZ + uU + vV + wW
+    <div class="formula-note">
+      位置の3次元（x, y, z）と方向の3次元（u, v, w）が、回転軸πとともに<br>
+      「1」の単位系として存在する
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <em>「入りきれなかったものが境界を作り、珠になる。</em><br>
+    1つが顕在化するとき2つに分かれ、<br>
+    入りきれないものが2つの境界を作り、<br>
+    3つの境界を持つモノが左右に生まれる。」
+  </div>
+</section>
+
+<!-- SIMULATION -->
+<section class="sim-section">
+  <span class="section-label">02 / シミュレーション</span>
+  <h2>双極の顕在化 — 両手が球になる瞬間</h2>
+  <p style="color: var(--ink-dim); font-size: var(--step--1); margin-bottom: 1.5rem;">
+    5つの節点が三角双錐を形成し、エネルギー（スピン）が蓄積されると構造が膨張し、
+    限界を超えたとき2つ独立した三角双錐へと顕在化する。これが細胞分裂の幾何学的本質である。
+  </p>
+
+  <div id="sim-container"></div>
+
+  <div class="sim-controls">
+    <button id="btn-reset" onclick="resetSim()">最初から</button>
+    <button id="btn-phase1" onclick="setPhase(0)">双極の形成</button>
+    <button id="btn-phase2" onclick="setPhase(1)">エネルギー蓄積</button>
+    <button id="btn-phase3" onclick="setPhase(2)">膨張・限界</button>
+    <button id="btn-phase4" onclick="setPhase(3)">顕在化（分裂）</button>
+    <button id="btn-auto" onclick="toggleAuto()">自動再生</button>
+    <span class="sim-status" id="sim-status">双極の形成</span>
+  </div>
+
+  <div class="sim-legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#c9a44a;"></div>
+      <span>節点（双極の極）</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#4a7a9a;"></div>
+      <span>張力辺（4辺の曲面）</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#c94a6a;"></div>
+      <span>エネルギー（スピンの強度）</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#ffffff; opacity:0.3;"></div>
+      <span>境界（膜・界面）</span>
+    </div>
+  </div>
+</section>
+
+<!-- THEORY CARDS -->
+<section>
+  <span class="section-label">03 / 構造</span>
+  <h2>手のひらの幾何学</h2>
+  <p>
+    人間の手は、宇宙の縮図である。親指がX軸、左右の付け根がYZ座標系を定義し、
+    5本の指先が三角双錐の頂点となる。左右の手が合わさるとき、閉じた球が生まれる。
+  </p>
+
+  <div class="diagram-wrap">
+    <svg viewBox="0 0 400 280" width="400" height="280">
+      <!-- Background grid -->
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L0,6 L9,3 z" fill="#c9a44a"/>
+        </marker>
+      </defs>
+      <!-- Coordinate axes -->
+      <line x1="200" y1="140" x2="320" y2="80" stroke="#4a7a9a" stroke-width="1.5" opacity="0.6"/>
+      <text x="325" y="78" fill="#4a7a9a" font-size="11" font-family="Zen Old Mincho">X（親指）</text>
+      <line x1="200" y1="140" x2="80" y2="180" stroke="#4a7a9a" stroke-width="1.5" opacity="0.6"/>
+      <text x="40" y="190" fill="#4a7a9a" font-size="11" font-family="Zen Old Mincho">Y</text>
+      <line x1="200" y1="140" x2="200" y2="30" stroke="#4a7a9a" stroke-width="1.5" opacity="0.6"/>
+      <text x="208" y="28" fill="#4a7a9a" font-size="11" font-family="Zen Old Mincho">Z</text>
+
+      <!-- Left hand nodes -->
+      <circle cx="130" cy="120" r="6" fill="#c9a44a" opacity="0.9"/>
+      <circle cx="110" cy="150" r="5" fill="#c9a44a" opacity="0.7"/>
+      <circle cx="150" cy="150" r="5" fill="#c9a44a" opacity="0.7"/>
+      <circle cx="120" cy="180" r="5" fill="#c9a44a" opacity="0.7"/>
+      <circle cx="140" cy="180" r="5" fill="#c9a44a" opacity="0.7"/>
+      <!-- Left hand edges -->
+      <line x1="130" y1="120" x2="110" y2="150" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="130" y1="120" x2="150" y2="150" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="130" y1="120" x2="120" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="130" y1="120" x2="140" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="110" y1="150" x2="120" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.3"/>
+      <line x1="150" y1="150" x2="140" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.3"/>
+      <text x="90" y="215" fill="#9a958a" font-size="11" font-family="Zen Kaku Gothic New">左手（双極A）</text>
+
+      <!-- Right hand nodes -->
+      <circle cx="270" cy="120" r="6" fill="#c9a44a" opacity="0.9"/>
+      <circle cx="250" cy="150" r="5" fill="#c9a44a" opacity="0.7"/>
+      <circle cx="290" cy="150" r="5" fill="#c9a44a" opacity="0.7"/>
+      <circle cx="260" cy="180" r="5" fill="#c9a44a" opacity="0.7"/>
+      <circle cx="280" cy="180" r="5" fill="#c9a44a" opacity="0.7"/>
+      <!-- Right hand edges -->
+      <line x1="270" y1="120" x2="250" y2="150" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="270" y1="120" x2="290" y2="150" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="270" y1="120" x2="260" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="270" y1="120" x2="280" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.5"/>
+      <line x1="250" y1="150" x2="260" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.3"/>
+      <line x1="290" y1="150" x2="280" y2="180" stroke="#4a7a9a" stroke-width="1" opacity="0.3"/>
+      <text x="240" y="215" fill="#9a958a" font-size="11" font-family="Zen Kaku Gothic New">右手（双極B）</text>
+
+      <!-- Connection between hands -->
+      <line x1="150" y1="150" x2="250" y2="150" stroke="#c94a6a" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
+      <text x="185" y="170" fill="#c94a6a" font-size="10" font-family="Zen Kaku Gothic New" opacity="0.8">引き合い（線）</text>
+
+      <!-- Center 00 symbol -->
+      <text x="196" y="145" fill="#c9a44a" font-size="14" font-family="Zen Old Mincho" font-weight="700">00</text>
+    </svg>
+    <p style="color: var(--ink-dim); font-size: var(--step--1); margin-top: 1rem;">
+      左右の手（三角双錐）が引き合い、中央に「00（双極）」が生まれる。
+      これが細胞の幾何学的原点である。
+    </p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h4>OOOπ = 1</h4>
+      <p>
+        3つのスピン（O）と回転軸（π）が統合されて「1」の単位系となる。
+        これはエネルギー的な細胞の存在条件である。
+      </p>
+    </div>
+    <div class="card">
+      <h4>XYZπ = 1</h4>
+      <p>
+        3次元空間（XYZ）と回転軸（π）が統合されて「1」の単位系となる。
+        これは空間的な細胞の存在条件である。
+      </p>
+    </div>
+    <div class="card">
+      <h4>7節点と4辺</h4>
+      <p>
+        5つの顕在節点（指先）に、2つの境界2つの境界節点（閉じた界と開いた世界）を加えた7節点が、
+        4辺のテンセグリティ構造を形成する。
+      </p>
+    </div>
+    <div class="card">
+      <h4>入りきれないものが境界を作る</h4>
+      <p>
+        エネルギーが蓄積しスピンが増大すると、1つの球に収まりきれなくなる。
+        その「余剰」が新しい境界を自己組織化し、2つの珠が顕在化する。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EULER CONNECTION -->
+<section>
+  <span class="section-label">04 / 数学的共鳴</span>
+  <h2>オイラーの公式との接続</h2>
+  <p>
+    オイラーの公式 e^(iθ) = cosθ + i sinθ は、「回転を指数として書く」という美しい発見である。
+    θ = π のとき、1が半回転して −1 になる。これは<strong>「自分の反対側に出会う」</strong>ことであり、
+    あなたの理論でいう「00双極）の誕生」に対応する。
+  </p>
+
+  <div class="formula-block">
+    e^(iπ) = −1
+    <div class="formula-note">
+      「1」が半回転（π）して「−1」になる。これが双極の数学的顕現である。
+    </div>
+  </div>
+
+  <div class="formula-block">
+    e^(i·2π) = 1
+    <div class="formula-note">
+      一周して元の場所に戻る。細胞が分裂しても「1の構造」が保存される。
+      分裂は終わりではなく、「1の回転周期が完成した」ことである。
+    </div>
+  </div>
+
+  <p>
+    四元数への拡張では、3つの虚数軸（i, j, k）とスカラーからなる単位四元数が、
+    3次元空間での回転の最小の閉じた表現となる。あなたの <strong>OOOπ</strong> は、
+    まさにこの「3つの双極的スピンと回転軸からなる単位の回転系」として機能している。
+  </p>
+</section>
+
+<!-- UNIVERSAL PRINCIPLE -->
+<section>
+  <span class="section-label">05 / 普遍原理</span>
+  <h2>宇宙と細胞は同じ文法で書ける</h2>
+  <p>
+    宇宙の誕生も、細胞の誕生も、根底では同じ幾何学的必然性が働いている。
+    それは「スケールを問わない普遍の原理」である。
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h4>宇宙のビッグバン</h4>
+      <p>
+        光の速さで起きた構造の自己複製。双極がエネルギーを取り込み、
+        1つの単位系が2つの独立した単位系へと顕在化した瞬間。
+      </p>
+    </div>
+    <div class="card">
+      <h4>細胞の分裂</h4>
+      <p>
+        膜の中に閉じ込められたエネルギーが限界に達し、
+        入りきれないものが新しい境界を作り、2つの珠として顕在化する。
+      </p>
+    </div>
+    <div class="card">
+      <h4>手と手の合わさること</h4>
+      <p>
+        人間の身体が宇宙の原理を具現化している。手と手を合わせることは、
+        双極の形成とその顕在化の、最も身近な比喩である。
+      </p>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <em>「一人で見ようとする夢はただの夢。</em><br>
+    みんなで見ようとする夢は現実となる。」
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>
+    三四式 TTT理論 / Triple-Tetra Theory<br>
+    〜 位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ 〜
+  </p>
+  <p style="margin-top: 1rem; opacity: 0.6;">
+    GitHub: <a href="https://github.com/kiki054-n/cnt34" target="_blank">kiki054-n/cnt34</a>
+  </p>
+</footer>
+
+<!-- THREE.JS SIMULATION -->
+<script>
+// ===== SIMULATION STATE =====
+let scene, camera, renderer, clock;
+let leftCluster, rightCluster, mergedCluster;
+let phase = 0; // 0: formation, 1: energy, 2: swelling, 3: division
+let autoPlay = false;
+let autoTimer = null;
+let time = 0;
+
+const PHASE_NAMES = [
+  "双極の形成",
+  "エネルギー蓄積",
+  "膨張・限界",
+  "顕在化（分裂）"
+];
+
+// ===== INIT =====
+function init() {
+  const container = document.getElementById('sim-container');
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+
+  scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x080a10, 0.035);
+
+  camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
+  camera.position.set(0, 2, 10);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x080a10, 1);
+  container.appendChild(renderer.domElement);
+
+  clock = new THREE.Clock();
+
+  // Lights
+  const ambient = new THREE.AmbientLight(0xffffff, 0.3);
+  scene.add(ambient);
+
+  const dirLight = new THREE.DirectionalLight(0xc9a44a, 0.8);
+  dirLight.position.set(5, 8, 5);
+  scene.add(dirLight);
+
+  const dirLight2 = new THREE.DirectionalLight(0x4a7a9a, 0.5);
+  dirLight2.position.set(-5, -3, -5);
+  scene.add(dirLight2);
+
+  const pointLight = new THREE.PointLight(0xc94a6a, 0.6, 20);
+  pointLight.position.set(0, 0, 2);
+  scene.add(pointLight);
+
+  // Build clusters
+  buildScene();
+
+  // Events
+  window.addEventListener('resize', onResize);
+  animate();
+}
+
+function onResize() {
+  const container = document.getElementById('sim-container');
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+
+// ===== BUILD SCENE =====
+function buildScene() {
+  leftCluster = createTrigonalBipyramid(-2.2, 0, 0, 0xc9a44a);
+  rightCluster = createTrigonalBipyramid(2.2, 0, 0, 0xc9a44a);
+  mergedCluster = createMergedStructure();
+
+  scene.add(leftCluster.group);
+  scene.add(rightCluster.group);
+  scene.add(mergedCluster.group);
+
+  updateVisibility();
+}
+
+function createNode(color, size = 0.18) {
+  const geo = new THREE.SphereGeometry(size, 24, 24);
+  const mat = new THREE.MeshStandardMaterial({
+    color: color,
+    emissive: color,
+    emissiveIntensity: 0.4,
+    roughness: 0.3,
+    metalness: 0.7
+  });
+  return new THREE.Mesh(geo, mat);
+}
+
+function createEdge(v1, v2, color, opacity = 0.5) {
+  const dir = new THREE.Vector3().subVectors(v2, v1);
+  const len = dir.length();
+  const geo = new THREE.CylinderGeometry(0.025, 0.025, len, 8);
+  const mat = new THREE.MeshStandardMaterial({
+    color: color,
+    transparent: true,
+    opacity: opacity,
+    roughness: 0.5
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+
+  const mid = new THREE.Vector3().addVectors(v1, v2).multiplyScalar(0.5);
+  mesh.position.copy(mid);
+  mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.clone().normalize());
+  return mesh;
+}
+
+function createTrigonalBipyramid(cx, cy, cz, nodeColor) {
+  const group = new THREE.Group();
+  group.position.set(cx, cy, cz);
+
+  // Trigonal bipyramid vertices
+  // Top and bottom poles, 3 equatorial
+  const vertices = [
+    new THREE.Vector3(0, 1.4, 0),      // top (thumb/pole)
+    new THREE.Vector3(0, -1.0, 0),     // bottom
+    new THREE.Vector3(1.0, 0.1, 0),    // equatorial 1
+    new THREE.Vector3(-0.5, 0.1, 0.87), // equatorial 2
+    new THREE.Vector3(-0.5, 0.1, -0.87) // equatorial 3
+  ];
+
+  const nodes = vertices.map((v, i) => {
+    const node = createNode(nodeColor, i === 0 ? 0.22 : 0.15);
+    node.position.copy(v);
+    group.add(node);
+    return node;
+  });
+
+  // Edges from top to all equatorial
+  for (let i = 2; i < 5; i++) {
+    group.add(createEdge(vertices[0], vertices[i], 0x4a7a9a, 0.5));
+  }
+  // Edges from bottom to all equatorial
+  for (let i = 2; i < 5; i++) {
+    group.add(createEdge(vertices[1], vertices[i], 0x4a7a9a, 0.5));
+  }
+  // Equatorial edges
+  group.add(createEdge(vertices[2], vertices[3], 0x4a7a9a, 0.3));
+  group.add(createEdge(vertices[3], vertices[4], 0x4a7a9a, 0.3));
+  group.add(createEdge(vertices[4], vertices[2], 0x4a7a9a, 0.3));
+
+  // Spin glow (energy indicator)
+  const glowGeo = new THREE.SphereGeometry(1.8, 32, 32);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0xc94a6a,
+    transparent: true,
+    opacity: 0.0,
+    side: THREE.BackSide
+  });
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  group.add(glow);
+
+  // Membrane sphere
+  const memGeo = new THREE.SphereGeometry(1.6, 32, 32);
+  const memMat = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.0,
+    side: THREE.BackSide,
+    depthWrite: false
+  });
+  const membrane = new THREE.Mesh(memGeo, memMat);
+  group.add(membrane);
+
+  return { group, nodes, glow, membrane, vertices };
+}
+
+function createMergedStructure() {
+  const group = new THREE.Group();
+
+  // Two trigonal bipyramids merged: 7 nodes, 4-edge membrane concept
+  const leftVerts = [
+    new THREE.Vector3(-0.8, 1.2, 0),
+    new THREE.Vector3(-0.8, -0.8, 0),
+    new THREE.Vector3(-1.6, 0.1, 0),
+    new THREE.Vector3(-0.5, 0.1, 0.8),
+    new THREE.Vector3(-0.5, 0.1, -0.8)
+  ];
+  const rightVerts = [
+    new THREE.Vector3(0.8, 1.2, 0),
+    new THREE.Vector3(0.8, -0.8, 0),
+    new THREE.Vector3(1.6, 0.1, 0),
+    new THREE.Vector3(0.5, 0.1, 0.8),
+    new THREE.Vector3(0.5, 0.1, -0.8)
+  ];
+
+  // Shared center nodes (the "00" dual pole)
+  const centerTop = createNode(0xc9a44a, 0.2);
+  centerTop.position.set(0, 1.0, 0);
+  group.add(centerTop);
+
+  const centerBottom = createNode(0xc9a44a, 0.2);
+  centerBottom.position.set(0, -0.7, 0);
+  group.add(centerBottom);
+
+  // All nodes
+  const allNodes = [centerTop, centerBottom];
+
+  [...leftVerts, ...rightVerts].forEach((v, i) => {
+    const node = createNode(0xc9a44a, 0.14);
+    node.position.copy(v);
+    group.add(node);
+    allNodes.push(node);
+  });
+
+  // Edges: connect poles to surrounding
+  const poles = [centerTop.position, centerBottom.position];
+  const surround = [...leftVerts, ...rightVerts];
+  surround.forEach(v => {
+    poles.forEach(p => {
+      group.add(createEdge(p, v, 0x4a7a9a, 0.35));
+    });
+  });
+
+  // Equatorial connections
+  group.add(createEdge(leftVerts[2], rightVerts[2], 0xc94a6a, 0.5));
+  group.add(createEdge(leftVerts[3], rightVerts[3], 0x4a7a9a, 0.25));
+  group.add(createEdge(leftVerts[4], rightVerts[4], 0x4a7a9a, 0.25));
+
+  // Large energy glow
+  const glowGeo = new THREE.SphereGeometry(3.0, 32, 32);
+  const glowMat = new THREE.MeshBasicMaterial({
+    color: 0xc94a6a,
+    transparent: true,
+    opacity: 0.0,
+    side: THREE.BackSide
+  });
+  const glow = new THREE.Mesh(glowGeo, glowMat);
+  group.add(glow);
+
+  // Membrane
+  const memGeo = new THREE.SphereGeometry(2.5, 40, 40);
+  const memMat = new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.0,
+    side: THREE.BackSide,
+    depthWrite: false
+  });
+  const membrane = new THREE.Mesh(memGeo, memMat);
+  group.add(membrane);
+
+  // Division plane indicator
+  const planeGeo = new THREE.RingGeometry(0.5, 2.8, 64);
+  const planeMat = new THREE.MeshBasicMaterial({
+    color: 0xc9a44a,
+    transparent: true,
+    opacity: 0.0,
+    side: THREE.DoubleSide
+  });
+  const divisionPlane = new THREE.Mesh(planeGeo, planeMat);
+  divisionPlane.rotation.y = Math.PI / 2;
+  group.add(divisionPlane);
+
+  return { group, glow, membrane, divisionPlane, allNodes };
+}
+
+function updateVisibility() {
+  if (!leftCluster || !rightCluster || !mergedCluster) return;
+
+  leftCluster.group.visible = (phase === 0);
+  rightCluster.group.visible = (phase === 0);
+  mergedCluster.group.visible = (phase >= 1);
+}
+
+// ===== PHASE CONTROL =====
+function setPhase(p) {
+  phase = p;
+  updateVisibility();
+  document.getElementById('sim-status').textContent = PHASE_NAMES[p];
+
+  // Update button states
+  document.querySelectorAll('.sim-controls button').forEach(btn => btn.classList.remove('active'));
+  const btnId = ['btn-phase1','btn-phase2','btn-phase3','btn-phase4'][p];
+  if (btnId) document.getElementById(btnId).classList.add('active');
+}
+
+function resetSim() {
+  autoPlay = false;
+  if (autoTimer) clearInterval(autoTimer);
+  document.getElementById('btn-auto').classList.remove('active');
+  time = 0;
+  setPhase(0);
+}
+
+function toggleAuto() {
+  autoPlay = !autoPlay;
+  const btn = document.getElementById('btn-auto');
+  if (autoPlay) {
+    btn.classList.add('active');
+    btn.textContent = "停止";
+    setPhase(0);
+    let step = 0;
+    autoTimer = setInterval(() => {
+      step++;
+      if (step >= 4) step = 0;
+      setPhase(step);
+    }, 3500);
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = "自動再生";
+    if (autoTimer) clearInterval(autoTimer);
+  }
+}
+
+// ===== ANIMATION =====
+function animate() {
+  requestAnimationFrame(animate);
+
+  const dt = clock.getDelta();
+  time += dt;
+
+  // Camera gentle orbit
+  const camAngle = time * 0.15;
+  camera.position.x = Math.sin(camAngle) * 9;
+  camera.position.z = Math.cos(camAngle) * 9;
+  camera.lookAt(0, 0, 0);
+
+  // Phase-specific animations
+  if (phase === 0) {
+    // Formation: clusters breathe and approach
+    const breathe = 1 + Math.sin(time * 2) * 0.03;
+    leftCluster.group.scale.setScalar(breathe);
+    rightCluster.group.scale.setScalar(breathe);
+    leftCluster.group.position.x = -2.2 + Math.sin(time * 0.5) * 0.3;
+    rightCluster.group.position.x = 2.2 - Math.sin(time * 0.5) * 0.3;
+    leftCluster.glow.material.opacity = 0.05 + Math.sin(time * 3) * 0.02;
+    rightCluster.glow.material.opacity = 0.05 + Math.sin(time * 3) * 0.02;
+  }
+  else if (phase === 1) {
+    // Energy accumulation: glow intensifies, membrane appears
+    mergedCluster.glow.material.opacity = 0.1 + Math.sin(time * 4) * 0.05;
+    mergedCluster.membrane.material.opacity = 0.08 + Math.sin(time * 2) * 0.03;
+    mergedCluster.group.rotation.y = time * 0.3;
+    mergedCluster.group.rotation.x = Math.sin(time * 0.4) * 0.1;
+  }
+  else if (phase === 2) {
+    // Swelling: glow pulses strongly, membrane thickens
+    const pulse = 0.2 + Math.sin(time * 6) * 0.08;
+    mergedCluster.glow.material.opacity = pulse;
+    mergedCluster.membrane.material.opacity = 0.15 + Math.sin(time * 3) * 0.05;
+    mergedCluster.group.scale.setScalar(1 + Math.sin(time * 1.5) * 0.05);
+    mergedCluster.group.rotation.y = time * 0.5;
+    mergedCluster.divisionPlane.material.opacity = 0.0;
+  }
+  else if (phase === 3) {
+    // Division: glow peaks, division plane appears, structure splits
+    mergedCluster.glow.material.opacity = 0.35 + Math.sin(time * 8) * 0.1;
+    mergedCluster.membrane.material.opacity = 0.25;
+    mergedCluster.divisionPlane.material.opacity = 0.3 + Math.sin(time * 5) * 0.1;
+    mergedCluster.group.rotation.y = time * 0.6;
+
+    // Simulate splitting by scaling x
+    const splitScale = 1 + Math.sin(time * 1.2) * 0.08;
+    mergedCluster.group.scale.set(splitScale, 1, 1);
+  }
+
+  renderer.render(scene, camera);
+}
+
+// Start
+window.addEventListener('load', init);
+</script>
+
+</body>
+</html>
