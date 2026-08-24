@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三式 TTT — 4つの柱と感謝の循環</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0e12;
+  --surface: #141820;
+  --surface-2: #1c2030;
+  --ink: #e8e4dc;
+  --ink-dim: #9a958a;
+  --accent: #c9a44a;
+  --accent-dim: #8a7340;
+  --accent-glow: rgba(201, 164, 74, 0.15);
+  --line: rgba(232, 228, 220, 0.08);
+  --pillar-1: #7a9a4a;
+  --pillar-2: #4a8a9a;
+  --pillar-3: #7a6a9a;
+  --pillar-4: #c9a44a;
+  --step--1: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --step-0: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --step-1: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  --step-3: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  --space: clamp(1rem, 0.8rem + 1vw, 2rem);
+  --radius: 8px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.9;
+  font-size: var(--step-0);
+  overflow-x: hidden;
+}
+
+.hero {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: var(--space);
+  background: radial-gradient(ellipse at 50% 30%, var(--surface) 0%, var(--bg) 70%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 800px; }
+
+.hero-kicker {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step--1);
+  letter-spacing: 0.3em;
+  color: var(--accent-dim);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.hero h1 {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-3);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 em { font-style: normal; color: var(--accent); }
+
+.hero-desc {
+  font-size: var(--step-1);
+  color: var(--ink-dim);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+section {
+  padding: calc(var(--space) * 3) var(--space);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step--1);
+  color: var(--accent-dim);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+h2 {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-1);
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
+}
+
+p { margin-bottom: 1.25rem; }
+
+/* ===== PILLARS ===== */
+.pillars-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.pillars-intro .formula {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-2);
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin: 1.5rem 0;
+}
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin: 2.5rem 0;
+}
+
+.pillar-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.pillar-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.pillar-card.p1::before { background: var(--pillar-1); }
+.pillar-card.p2::before { background: var(--pillar-2); }
+.pillar-card.p3::before { background: var(--pillar-3); }
+.pillar-card.p4::before { background: var(--pillar-4); }
+
+.pillar-num {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step--1);
+  letter-spacing: 0.15em;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+.pillar-card h4 {
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-1);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.pillar-card.p1 h4 { color: var(--pillar-1); }
+.pillar-card.p2 h4 { color: var(--pillar-2); }
+.pillar-card.p3 h4 { color: var(--pillar-3); }
+.pillar-card.p4 h4 { color: var(--pillar-4); }
+
+.pillar-card p {
+  font-size: var(--step--1);
+  color: var(--ink-dim);
+  line-height: 1.8;
+  margin: 0;
+}
+
+.pillar-examples {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--step--1);
+  color: var(--ink-dim);
+  line-height: 1.8;
+}
+
+.pillar-examples strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ===== GRATITUDE ===== */
+.gratitude-section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space) * 1.5);
+  margin: calc(var(--space) * 2) auto;
+  max-width: 900px;
+}
+
+.gratitude-diagram {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.gratitude-diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.quote-block {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 2.5rem 0;
+  font-family: "Zen Old Mincho", serif;
+  font-size: var(--step-1);
+  line-height: 1.8;
+  color: var(--ink-dim);
+}
+
+.quote-block em {
+  color: var(--ink);
+  font-style: normal;
+}
+
+/* ===== REPO STRUCTURE ===== */
+.repo-tree {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  font-family: "Source Code Pro", "SF Mono", Monaco, monospace;
+  font-size: var(--step--1);
+  line-height: 2;
+  color: var(--ink-dim);
+  overflow-x: auto;
+}
+
+.repo-tree .dir { color: var(--pillar-2); }
+.repo-tree .file { color: var(--ink-dim); }
+.repo-tree .comment { color: #6a7a5a; font-style: italic; }
+
+/* ===== FOOTER ===== */
+.footer {
+  text-align: center;
+  padding: calc(var(--space) * 2) var(--space);
+  border-top: 1px solid var(--line);
+  color: var(--ink-dim);
+  font-size: var(--step--1);
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .pillars-grid { grid-template-columns: 1fr; }
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+  .hero, .gratitude-section, .pillar-card { background: #f5f5f5; border-color: #ccc; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-content">
+    <span class="hero-kicker">TTT Repository Architecture</span>
+    <h1>4つの柱と<em>感謝の循環</em></h1>
+    <p class="hero-desc">
+      三四式理論を使い、人の役割を4つの方向として定義し、<br>
+      感謝をエネルギーの循環として設計する
+    </p>
+  </div>
+</header>
+
+<section>
+  <span class="section-label">01 / 原理</span>
+  <h2>4方向は4つの柱となる</h2>
+  <p>
+    トリテトラ理論では、空間には「位置（3）」と「方向（4）」がある。
+    人の社会においても、人は「どこにいるか（位置）」ではなく、
+    <strong>「どちらを向いているか（方向）」</strong>によって役割が決まる。
+  </p>
+  <p>
+    4つの方向（u, v, w と統合軸π）は、社会の4つの役割の柱となる。
+    そしてこれらの柱の間を流れるエネルギーが<strong>「感謝」</strong>である。
+    感謝は双極間の引き合いであり、構造を安定させる張力そのものだ。
+  </p>
+
+  <div class="pillars-intro">
+    <div class="formula">
+      4方向 × 感謝の循環 = 社会のテンセグリティ
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section>
+  <span class="section-label">02 / 4つの柱</span>
+  <h2>人の役割方向として定義する</h2>
+
+  <div class="pillars-grid">
+    <div class="pillar-card p1">
+      <div class="pillar-num">第1柱</div>
+      <h4>作る労働</h4>
+      <p>
+        物質を生み出し、形を与える方向。
+        大地から命を育み、素材を加工し、生活の基基盤を紡ぐ。
+      </p>
+      <div class="pillar-examples">
+        <strong>例：</strong>農業、漁業、林業、建設業、製造業、<br>
+        飲食サービス、流通・小売、インフラ整備
+      </div>
+    </div>
+
+    <div class="pillar-card p2">
+      <div class="pillar-num">第2柱</div>
+      <h4>支える労働</h4>
+      <p>
+        命を守り、知を伝え、傷を癒す方向。
+        人の尊厳と可能性を育み、社会の根幹支える。
+      </p>
+      <div class="pillar-examples">
+        <strong>例：</strong>介護、医療、教育、保育、福祉、<br>
+        相談支援、地域活動、ボランティア
+      </div>
+    </div>
+
+    <div class="pillar-card p3">
+      <div class="pillar-num">第3柱</div>
+      <h4>管理労働</h4>
+      <p>
+        秩序を保ち、安全を守り、全体を調整する方向。
+        4つの柱のバランスを見渡し、社会の安定を維持する。
+      </p>
+      <div class="pillar-examples">
+        <strong>例：</strong>管理職、公務員、自衛官、警察官、<br>
+        消防、裁判所、企画・調整職、監査
+      </div>
+    </div>
+
+    <div class="pillar-card p4">
+      <div class="pillar-num">第4柱</div>
+      <h4>創造労働</h4>
+      <p>
+        新しい視点を生み、美を創り、物語を紡ぐ方向。
+        人の心に風を起こし、社会の方向性を更新する。
+      </p>
+      <div class="pillar-examples">
+        <strong>例：</strong>作家、画家、音楽家、エンターテイナー、<br>
+        研究者、デザイナー、発明家、哲学者
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <em>「4つの柱は独立して存在しない。</em><br>
+    作る者が支えられ、支える者が管理され、管理する者が創造され、創造する者が作られる——<br>
+    この循環が感謝である。」
+  </div>
+</section>
+
+<!-- GRATITUDE -->
+<section class="gratitude-section">
+  <span class="section-label">03 / 感謝の循環</span>
+  <h2>感謝は4柱間のエネルギー流である</h2>
+  <p>
+    トリテトラ理論において、双極（00）引き合うことで「線（辺）」を生む。
+    社会において、4つの柱の間を流れる感謝が、その「線」に相当する。
+    感謝が途絶えると、柱は孤立し、社会のテンセグリティ構造は崩れる。
+  </p>
+
+  <div class="gratitude-diagram">
+    <svg viewBox="0 0 500 420" width="500" height="420">
+      <!-- Center: gratitude -->
+      <circle cx="250" cy="210" r="45" fill="none" stroke="#c9a44a" stroke-width="2" opacity="0.6"/>
+      <text x="250" y="205" text-anchor="middle" fill="#c9a44a" font-size="13" font-family="Zen Old Mincho" font-weight="700">感謝</text>
+      <text x="250" y="222" text-anchor="middle" fill="#c9a44a" font-size="10" font-family="Zen Kaku Gothic New" opacity="0.8">エネルギーの循環</text>
+
+      <!-- Pillar 1: 作る (top) -->
+      <rect x="185" y="30" width="130" height="56" rx="6" fill="#1c2030" stroke="#7a9a4a" stroke-width="1.5" opacity="0.9"/>
+      <text x="250" y="55" text-anchor="middle" fill="#7a9a4a" font-size="12" font-family="Zen Old Mincho" font-weight="700">第1柱・作る労働</text>
+      <text x="250" y="74" text-anchor="middle" fill="#9a958a" font-size="9" font-family="Zen Kaku Gothic New">農業・工業・サービス</text>
+
+      <!-- Pillar 2: 支える (left) -->
+      <rect x="30" y="182" width="130" height="56" rx="6" fill="#1c2030" stroke="#4a8a9a" stroke-width="1.5" opacity="0.9"/>
+      <text x="95" y="207" text-anchor="middle" fill="#4a8a9a" font-size="12" font-family="Zen Old Mincho" font-weight="700">第2柱・支える労働</text>
+      <text x="95" y="226" text-anchor="middle" fill="#9a958a" font-size="9" font-family="Zen Kaku Gothic New">介護・教育・療</text>
+
+      <!-- Pillar 3: 管理 (right) -->
+      <rect x="340" y="182" width="130" height="56" rx="6" fill="#1c2030" stroke="#7a6a9a" stroke-width="1.5" opacity="0.9"/>
+      <text x="405" y="207" text-anchor="middle" fill="#7a6a9a" font-size="12" font-family="Zen Old Mincho" font-weight="700">第3柱・管理労働</text>
+      <text x="405" y="226" text-anchor="middle" fill="#9a958a" font-size="9" font-family="Zen Kaku Gothic New">公務・治安・調整</text>
+
+      <!-- Pillar 4: 創造 (bottom) -->
+      <rect x="185" y="334" width="130" height="56" rx="6" fill="#1c2030" stroke="#c9a44a" stroke-width="1.5" opacity="0.9"/>
+      <text x="250" y="359" text-anchor="middle" fill="#c9a44a" font-size="12" font-family="Zen Old Mincho" font-weight="700">第4柱・創造労働</text>
+      <text x="250" y="378" text-anchor="middle" fill="#9a958a" font-size="9" font-family="Zen Kaku Gothic New">芸術・研究・思想</text>
+
+      <!-- Flow arrows -->
+      <defs>
+        <marker id="arr-g" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L0,6 L7,3 z" fill="#c9a44a" opacity="0.5"/>
+        </marker>
+      </defs>
+      <!-- 1 -> 2 -->
+      <line x1="195" y1="86" x2="140" y2="175" stroke="#c9a44a" stroke-width="1" opacity="0.3" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 2 -> 3 (through center) -->
+      <line x1="160" y1="210" x2="340" y2="210" stroke="#c9a44a" stroke-width="1" opacity="0.3" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 3 -> 4 -->
+      <line x1="360" y1="238" x2="305" y2="330" stroke="#c9a44a" stroke-width="1" opacity="0.3" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 4 -> 1 -->
+      <line x1="250" y1="334" x2="250" y2="142" stroke="#c9a44a" stroke-width="1" opacity="0.3" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 2 -> 1 -->
+      <line x1="140" y1="245" x2="195" y2="86" stroke="#c9a44a" stroke-width="1" opacity="0.15" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 1 -> 4 -->
+      <line x1="220" y1="86" x2="220" y2="334" stroke="#c9a44a" stroke-width="1" opacity="0.15" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 4 -> 2 -->
+      <line x1="185" y1="334" x2="130" y2="245" stroke="#c9a44a" stroke-width="1" opacity="0.15" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+      <!-- 3 -> 1 -->
+      <line x1="360" y1="182" x2="305" y2="86" stroke="#c9a44a" stroke-width="1" opacity="0.15" marker-end="url(#arr-g)" stroke-dasharray="3,2"/>
+
+      <!-- Labels on arrows -->
+      <text x="150" y="125" fill="#c9a44a" font-size="9" font-family="Zen Kaku Gothic New" opacity="0.7">食を分かち合う</text>
+      <text x="230" y="280" fill="#c9a44a" font-size="9" font-family="Zen Kaku Gothic New" opacity="0.7">知を還元する</text>
+      <text x="340" y="290" fill="#c9a44a" font-size="9" font-family="Zen Kaku Gothic New" opacity="0.7">美を統治する</text>
+      <text x="265" y="170" fill="#c9a44a" font-size="9" font-family="Zen Kaku Gothic New" opacity="0.7">安全を創る</text>
+    </svg>
+  </div>
+
+  <p style="color: var(--ink-dim); font-size: var(--step--1);">
+    図：4つの柱が中央の「感謝」を中心に循環する。実線の矢印は主なエネルギー流、
+    破線は還流（フィードバック）を示す。すべての柱は双方向に感謝を交換し、
+    社会全体が「7節点4辺のテンセグリティ構造」として安定する。
+  </p>
+</section>
+
+<!-- REPO STRUCTURE -->
+<section>
+  <span class="section-label">04 / リポジトリ設計</span>
+  <h2>cnt34 のディレクトリ構造</h2>
+  <p>
+    GitHubリポジトリ <strong>cnt34</strong> を、4つの柱と感謝の循環を体現する
+    オープンソースの場として設計する。各ディレクトリは1つの柱を表し、
+    感謝はCONTRIBUTING.mdとIssueテンプレートを通じて循環する。
+  </p>
+
+  <div class="repo-tree">
+<span class="comment"># cnt34 — 三四式 TTT理論リポジトリ</span>
+cnt34/
+├── README.md                 <span class="comment"># 理論の全体像とビジョン</span>
+├── LICENSE                   <span class="comment"># MIT License + CC BY 4.0</span>
+├── docs/
+│   ├── theory/
+│   │   ├── 00-dual-pole.md   <span class="comment"># 双極の原理</span>
+│   │   ├── OOO-pi.md         <span class="comment"># エネルギー単位系</span>
+│   │   ├── XYZ-pi.md         <span class="comment"># 空間単位系</span>
+│   │   ├── euler-connection.md <span class="comment"># オイラー公式との接続</span>
+│   │   └── cell-division.md  <span class="comment"># 細胞分裂の幾何学</span>
+│   └── pillars/
+│       ├── pillar-01-create.md   <span class="dir"># 第1柱：作る労働</span>
+│       ├── pillar-02-support.md  <span class="dir"># 第2柱：支える労働</span>
+│       ├── pillar-03-govern.md   <span class="dir"># 第3柱：管理労働</span>
+│       ├── pillar-04-create.md   <span class="dir"># 第4柱：創造労働</span>
+│       └── gratitude.md            <span class="comment"># 感謝の循環プロトコル</span>
+├── pillar-01-create/         <span class="dir"># 作る労働の実装・議論</span>
+│   ├── README.md
+│   ├── projects/
+│   └── discussions/
+├── pillar-02-support/        <span class="dir"># 支る労働の実装・議論</span>
+│   ├── README.md
+│   ├── projects/
+│   └── discussions/
+├── pillar-03-govern/         <span class="dir"># 管理労働の実装・議論</span>
+│   ├── README.md
+│   ├── projects/
+│   └── discussions/
+├── pillar-04-invent/         <span class="dir"># 創造労働の実装・議論</span>
+│   ├── README.md
+│   ├── projects/
+│   └── discussions/
+├── sim/
+│   ├── index.html            <span class="comment"># 双極の顕在化シミュレーション</span>
+│   ├── js/
+│   └── assets/
+├── contrib/
+│   ├── gratitude-log/        <span class="comment"># 感謝の記録（誰が誰に感謝したか）</span>
+│   ├── how-to-thank.md       <span class="comment"># 感謝の作法</span>
+│   └── CODE_OF_CONDUCT.md    <span class="comment"># 4柱の調和を保つ行動規範</span>
+└── .github/
+    ├── ISSUE_TEMPLATE/
+    │   ├── pillar-01.yml
+    │   ├── pillar-02.yml
+    │   ├── pillar-03.yml
+    │   ├── pillar-04.yml
+    │   └── gratitude.yml     <span class="comment"># 「感謝を送る」専用Issue</span>
+    └── PULL_REQUEST_TEMPLATE.md
+  </div>
+
+  <h3>感謝をコード化する</h3>
+  <p>
+    このリポジトリの最も独自的な設計は、<strong>「感をIssueとして送れる」</strong>ことだ。
+    GitHubのIssueテンプレートに「gratitude.yml」を設け、誰かが別の柱の貢献に感謝したいとき、
+    専用のフォームから感謝を送る。感謝は<code>contrib/gratitude-log/</code>に記録され、
+    リポジトリの「エネルギー流」として可視化される。
+  </p>
+  <p>
+    感謝が蓄積すると、リポジトリは「入りきれない」エネルギーを持ち、
+    新しいプロジェクト（分裂・顕在化）が生まれる。これがTTT理論の社会実装である。
+  </p>
+</section>
+
+<!-- VISION -->
+<section>
+  <span class="section-label">05 / ビジョン</span>
+  <h2>リポジトリは「社会の細胞」になる</h2>
+  <p>
+    cnt34は、単なるコードの置き場ではない。4つの柱が感謝を循環させ、
+    自律的に新しいプロジェクトを生み出す「社会の細胞」として設計される。
+  </p>
+  <p>
+    作る者、支える者、管理する者、創造する者——誰もがこのリポジトリに参加し、
+    自分の柱を通じて貢献する。そして感謝が還流することで、
+    社会全体のテンセグリティ構造が強化される。
+  </p>
+
+  <div class="quote-block">
+    <em>「一人で見ようとする夢はただの夢。</em><br>
+    みんなで見ようとする夢は現実となる。」
+  </div>
+</section>
+
+<footer class="footer">
+  <p>
+    三四式 TTT理論 / Triple-Tetra Theory<br>
+    GitHub: <a href="https://github.com/kiki054-n/cnt34" target="_blank">kiki054-n/cnt34</a>
+  </p>
+</footer>
+
+</body>
+</html>
