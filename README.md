@@ -9,6 +9,8 @@
 
 [![Author](https://img.shields.io/badge/Author-川上真潔-f39c12?style=for-the-badge)](https://orcid.org/0009-0009-2972-6511)
 
+📄 [紹介ページ（CNT34_TriTetra_Introduction.html）](CNT34_TriTetra_Introduction.html) — 全体像・導出の要点・参加方法を1枚にまとめた紹介ページ
+
 ---
 
 # 三四式（TTT理論 / Triple-Tetra Theory）
