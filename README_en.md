@@ -9,6 +9,8 @@
 
 [![Author](https://img.shields.io/badge/Author-Naoyuki_Kawakami-f39c12?style=for-the-badge)](https://orcid.org/0009-0009-2972-6511)
 
+📄 [Introduction page (CNT34_TriTetra_Introduction.html)](CNT34_TriTetra_Introduction.html) — a one-page overview covering the big picture, the key derivations, and how to get involved. (Japanese only.)
+
 ---
 
 # Sanshi-shiki (三四式) — TTT Theory / Triple-Tetra Theory
