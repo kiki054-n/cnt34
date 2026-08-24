@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNT34 — 三四式 / Tri-Tetra Theory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+JP:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0a09;
+      --surface: #1c1917;
+      --surface-2: #292524;
+      --ink: #fafaf9;
+      --ink-muted: #a8a29e;
+      --ink-dim: #78716c;
+      --accent: #fbbf24;
+      --accent-weak: rgba(251, 191, 36, 0.08);
+      --accent-mid: rgba(251, 191, 36, 0.18);
+      --line: rgba(250, 250, 249, 0.08);
+      --line-strong: rgba(250, 250, 249, 0.18);
+      --step--2: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+      --step--1: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+      --step-0: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
+      --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+      --step-2: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+      --step-3: clamp(2rem, 1.5rem + 2vw, 3rem);
+      --step-4: clamp(2.5rem, 1.8rem + 3vw, 4rem);
+      --space: clamp(1rem, 0.7rem + 1.2vw, 2rem);
+      --radius: 6px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Noto Serif JP", "Shippori Mincho", "Hiragino Mincho ProN", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.85;
+      font-size: var(--step-0);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: var(--space);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(251,191,36,0.06) 0%, transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(251,191,36,0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(251,191,36,0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent-mid);
+      padding: 0.4em 1.2em;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-4);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 .mono {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 700;
+      font-size: 0.85em;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .hero-sub {
+      font-size: var(--step-1);
+      color: var(--ink-muted);
+      margin-top: 1.5rem;
+      max-width: 28em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-formula {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step-2);
+      color: var(--accent);
+      margin-top: 2.5rem;
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      color: var(--ink-dim);
+      letter-spacing: 0.15em;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ===== GEOMETRIC SIGNATURE ===== */
+    .geo-sig {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .geo-box {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      color: var(--ink-dim);
+      transition: all 0.3s ease;
+    }
+
+    .geo-box.accent {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-weak);
+    }
+
+    .geo-plus {
+      color: var(--ink-dim);
+      font-family: "JetBrains Mono", monospace;
+      align-self: center;
+      font-size: var(--step--1);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: calc(var(--space) * 3) var(--space);
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    section + section {
+      border-top: 1px solid var(--line);
+    }
+
+    .section-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h2 {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-2);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+    }
+
+    h3 {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-1);
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+    }
+
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-muted);
+    }
+
+    p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: calc(var(--space) * 1.2);
+      margin: 1.5rem 0;
+    }
+
+    .card-accent {
+      border-color: var(--accent-mid);
+      background: var(--accent-weak);
+    }
+
+    .card h4 {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ===== FORMULA BLOCKS ===== */
+    .formula-block {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--1);
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      color: var(--ink);
+      line-height: 2;
+      overflow-x: auto;
+    }
+
+    .formula-block .comment {
+      color: var(--ink-dim);
+    }
+
+    /* ===== TABLES ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: var(--step--1);
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      background: var(--surface);
+    }
+
+    td {
+      color: var(--ink-muted);
+    }
+
+    td:first-child {
+      font-family: "JetBrains Mono", monospace;
+      color: var(--ink);
+    }
+
+    tr:hover td {
+      background: var(--accent-weak);
+    }
+
+    /* ===== BUTTONS / LINKS ===== */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--1);
+      padding: 0.875rem 1.75rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-secondary {
+      border-color: var(--line-strong);
+      color: var(--ink-muted);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+      background: transparent;
+    }
+
+    /* ===== FULL BLEED BAND ===== */
+    .band {
+      background: var(--surface);
+      margin: calc(var(--space) * 2) calc(var(--space) * -1);
+      padding: calc(var(--space) * 2) var(--space);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .band-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ===== TAGS ===== */
+    .tag {
+      display: inline-block;
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      padding: 0.2em 0.7em;
+      border: 1px solid var(--line);
+      color: var(--ink-dim);
+      margin: 0 0.3rem 0.5rem 0;
+    }
+
+    .tag-accent {
+      border-color: var(--accent-mid);
+      color: var(--accent);
+      background: var(--accent-weak);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: calc(var(--space) * 2) var(--space);
+      text-align: center;
+      color: var(--ink-dim);
+      font-size: var(--step--1);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      body { background: #fff; color: #000; }
+      .hero { min-height: auto; padding: 3rem 1rem; }
+      .hero-scroll { display: none; }
+      .btn-group { display: none; }
+      .card, .formula-block { border: 1px solid #ccc; }
+    }
+
+    @page { size: A4; margin: 18mm; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 480px) {
+      .geo-box { width: 32px; height: 32px; font-size: 10px; }
+      .btn-group { flex-direction: column; }
+      .btn { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Open-Source Research Initiative</div>
+  <h1>
+    <span class="mono">CNT34</span><br>
+    三四式 / Tri-Tetra Theory
+  </h1>
+  <p class="hero-sub">
+    位置（3）と方向（4）がつむぐ、より良き世界へのオプンソー研究イニシアチブ
+  </p>
+  <div class="hero-formula">XYZ&pi; = 1&nbsp;&nbsp;&nbsp;OOO&pi; = 1</div>
+  <div class="geo-sig">
+    <div class="geo-box accent">3</div>
+    <div class="geo-box">位</div>
+    <div class="geo-box">置</div>
+    <div class="geo-plus">+</div>
+    <div class="geo-box accent">4</div>
+    <div class="geo-box">方</div>
+    <div class="geo-box">向</div>
+    <div class="geo-plus">=</div>
+    <div class="geo-box accent">7</div>
+    <div class="geo-box">調</div>
+    <div class="geo-box">和</div>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</header>
+
+<main>
+
+<!-- ABOUT CNT34 -->
+<section class="reveal">
+  <div class="section-label">About CNT34</div>
+  <h2>すべての人が「世界を変える鍵」を持っている</h2>
+  <p>
+    <strong>CNT34（Code Name Type 34 / 三四式）</strong>は、GitHub上で公開されたオープンソース研究リポジトリです。
+    トリテトラ理論（Tri-Tetra Theory, TTT）を中核とし、位置の3次元と方向の4次元が相互作用することで、
+    宇宙の創生から素粒子、生命、社会に至るまでを一つの幾何学的フレームワークで捉えようとする試みです。
+  </p>
+  <p>
+    この理論は塩尻のワイナリーで発想され、双極原理から出発して、正多面体幾何学を通じて
+    Higgs質量、陽子・電子質量比、標準模型の粒子数と世代構造、さらには宇宙の組成までを
+    導き出すことを目指しています。
+  </p>
+
+  <div class="card card-accent">
+    <h4>Repository</h4>
+    <p style="font-family: JetBrains Mono, monospace; font-size: var(--step--1);">
+      github.com/kiki054-n/cnt34
+    </p>
+    <p>
+      License: MIT / CC BY 4.0 &nbsp;|&nbsp; 
+      DOI: 10.5281/zenodo.19704117 &nbsp;|&nbsp;
+      Author: 川上真潔 (ORCID: 0009-0009-2972-6511)
+    </p>
+  </div>
+
+  <div class="btn-group">
+    <a href="https://github.com/kiki054-n/cnt34" class="btn" target="_blank" rel="noopener">GitHub を開く &rarr;</a>
+    <a href="https://doi.org/10.5281/zenodo.19704117" class="btn btn-secondary" target="_blank" rel="noopener">Zenodo DOI</a>
+  </div>
+</section>
+
+<!-- DERIVATION OVERVIEW -->
+<section class="reveal">
+  <div class="section-label">Derivation</div>
+  <h2>TTT の導出方法 — 一本の線</h2>
+  <p>
+    トリテトラ理論は「双極零公理」という3つの公理から出発し、
+    正多面体の頂点数を基礎語彙として、外部定数を一切導入せずに
+    物理法則を幾何学的に導出します。
+  </p>
+
+  <h3>01. 双極零公理 — 出発点</h3>
+  <div class="formula-block">
+XY = 1 &nbsp;&nbsp;（双極零公理 / Bipolar Zero）<br>
+&Sigma;V = 0 &nbsp;&nbsp;（頂点保存 / Vertex Conservation）<br>
+JIK = &minus;1 &nbsp;&nbsp;（三軸反転 / Triple Inversion）
+  </div>
+  <p>
+    拡散（X）と収束（Y）の積が1で存在する。正多面体の頂点総はゼロ配位。
+    三軸の反転が &minus;1 で自己否定しつつ保存する。
+    この3つが唯一の出発点です。
+  </p>
+
+  <h3>02. 三倍増殖則 — T<sub>n</sub> = 2 &times; 3<sup>n&minus;1</sup></h3>
+  <div class="formula-block">
+T<sub>1</sub> = 2 &nbsp;&nbsp; T<sub>2</sub> = 6 &nbsp;&nbsp; T<sub>3</sub> = 18 &nbsp;&nbsp; T<sub>4</sub> = 54 &nbsp;&nbsp; T<sub>5</sub> = 162 &nbsp;&nbsp; T<sub>6</sub> = 486 ...
+  </div>
+  <p>
+    2は陰陽の珠、3は面・線・点の三極。この増殖則は「珠が面を持ち、面が粒子を産む」
+    過程を記述します。n = 3 で 18 = 17 + 1 となり、標準模型の17粒子が必然化されます。
+  </p>
+
+  <h3>03. 125 + 32/128 = 125.25 GeV — Higgs質量</h3>
+  <div class="formula-block">
+125 = 5&sup3; &nbsp;&nbsp;（立方世代 / ダークエネルギー）<br>
+32 = 12 + 20 = V<sub>12</sub> + V<sub>20</sub> &nbsp;&nbsp;（双対和 / Higgs補正分子）<br>
+128 = 4 &times; 32 = 2&sup7; &nbsp;&nbsp;（正四面体が唯一許す7乗）<br>
+<span class="comment">125 + 32/128 = 125.25 GeV &nbsp;&rarr;&nbsp; 実験値と 0.00% 一致</span>
+  </div>
+  <p>
+    立方数 5&sup3; = 125 に、正十二面体（12）と正二十面体（20）の双対和 32 を
+    正四面体由来の 128 で補正する。これが Higgs 質量の幾何学的起源です。
+  </p>
+
+  <h3>04. 37 = 36 + 1 — 質量確定閾値</h3>
+  <div class="formula-block">
+36 = 12 + 12 + 12 = uud &nbsp;&nbsp;（陽子を構成する3クォーク）<br>
++1 = 軌道を閉じ質量を確定させる双極珠<br>
+37 = 36 + 1 &nbsp;&nbsp;<span class="comment">— 36個の面エネルギーが1つの軌道閉じて初めて質量を持つ</span>
+  </div>
+  <p>
+    36は高度合成数、37は素数。質量は合成数36が素数37へ跳ぶ瞬間に確定します。
+    そしてこの 36 の核心 12 + 20 = 32 は、Higgs補正項の分子と完全一致します。
+  </p>
+</section>
+
+<!-- KEY RESULTS TABLE -->
+<section class="reveal">
+  <div class="section-label">Key Results</div>
+  <h2>主要な導出結果</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>対象</th>
+        <th>導出式</th>
+        <th>一致度</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Higgs 質量</td>
+        <td>125 + 32/128 = 125.25 GeV</td>
+        <td>0.00% ★★★</td>
+      </tr>
+      <tr>
+        <td>p/e 質量比</td>
+        <td>108 &times; 17 + 32/209 = 1836.15311</td>
+        <td>小数2桁一致 ★★</td>
+      </tr>
+      <tr>
+        <td>標準模型粒子数</td>
+        <td>T<sub>3</sub> = 18 = 17 + 1</td>
+        <td>完全一致 ★★★</td>
+      </tr>
+      <tr>
+        <td>3世代構造</td>
+        <td>108 = 36 &times; 3</td>
+        <td>完全一致 ★★★</td>
+      </tr>
+      <tr>
+        <td>ダークエネルギー</td>
+        <td>110/162 = 67.9%</td>
+        <td>Planck観測と Δ0.4% ★</td>
+      </tr>
+      <tr>
+        <td>次世代予言</td>
+        <td>T<sub>6</sub> = 486 GeV</td>
+        <td>LHC検証可能 ★★★</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="reveal">
+  <div class="section-label">Philosophy</div>
+  <h2>なぜ「三四式」なのか</h2>
+  <p>
+    「三四式」という名前は、日本の兵器命名法から来ています。
+    明治〜昭和初期、日本軍は制式採用年の元号や皇紀の下2桁を「式」に冠して
+    兵器を命名しました（三八式歩兵銃、零式艦上戦闘機など）。
+  </p>
+  <p>
+    しかし CNT34 の「三四式」は、Tri-Tetra Theory の頭文字 TTT と、
+    理論の中核「位置3 + 方向4」を縮約した象徴的名称です。
+    兵器が「対立と殺戮」の象徴であったように、
+    三四式は「接続と調和」の象徴を目指します。
+  </p>
+  <p>
+    5/7/4 モデル、7/9 モデル、そして XYZ&pi; = 1、OOO&pi; = 1。
+    これらは「差異（位置）があっても、方向を変えれば統合できる」という
+    幾何学的な平和論です。国籍も宗教も言語も、すべては
+    「5の立方体が12の辺で自分を閉じようとする」過程で生じた
+    余白の配置の違いに過ぎない。
+  </p>
+
+  <div class="card">
+    <h4>Core Message</h4>
+    <p>
+      「一人で見ようとする夢はただの夢。みんなで見ようとする夢は現実となる。」<br>
+      世界をより良く、より美しくするための「三四式」の探求に、ぜひご参加ください。
+    </p>
+  </div>
+</section>
+
+<!-- PARTICIPATE -->
+<section class="reveal">
+  <div class="section-label">Participate</div>
+  <h2>参加する方法</h2>
+  <p>
+    CNT34 は完結した理論ではなく、ここからがスタートです。
+    あなたの専門知識やアイデアが、この理論を次の段階に引き上げます。
+  </p>
+
+  <div style="display: grid; gap: 1rem; margin: 1.5rem 0;">
+    <div class="card">
+      <h4>数学・物理</h4>
+      <p>数式のアプローチや四元数・多次元幾何との厳密な定式化。反証も大歓迎です。</p>
+    </div>
+    <div class="card">
+      <h4>プログラマー</h4>
+      <p>Python や Web3D（Three.js）での「5/7/4モデル」の可視化シミュレーションコード作成。</p>
+    </div>
+    <div class="card">
+      <h4>思想・アート・詩</h4>
+      <p>このモデルがもたらす新しい世界観や生命論の議論・文書化。境界を越える言語を紡ぐ。</p>
+    </div>
+    <div class="card">
+      <h4>教育者・平和活動家</h4>
+      <p>「位置と方向」のワークショップ設計。子どもから専門家まで、誰もが「鍵」を持てる教育プログラム。</p>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <a href="https://github.com/kiki054-n/cnt34" class="btn" target="_blank" rel="noopener">GitHub リポジトリ &rarr;</a>
+    <a href="https://doi.org/10.5281/zenodo.21271597" class="btn btn-secondary" target="_blank" rel="noopener">論文 DOI</a>
+    <a href="https://orcid.org/0009-0009-2972-6511" class="btn btn-secondary" target="_blank" rel="noopener">ORCID</a>
+  </div>
+</section>
+
+<!-- TAGS -->
+<section class="reveal" style="text-align: center;">
+  <div style="margin-top: 1rem;">
+    <span class="tag tag-accent">Higgs 125.25 GeV</span>
+    <span class="tag">p/e 1836.15</span>
+    <span class="tag tag-accent">SM 17 particles</span>
+    <span class="tag">3 Generations</span>
+    <span class="tag tag-accent">T<sub>n</sub> = 2&times;3<sup>n&minus;1</sup></span>
+    <span class="tag">37 = 36 + 1</span>
+    <span class="tag tag-accent">486 GeV Prediction</span>
+    <span class="tag">XYZ&pi; = 1</span>
+    <span class="tag">Open Source</span>
+    <span class="tag tag-accent">World Peace</span>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>
+    CNT34 / Tri-Tetra Theory &mdash; 川上真潔<br>
+    <a href="https://github.com/kiki054-n/cnt34" target="_blank" rel="noopener">github.com/kiki054-n/cnt34</a> &nbsp;|&nbsp;
+    DOI: <a href="https://doi.org/10.5281/zenodo.19704117" target="_blank" rel="noopener">10.5281/zenodo.19704117</a> &nbsp;|&nbsp;
+    <a href="https://orcid.org/0009-0009-2972-6511" target="_blank" rel="noopener">ORCID</a>
+  </p>
+  <p style="margin-top: 1rem; font-size: var(--step--2); color: var(--ink-dim);">
+    位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ
+  </p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
