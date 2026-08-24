@@ -67,10 +67,10 @@ We don't consider this theory finished. If anything, this is only the starting p
 
 A chapter applying TTT Theory to social institutions.
 
-- **Core idea**: [`docs/Governance/Governance-En.md`](docs/Governance/Governance-En.md) - 3 branches of government + popular sovereignty + AI = a 5th autonomous body, the "verifiable consensus cell"
-- **Implementation blueprint**: [`docs/Governance/5W1H-En.md`](docs/Governance/5W1H-En.md) - the consensus cell's design, unfolded across the 5W1H
-- **Interactive demo**: [`docs/Governance/Governance-5w1h.html`](docs/Governance/Governance-5w1h.html) - visualizing the birth and division of the membrane
-- JA: [`governance.md`](docs/Governance/governance.md) / [`5W1H.md`](docs/Governance/5W1H.md)
+- **Core idea**: [`docs/Governance/Governance-En.md`](06_GOVERNANCE/Governance-En.md) - 3 branches of government + popular sovereignty + AI = a 5th autonomous body, the "verifiable consensus cell"
+- **Implementation blueprint**: [`docs/Governance/5W1H-En.md`](06_GOVERNANCE/5W1H-En.md) - the consensus cell's design, unfolded across the 5W1H
+- **Interactive demo**: [`docs/Governance/Governance-5w1h.html`](06_GOVERNANCE/Governance-5w1h.html) - visualizing the birth and division of the membrane
+- JA: [`governance.md`](06_GOVERNANCE/governance.md) / [`5W1H.md`](06_GOVERNANCE/5W1H.md)
 
 [![Open in Browser](https://img.shields.io/badge/Demo-Governance%20Cell-blue?style=for-the-badge)](https://kiki054-n.github.io/cnt34/docs/Governance/Governance-5w1h.html)
 
@@ -88,23 +88,23 @@ A chapter applying TTT Theory to social institutions.
 
 The mathematical foundation of TTT Theory, traced across five documents that follow one sequence of numbers: dual pole (2) → position (3) → orientation (4) → a manifested autonomous unit (5). These are currently Japanese-only.
 
-- [`theory/00-dual-pole.md`](theory/00-dual-pole.md) - The Principle of Dual Poles — why everything starts from "2," not "1." From the minimal distinction "00," dimensions and the geometry of the palm are born
-- [`theory/XYZ-pi.md`](theory/XYZ-pi.md) - The Spatial Unit System — the three positional axes X, Y, Z and the unit condition $XYZ\pi=1$ that closes them via the rotation axis π
-- [`theory/OOO-pi.md`](theory/OOO-pi.md) - The Energy Unit System — three spins O, O, O and the unit condition $OOO\pi=1$; maps onto the energy of the Four Pillars
-- [`theory/euler-connection.md`](theory/euler-connection.md) - Connection to Euler's Formula — reading $e^{i\pi}=-1$ as the birth of the dual pole and $e^{i\cdot2\pi}=1$ as the completed cycle of manifestation
-- [`theory/cell-division.md`](theory/cell-division.md) - The Geometry of Cell Division — a methane molecule (5 → 15 → 30 → 15+15) and the sequence "2·3·4·5" that closes the theory as a whole
+- [`theory/00-dual-pole.md`](01_FOUNDATION/00-dual-pole.md) - The Principle of Dual Poles — why everything starts from "2," not "1." From the minimal distinction "00," dimensions and the geometry of the palm are born
+- [`theory/XYZ-pi.md`](02_MATHEMATICS/XYZ-pi.md) - The Spatial Unit System — the three positional axes X, Y, Z and the unit condition $XYZ\pi=1$ that closes them via the rotation axis π
+- [`theory/OOO-pi.md`](02_MATHEMATICS/OOO-pi.md) - The Energy Unit System — three spins O, O, O and the unit condition $OOO\pi=1$; maps onto the energy of the Four Pillars
+- [`theory/euler-connection.md`](02_MATHEMATICS/euler-connection.md) - Connection to Euler's Formula — reading $e^{i\pi}=-1$ as the birth of the dual pole and $e^{i\cdot2\pi}=1$ as the completed cycle of manifestation
+- [`theory/cell-division.md`](04_LIFE/cell-division.md) - The Geometry of Cell Division — a methane molecule (5 → 15 → 30 → 15+15) and the sequence "2·3·4·5" that closes the theory as a whole
 
 ---
 
 ## 🏛️ The Four Pillars & the Circulation of Gratitude
 
-TTT Theory applied to human roles and labor. These are currently Japanese-only; see [`TTT_theory_simulation_en.html`](TTT_theory_simulation_en.html) for the English simulation.
+TTT Theory applied to human roles and labor. These are currently Japanese-only; see [`TTT_theory_simulation_en.html`](02_MATHEMATICS/TTT_theory_simulation_en.html) for the English simulation.
 
-- [`docs/pillars/pillar-01-create.md`](docs/pillars/pillar-01-create.md) - Pillar 1: Creative Labor
-- [`docs/pillars/pillar-02-support.md`](docs/pillars/pillar-02-support.md) - Pillar 2: Support Labor
-- [`docs/pillars/pillar-03-govern.md`](docs/pillars/pillar-03-govern.md) - Pillar 3: Governance Labor
-- [`docs/pillars/pillar-04-invent.md`](docs/pillars/pillar-04-invent.md) - Pillar 4: Invention Labor
-- [`docs/pillars/gratitude.md`](docs/pillars/gratitude.md) - The Gratitude Circulation Protocol
+- [`docs/pillars/pillar-01-create.md`](06_GOVERNANCE/pillars/pillar-01-create.md) - Pillar 1: Creative Labor
+- [`docs/pillars/pillar-02-support.md`](06_GOVERNANCE/pillars/pillar-02-support.md) - Pillar 2: Support Labor
+- [`docs/pillars/pillar-03-govern.md`](06_GOVERNANCE/pillars/pillar-03-govern.md) - Pillar 3: Governance Labor
+- [`docs/pillars/pillar-04-invent.md`](06_GOVERNANCE/pillars/pillar-04-invent.md) - Pillar 4: Invention Labor
+- [`docs/pillars/gratitude.md`](07_WCCC/gratitude.md) - The Gratitude Circulation Protocol
 
 ---
 
