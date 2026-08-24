@@ -1,484 +1,932 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>三四式 TTT理論 — cnt34</title>
-<meta name="description" content="三四式（Triple-Tetra Theory）— 位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ。理論シミュレーション、ガバナンスモデルの一覧。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0c0e12;
-  --surface: #141820;
-  --surface-2: #1c2030;
-  --ink: #e8e4dc;
-  --ink-dim: #9a958a;
-  --accent: #c9a44a;
-  --accent-dim: #8a7340;
-  --accent-glow: rgba(201, 164, 74, 0.15);
-  --accent-2: #6f9bb0;
-  --line: rgba(232, 228, 220, 0.08);
-  --line-strong: rgba(232, 228, 220, 0.18);
-  --step--1: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --step-0: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  --step-1: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
-  --step-2: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
-  --step-3: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
-  --space: clamp(1rem, 0.8rem + 1vw, 2rem);
-  --radius: 10px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNT34 — 三四式 / Tri-Tetra Theory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Serif+JP:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0a09;
+      --surface: #1c1917;
+      --surface-2: #292524;
+      --ink: #fafaf9;
+      --ink-muted: #a8a29e;
+      --ink-dim: #78716c;
+      --accent: #fbbf24;
+      --accent-weak: rgba(251, 191, 36, 0.08);
+      --accent-mid: rgba(251, 191, 36, 0.18);
+      --line: rgba(250, 250, 249, 0.08);
+      --line-strong: rgba(250, 250, 249, 0.18);
+      --step--2: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+      --step--1: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+      --step-0: clamp(1rem, 0.9rem + 0.4vw, 1.125rem);
+      --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+      --step-2: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+      --step-3: clamp(2rem, 1.5rem + 2vw, 3rem);
+      --step-4: clamp(2.5rem, 1.8rem + 3vw, 4rem);
+      --space: clamp(1rem, 0.7rem + 1.2vw, 2rem);
+      --radius: 6px;
+    }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
 
-html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-body {
-  font-family: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.9;
-  font-size: var(--step-0);
-  overflow-x: hidden;
-}
+    body {
+      font-family: "Noto Serif JP", "Shippori Mincho", "Hiragino Mincho ProN", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.85;
+      font-size: var(--step-0);
+      -webkit-font-smoothing: antialiased;
+    }
 
-a { color: inherit; }
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: var(--space);
+      text-align: center;
+      overflow: hidden;
+    }
 
-.wrap {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 var(--space);
-}
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 40%, rgba(251,191,36,0.06) 0%, transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(251,191,36,0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(251,191,36,0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
 
-/* ===== HERO ===== */
-.hero {
-  position: relative;
-  padding: clamp(4rem, 8vh, 7rem) var(--space) clamp(3rem, 6vh, 5rem);
-  text-align: center;
-  background: radial-gradient(ellipse at 50% 20%, var(--surface) 0%, var(--bg) 70%);
-  border-bottom: 1px solid var(--line);
-}
+    .hero-badge {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent-mid);
+      padding: 0.4em 1.2em;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  opacity: 0.5;
-  pointer-events: none;
-}
+    .hero h1 {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-4);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      position: relative;
+      z-index: 1;
+    }
 
-.hero-content { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+    .hero h1 .mono {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 700;
+      font-size: 0.85em;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
 
-.hero-kicker {
-  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
-  font-size: var(--step--1);
-  letter-spacing: 0.3em;
-  color: var(--accent-dim);
-  text-transform: uppercase;
-  margin-bottom: 1.25rem;
-}
+    .hero-sub {
+      font-size: var(--step-1);
+      color: var(--ink-muted);
+      margin-top: 1.5rem;
+      max-width: 28em;
+      position: relative;
+      z-index: 1;
+    }
 
-.hero h1 {
-  font-family: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
-  font-weight: 900;
-  font-size: var(--step-3);
-  letter-spacing: 0.04em;
-  color: var(--ink);
-  margin-bottom: 0.75rem;
-}
+    .hero-formula {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step-2);
+      color: var(--accent);
+      margin-top: 2.5rem;
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
 
-.hero h1 span { color: var(--accent); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      color: var(--ink-dim);
+      letter-spacing: 0.15em;
+      animation: float 2.5s ease-in-out infinite;
+    }
 
-.hero-sub {
-  font-size: var(--step-1);
-  color: var(--ink-dim);
-  font-weight: 300;
-  margin-bottom: 1.75rem;
-}
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
 
-.hero-formula {
-  display: inline-block;
-  font-family: "Zen Old Mincho", serif;
-  font-size: var(--step-1);
-  color: var(--accent);
-  letter-spacing: 0.05em;
-  padding: 0.6em 1.4em;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  background: var(--accent-glow);
-  margin-bottom: 1.5rem;
-}
+    /* ===== GEOMETRIC SIGNATURE ===== */
+    .geo-sig {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      position: relative;
+      z-index: 1;
+    }
 
-.hero-links {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
+    .geo-box {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      color: var(--ink-dim);
+      transition: all 0.3s ease;
+    }
 
-.hero-links a {
-  font-size: var(--step--1);
-  text-decoration: none;
-  color: var(--ink-dim);
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  padding: 0.5em 1.1em;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
+    .geo-box.accent {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-weak);
+    }
 
-.hero-links a:hover { color: var(--accent); border-color: var(--accent-dim); }
+    .geo-plus {
+      color: var(--ink-dim);
+      font-family: "JetBrains Mono", monospace;
+      align-self: center;
+      font-size: var(--step--1);
+    }
 
-/* ===== SECTIONS ===== */
-section.list { padding: clamp(3rem, 6vh, 4.5rem) 0; }
+    /* ===== SECTIONS ===== */
+    section {
+      padding: calc(var(--space) * 3) var(--space);
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+    }
 
-.section-head { margin-bottom: 1.75rem; }
+    section + section {
+      border-top: 1px solid var(--line);
+    }
 
-.section-head .label {
-  font-family: "Zen Old Mincho", serif;
-  font-size: var(--step--1);
-  letter-spacing: 0.25em;
-  color: var(--accent-dim);
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 0.4rem;
-}
+    .section-label {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
 
-.section-head h2 {
-  font-family: "Zen Old Mincho", serif;
-  font-weight: 700;
-  font-size: var(--step-2);
-}
+    h2 {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-2);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+    }
 
-.section-head p {
-  color: var(--ink-dim);
-  font-size: var(--step--1);
-  max-width: 640px;
-  margin-top: 0.5rem;
-}
+    h3 {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-1);
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+      color: var(--ink);
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.25rem;
-}
+    p {
+      margin-bottom: 1.25rem;
+      color: var(--ink-muted);
+    }
 
-.grid-compact { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+    p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
 
-.card-compact { padding: 1.2rem; gap: 0.6rem; }
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: calc(var(--space) * 1.2);
+      margin: 1.5rem 0;
+    }
 
-.card-compact h3 { font-size: var(--step-0); }
+    .card-accent {
+      border-color: var(--accent-mid);
+      background: var(--accent-weak);
+    }
 
-.section-head p a { color: var(--accent-dim); text-decoration-color: var(--line-strong); }
-.section-head p a:hover { color: var(--accent); }
+    .card h4 {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  padding: 1.6rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  text-decoration: none;
-  color: var(--ink);
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
+    .card p:last-child {
+      margin-bottom: 0;
+    }
 
-.card:hover {
-  transform: translateY(-3px);
-  border-color: var(--accent-dim);
-  background: var(--surface-2);
-}
+    /* ===== FORMULA BLOCKS ===== */
+    .formula-block {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--1);
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      color: var(--ink);
+      line-height: 2;
+      overflow-x: auto;
+    }
 
-.card-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .formula-block .comment {
+      color: var(--ink-dim);
+    }
 
-.tag {
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  padding: 0.25em 0.7em;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  color: var(--ink-dim);
-}
+    /* ===== TABLES ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: var(--step--1);
+    }
 
-.tag.accent { color: var(--accent); border-color: var(--accent-dim); background: var(--accent-glow); }
-.tag.accent2 { color: var(--accent-2); border-color: rgba(111,155,176,0.4); background: rgba(111,155,176,0.1); }
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
 
-.card h3 {
-  font-family: "Zen Old Mincho", serif;
-  font-weight: 700;
-  font-size: var(--step-1);
-  line-height: 1.5;
-}
+    th {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      background: var(--surface);
+    }
 
-.card p {
-  color: var(--ink-dim);
-  font-size: var(--step--1);
-  line-height: 1.8;
-  flex-grow: 1;
-}
+    td {
+      color: var(--ink-muted);
+    }
 
-.card .open {
-  font-size: var(--step--1);
-  color: var(--accent);
-  letter-spacing: 0.05em;
-}
+    td:first-child {
+      font-family: "JetBrains Mono", monospace;
+      color: var(--ink);
+    }
 
-/* ===== FOOTER ===== */
-footer {
-  border-top: 1px solid var(--line);
-  padding: 2.5rem var(--space) 3rem;
-  text-align: center;
-  color: var(--ink-dim);
-  font-size: var(--step--1);
-}
+    tr:hover td {
+      background: var(--accent-weak);
+    }
 
-footer a {
-  color: var(--ink-dim);
-  text-decoration: underline;
-  text-decoration-color: var(--line-strong);
-  text-underline-offset: 3px;
-}
+    /* ===== BUTTONS / LINKS ===== */
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
 
-footer a:hover { color: var(--accent); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--1);
+      padding: 0.875rem 1.75rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      background: transparent;
+      cursor: pointer;
+    }
 
-footer .footer-links {
-  display: flex;
-  gap: 1.25rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-</style>
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-secondary {
+      border-color: var(--line-strong);
+      color: var(--ink-muted);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--ink);
+      color: var(--ink);
+      background: transparent;
+    }
+
+    /* ===== FULL BLEED BAND ===== */
+    .band {
+      background: var(--surface);
+      margin: calc(var(--space) * 2) calc(var(--space) * -1);
+      padding: calc(var(--space) * 2) var(--space);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .band-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ===== TAGS ===== */
+    .tag {
+      display: inline-block;
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      padding: 0.2em 0.7em;
+      border: 1px solid var(--line);
+      color: var(--ink-dim);
+      margin: 0 0.3rem 0.5rem 0;
+    }
+
+    .tag-accent {
+      border-color: var(--accent-mid);
+      color: var(--accent);
+      background: var(--accent-weak);
+    }
+
+    /* ===== PILLARS GRID ===== */
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin: 1.5rem 0;
+    }
+
+    .pillar {
+      background: var(--surface);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .pillar-symbol {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step-3);
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .pillar-name {
+      font-family: "Shippori Mincho", "Noto Serif JP", serif;
+      font-size: var(--step-0);
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .pillar-desc {
+      font-size: var(--step--1);
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+
+    /* ===== COMPARE TABLE ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: var(--step--1);
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .compare-table th {
+      font-family: "JetBrains Mono", monospace;
+      font-size: var(--step--2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      background: var(--surface);
+      width: 50%;
+    }
+
+    .compare-table td {
+      color: var(--ink-muted);
+      vertical-align: top;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: calc(var(--space) * 2) var(--space);
+      text-align: center;
+      color: var(--ink-dim);
+      font-size: var(--step--1);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      body { background: #fff; color: #000; }
+      .hero { min-height: auto; padding: 3rem 1rem; }
+      .hero-scroll { display: none; }
+      .btn-group { display: none; }
+      .card, .formula-block { border: 1px solid #ccc; }
+    }
+
+    @page { size: A4; margin: 18mm; }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 480px) {
+      .geo-box { width: 32px; height: 32px; font-size: 10px; }
+      .btn-group { flex-direction: column; }
+      .btn { justify-content: center; }
+      .pillars { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
+<!-- HERO -->
 <header class="hero">
-  <div class="hero-content">
-    <span class="hero-kicker">cnt34 &nbsp;/&nbsp; Code Name Type 34</span>
-    <h1>三四式 <span>TTT理論</span></h1>
-    <p class="hero-sub">位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ</p>
-    <div class="hero-formula">P = xX + yY + zZ + uU + vV + wW</div>
-    <div class="hero-links">
-      <a href="https://github.com/kiki054-n/cnt34" target="_blank" rel="noopener">GitHub リポジトリ</a>
-      <a href="README.md">README（日本語）</a>
-      <a href="README_en.md">README (English)</a>
-    </div>
+  <div class="hero-badge">Open-Source Research Initiative</div>
+  <h1>
+    <span class="mono">CNT34</span><br>
+    三四式 / Tri-Tetra Theory
+  </h1>
+  <p class="hero-sub">
+    位置（3）と方向（4）がつむぐ、より良き世界へのオプンソー研究イニシアチブ
+  </p>
+  <div class="hero-formula">XYZ&pi; = 1&nbsp;&nbsp;&nbsp;OOO&pi; = 1</div>
+  <div class="geo-sig">
+    <div class="geo-box accent">3</div>
+    <div class="geo-box">位</div>
+    <div class="geo-box">置</div>
+    <div class="geo-plus">+</div>
+    <div class="geo-box accent">4</div>
+    <div class="geo-box">方</div>
+    <div class="geo-box">向</div>
+    <div class="geo-plus">=</div>
+    <div class="geo-box accent">7</div>
+    <div class="geo-box">調</div>
+    <div class="geo-box">和</div>
   </div>
+  <div class="hero-scroll">SCROLL</div>
 </header>
 
-<main class="wrap">
+<main>
 
-  <section class="list">
-    <div class="section-head">
-      <span class="label">Introduction</span>
-      <h2>紹介ページ</h2>
-      <p>CNT34（三四式）の全体像、導出の要点、参加方法までをまとめた紹介ページ。</p>
+<!-- ABOUT CNT34 -->
+<section class="reveal">
+  <div class="section-label">About CNT34</div>
+  <h2>すべての人が「世界を変える鍵」を持っている</h2>
+  <p>
+    <strong>CNT34（Code Name Type 34 / 三四式）</strong>は、GitHub上で公開されたオープンソース研究リポジトリです。
+    トリテトラ理論（Tri-Tetra Theory, TTT）を中核とし、位置の3次元と方向の4次元が相互作用することで、
+    宇宙の創生から素粒子、生命、社会に至るまでを一つの幾何学的フレームワークで捉えようとする試みです。
+  </p>
+  <p>
+    この理論は塩尻のワイナリーで発想され、双極原理から出発して、正多面体幾何学を通じて
+    Higgs質量、陽子・電子質量比、標準模型の粒子数と世代構造、さらには宇宙の組成までを
+    導き出すことを目指しています。
+  </p>
+
+  <div class="card card-accent">
+    <h4>Repository</h4>
+    <p style="font-family: JetBrains Mono, monospace; font-size: var(--step--1);">
+      github.com/kiki054-n/cnt34
+    </p>
+    <p>
+      License: MIT / CC BY 4.0 &nbsp;|&nbsp; 
+      DOI: 10.5281/zenodo.19704117 &nbsp;|&nbsp;
+      Author: 川上真潔 (ORCID: 0009-0009-2972-6511)
+    </p>
+  </div>
+
+  <div class="btn-group">
+    <a href="https://github.com/kiki054-n/cnt34" class="btn" target="_blank" rel="noopener">GitHub を開く &rarr;</a>
+    <a href="https://doi.org/10.5281/zenodo.19704117" class="btn btn-secondary" target="_blank" rel="noopener">Zenodo DOI</a>
+  </div>
+</section>
+
+<!-- DERIVATION OVERVIEW -->
+<section class="reveal">
+  <div class="section-label">Derivation</div>
+  <h2>TTT の導出方法 — 一本の線</h2>
+  <p>
+    トリテトラ理論は「双極零公理」という3つの公理から出発し、
+    正多面体の頂点数を基礎語彙として、外部定数を一切導入せずに
+    物法則を幾何学的に導出します。
+  </p>
+
+  <h3>01. 双極零公理 — 出発点</h3>
+  <div class="formula-block">
+XY = 1 &nbsp;&nbsp;（双極零公理 / Bipolar Zero）<br>
+&Sigma;V = 0 &nbsp;&nbsp;（頂点保存 / Vertex Conservation）<br>
+JIK = &minus;1 &nbsp;&nbsp;（三軸反転 / Triple Inversion）
+  </div>
+  <p>
+    拡散（X）と収束（Y）の積が1で存在する。正多面体の頂点総はゼロ配位。
+    三軸の反転が &minus;1 で自己否定しつつ保存する。
+    この3つが唯一の出発点です。
+  </p>
+
+  <h3>02. 三倍増殖則 — T<sub>n</sub> = 2 &times; 3<sup>n&minus;1</sup></h3>
+  <div class="formula-block">
+T<sub>1</sub> = 2 &nbsp;&nbsp; T<sub>2</sub> = 6 &nbsp;&nbsp; T<sub>3</sub> = 18 &nbsp;&nbsp; T<sub>4</sub> = 54 &nbsp;&nbsp; T<sub>5</sub> = 162 &nbsp;&nbsp; T<sub>6</sub> = 486 ...
+  </div>
+  <p>
+    2は陰陽の珠、3は面・線・点の三極。この増殖則は「珠が面を持ち、面が粒子を産む」
+    過程を記述します。n = 3 で 18 = 17 + 1 となり、標準模型の17粒子が必然化されます。
+  </p>
+
+  <h3>03. 125 + 32/128 = 125.25 GeV — Higgs質量</h3>
+  <div class="formula-block">
+125 = 5&sup3; &nbsp;&nbsp;（立方世代 / ダークエネルギー）<br>
+32 = 12 + 20 = V<sub>12</sub> + V<sub>20</sub> &nbsp;&nbsp;（双対和 / Higgs補正分子）<br>
+128 = 4 &times; 32 = 2&sup7; &nbsp;&nbsp;（正四面体が唯一許す7乗）<br>
+<span class="comment">125 + 32/128 = 125.25 GeV &nbsp;&rarr;&nbsp; 実験値と 0.00% 一致</span>
+  </div>
+  <p>
+    立方数 5&sup3; = 125 に、正十二面体（12）と正二十面体（20の双対和 32 を
+    正四面体由来の 128 で補正する。これが Higgs 質量の幾何学的起源です。
+  </p>
+
+  <h3>04. 37 = 36 + 1 — 質量確定閾値</h3>
+  <div class="formula-block">
+36 = 12 + 12 + 12 = uud &nbsp;&nbsp;（陽子を構成する3クォーク）<br>
++1 = 軌道を閉じ質量を確定させる双極珠<br>
+37 = 36 + 1 &nbsp;&nbsp;<span class="comment">— 36個の面エネルギー1つの軌道閉じて初めて質量を持つ</span>
+  </div>
+  <p>
+    36は高度合成数、37は素数。質量は合成数36が素数37へ跳ぶ瞬間に確定します。
+    そしてこの 36 の核心 12 + 20 = 32 は、Higgs補正項の分子と完全一致します。
+  </p>
+</section>
+
+<!-- KEY RESULTS TABLE -->
+<section class="reveal">
+  <div class="section-label">Key Results</div>
+  <h2>主要な導出結果</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>対象</th>
+        <th>導出式</th>
+        <th>一致度</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Higgs 質量</td>
+        <td>125 + 32/128 = 125.25 GeV</td>
+        <td>0.00% ★★★</td>
+      </tr>
+      <tr>
+        <td>p/e 質量比</td>
+        <td>108 &times; 17 + 32/209 = 1836.15311</td>
+        <td>小数2桁一致 ★★</td>
+      </tr>
+      <tr>
+        <td>標準模型粒子数</td>
+        <td>T<sub>3</sub> = 18 = 17 + 1</td>
+        <td>完全一致 ★★★</td>
+      </tr>
+      <tr>
+        <td>3世代構造</td>
+        <td>108 = 36 &times; 3</td>
+        <td>完全一致 ★★★</td>
+      </tr>
+      <tr>
+        <td>ダークエネルギー</td>
+        <td>110/162 = 67.9%</td>
+        <td>Planck観測と Δ0.4% ★</td>
+      </tr>
+      <tr>
+        <td>次世代予言</td>
+        <td>T<sub>6</sub> = 486 GeV</td>
+        <td>LHC検証可能 ★★★</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="reveal">
+  <div class="section-label">Philosophy</div>
+  <h2>なぜ「三四式」なのか</h2>
+  <p>
+    「三四式」という名前は、日本の兵器命名法から来ています。
+    明治〜昭和初期、日本軍は制式採用年の元号や皇紀の下2桁を「式」に冠して
+    兵器を命名しました（三八式歩兵銃、零式艦上戦闘機など）。
+  </p>
+  <p>
+    しかし CNT34 の「三四式」は、Tri-Tetra Theory の頭文字 TTT と、
+    理論の中核「位置3 + 方向4」を縮約した象徴的名称です。
+    兵器が「対立と殺戮」の象徴であったように、
+    三四式は「接続と調和」の象徴を目指します。
+  </p>
+  <p>
+    5/7/4 モデル、7/9 モデル、そして XYZ&pi; = 1、OOO&pi; = 1。
+    これらは「差異（位置）があっても、方向を変えれば統合できる」という
+    幾何学的な平和論です。国籍も宗教も言語も、すべては
+    「5の立方体が12の辺で自分を閉じようとする」過程で生じた
+    余白の配置の違いに過ぎない。
+  </p>
+
+  <div class="card">
+    <h4>Core Message</h4>
+    <p>
+      「一人で見ようとする夢はただの夢。みんなで見ようとする夢は現実となる。」<br>
+      世界をより良く、より美しくするための「三四式」の探求に、ぜひご参加ください。
+    </p>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- NEW SECTION: 日本創生の4神と、社会のテンセグリティ -->
+<!-- ============================================ -->
+<section class="reveal">
+  <div class="section-label">Culture &amp; Society</div>
+  <h2>日本創生の4神と、社会のテンセグリティ</h2>
+
+  <p>
+    <strong>「草木国土悉皆成仏」</strong>。すべてのものに魂が宿るという思想は、
+    まさに <strong>OOO&pi; = 1</strong> の日本語的表現です。
+    草木（植物の位置と方向）、国土（大地の位置と方向）、
+    悉皆（すべてが）、成仏（&pi;を経て1に還る）。
+    浄土真宗の教えでありながら、存在するものすべてが循環（&pi;）を経て統合（1）に至る、
+    TTTの幾何学と驚くほど重なる宇宙観です。
+  </p>
+
+  <h3>縄文の一万年 — 王のいない時間</h3>
+  <p>
+    日本文化の根は、長い縄文時代に自然と共にはぐくまれたものにあります。
+    土器に目を描き、縄を巻き、自然と共に生きた人々は、
+    支配と服従のピラミッドではなく、<strong>4方向の循環する共同体</strong>を知っていました。
+    一極の王が君臨するのではなく、四神が四方を守る。
+    それが日本創生の文化です。
+  </p>
+
+  <h3>四神 — 4方向は「支配する者」ではなく「守る方位」</h3>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-symbol">東</div>
+      <div class="pillar-name">青龍</div>
+      <div class="pillar-desc">春・発生・木<br>「開く」方向</div>
     </div>
-    <div class="grid">
-
-      <a class="card" href="CNT34_TriTetra_Introduction.html">
-        <div class="card-tags">
-          <span class="tag accent">紹介</span>
-          <span class="tag">日本語</span>
-        </div>
-        <h3>CNT34 — 三四式 / Tri-Tetra Theory</h3>
-        <p>双極零公理から出発し、正多面体幾何学を通じてHiggs質量や標準模型の粒子数などを導出する試みの全体像と、参加方法をまとめた紹介ページ。</p>
-        <span class="open">開く →</span>
-      </a>
-
+    <div class="pillar">
+      <div class="pillar-symbol">西</div>
+      <div class="pillar-name">白虎</div>
+      <div class="pillar-desc">秋・収穫・金<br>「守る」方向</div>
     </div>
-  </section>
-
-  <section class="list">
-    <div class="section-head">
-      <span class="label">Theory Simulations</span>
-      <h2>理論シミュレーション</h2>
-      <p>三四式（TTT理論）の中核となる、双極の顕在化を扱うインタラクティブなシミュレーション。</p>
+    <div class="pillar">
+      <div class="pillar-symbol">南</div>
+      <div class="pillar-name">朱雀</div>
+      <div class="pillar-desc">夏・成長・火<br>「織る」方向</div>
     </div>
-    <div class="grid">
-
-      <a class="card" href="TTT_theory_simulation.html">
-        <div class="card-tags">
-          <span class="tag accent">理論</span>
-          <span class="tag">日本語</span>
-        </div>
-        <h3>三四式 TTT理論 — 双双極の顕在化シミュレーション</h3>
-        <p>位置ベクトルと配向ベクトルの相互作用から、対称性の破れと自律的な構造形成が立ち上がる様子を可視化した中心的なシミュレーション。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card" href="TTT_theory_simulation_en.html">
-        <div class="card-tags">
-          <span class="tag accent">Theory</span>
-          <span class="tag">English</span>
-        </div>
-        <h3>Triple-Tetra Theory (TTT) — The Manifestation of Dual Poles</h3>
-        <p>English edition of the core TTT simulation, visualizing how the interaction of position and orientation vectors gives rise to symmetry breaking and self-organized structure.</p>
-        <span class="open">Open →</span>
-      </a>
-
-      <a class="card" href="TTT_4pillars_repository.html">
-        <div class="card-tags">
-          <span class="tag accent">理論</span>
-          <span class="tag">日本語</span>
-        </div>
-        <h3>三式 TTT — 4つの柱と感謝の循環</h3>
-        <p>創造・支援・統治・発明という4つの柱と、それらの間を循環する感謝のプロトコルについてまとめたリファレンスページ。</p>
-        <span class="open">開く →</span>
-      </a>
-
+    <div class="pillar">
+      <div class="pillar-symbol">北</div>
+      <div class="pillar-name">玄武</div>
+      <div class="pillar-desc">冬・潜藏・水<br>「統合する」方向</div>
     </div>
-  </section>
+  </div>
+  <p>
+    四神は中心に王を置くのではなく、<strong>周縁の4方向が互いに引き合うことで空間を安定させる</strong>。
+    これはまさに社会のテンセグリティ構造です。
+    柱同士が直接触れていなくても、張力のネットワークで空間を保ちます。
+  </p>
 
-  <section class="list">
-    <div class="section-head">
-      <span class="label">Governance</span>
-      <h2>ガバナンス・モデル</h2>
-      <p>三四式を社会制度に応用した章。3権＋国民主権＋AIからなる「第5の自律体」を扱うデモ。</p>
+  <h3>「引き分け」は敗北ではなく、均衡の勝利</h3>
+  <p>
+    4つに分けるといつも引き分けになる。これは日本文化の核心です。
+  </p>
+  <div class="formula-block">
+男 &harr; 女 &nbsp;&nbsp;（どちらが上でもない、双極XY = 1）<br>
+子供 &harr; 大人 &nbsp;&nbsp;（どちらが正しいでもない、循環&pi;の異なる位相）<br>
+4神 &harr; 4神 &nbsp;&nbsp;（どれが上でもなく、4方向が互いに補完する）
+  </div>
+  <p>
+    西洋の論理では「引き分け」は決着がつかないことです。
+    しかし日本の文化では、4つに分けたときの「引き分け」は、
+    <strong>どの極も他を圧倒しない調和の証</strong>です。
+    JIK = &minus;1 の文化論的解釈。三軸が反転しながらも保存する。
+    どの軸も「絶対」にならない。引き分けは停滞ではなく、
+    双極間の引き合いが機能している状態です。
+  </p>
+
+  <h3>西洋の「1の覇権」と日本の「4の調和」</h3>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>西洋のモデル</th>
+        <th>日本のモデル</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>王（1人）が頂点に君臨</td>
+        <td>四神（4方向）が周縁を守る</td>
+      </tr>
+      <tr>
+        <td>支配 &rarr; 反乱 &rarr; 支配 の繰り返し</td>
+        <td>引き分けの均衡が続く</td>
+      </tr>
+      <tr>
+        <td>中心からの放射状の力（圧力）</td>
+        <td>周縁からの引き合い（張力）</td>
+      </tr>
+      <tr>
+        <td>神は人間の外にいる</td>
+        <td>草木国土悉皆に魂が宿る</td>
+      </tr>
+      <tr>
+        <td>歴史は「勝者の記録」</td>
+        <td>時間は「循環する季節と祭祀」</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+    TTTで言えば、西洋は<strong>「位置の3が固定され、方向の4が1つに収束する」</strong>モデルです。
+    頂点の1が方向を決定する。しかし日本は
+    <strong>「方向の4が互いに引き合い、中心を空にしたまま空間を保つ」</strong>モデルです。
+    中心に力の源があるのではなく、周縁の4方向の張力が空間を生み出す。
+    これがテンセグリティ構造の文化論です。
+  </p>
+
+  <h3>感謝は双極間の引き合い — 構造を安定させる張力</h3>
+  <p>
+    トリテトラ理論では、空間には「位置（3）」と「方向（4）」があります。
+    人の社会においても、人は「どこにいるか（位置）」ではなく、
+    <strong>「どちらを向いているか（方向）」</strong>によって役割が決まります。
+  </p>
+  <p>
+    4つの方向（u, v, w と統合軸 &pi;）は、社会の4つの役割の柱となります。
+    そしてこれらの柱の間を流れるエネルギーが<strong>「感謝」</strong>です。
+    感謝は双極間の引き合いであり、構造を安定させる張力そのものです。
+  </p>
+  <div class="formula-block">
+4方向 &times; 感謝の循環 = 社会のテンセグリティ
+  </div>
+  <p>
+    感謝がない社会は、柱がぶつかり合う「圧力だけの構造」になります。
+    感謝がある社会は、柱が離れていても引き合う「張力の構造」になります。
+    圧力だけの構造は崩れやすい。張力の構造は、風が吹いても揺らぎながら戻ってくる。
+    感謝は与えたり受けたりする「物」ではなく、XY = 1 の双極原理そのものです。
+  </p>
+
+  <h3>いま、どう生きるか</h3>
+  <p>
+    世界が直面しているのは、まさに「圧力の社会」が限界を迎えていることです。
+    一極支配が破綻し、対立が激化し、どの「王」も世界を統べられなくなった。
+    このとき必要なのは、新しい「王」ではなく、
+    <strong>4方向が引き合う社会のテンセグリティ</strong>です。
+  </p>
+  <p>
+    男と女、子供と大人、自と人間、伝統と革新。
+    これらを「引き分け」として受け入れ、感謝という張力で結び直す生き方。
+    縄文の人々が自然と共に一万年も生き延びたのは、支配ではなく調和の技術を持っていたからです。
+    それが「草木国土悉皆成仏」として仏教に継承され、四神として神道に継承され、
+    いま「三四式」として再び幾何学の言語で蘇ろうとしている。
+  </p>
+
+  <div class="card card-accent">
+    <h4>From Jomon to TTT</h4>
+    <p>
+      縄文の土器の目は、四神の方位は、悉皆成仏の循環は、
+      すべて同じ幾何学の異なる位相に過ぎない。
+      日本創生の4神は、TTTの4方向そのものだった。
+    </p>
+  </div>
+</section>
+
+<!-- PARTICIPATE -->
+<section class="reveal">
+  <div class="section-label">Participate</div>
+  <h2>参加する方法</h2>
+  <p>
+    CNT34 は完結した理論はなく、ここからがスタートです。
+    あなたの専門知識やアイデアが、この理論を次の段階に引き上げます。
+  </p>
+
+  <div style="display: grid; gap: 1rem; margin: 1.5rem 0;">
+    <div class="card">
+      <h4>数学・物理</h4>
+      <p>数式のアプローチや四元数・多次元幾何との厳密な定式化。反証も大歓迎です。</p>
     </div>
-    <div class="grid">
-
-      <a class="card" href="docs/Governance/Governance-5w1h.html">
-        <div class="card-tags">
-          <span class="tag accent2">ガバナンス</span>
-          <span class="tag">日本語</span>
-        </div>
-        <h3>検証可能な合意細胞 — 5W1Hインタラクティブデモ</h3>
-        <p>3権・国民主権・AIが結合してできる「検証可能な合意細胞」の、膜の誕生と分裂を可視化したデモンストレーション。</p>
-        <span class="open">開く →</span>
-      </a>
-
+    <div class="card">
+      <h4>プログラマー</h4>
+      <p>Python や Web3D（Three.js）での「5/7/4モデル」の可視化シミュレーションコード作成。</p>
     </div>
-  </section>
-
-  <section class="list">
-    <div class="section-head">
-      <span class="label">Theory Documents</span>
-      <h2>理論ドキュメント</h2>
-      <p>双極（2）→ 位置（3）→ 方向（4）→ 顕在化した自律体（5）という数の並びを、5本のドキュメントで1つずつ辿ります。</p>
+    <div class="card">
+      <h4>思想・アート・詩</h4>
+      <p>このモデルがもたらす新しい世界観や生命論の議論・文書化。境界を越える言語を紡ぐ。</p>
     </div>
-    <div class="grid grid-compact">
-
-      <a class="card card-compact" href="theory/00-dual-pole.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>双極の原理</h3>
-        <p>なぜ「1」ではなく「2」から始まるのか。00という最小の区別から、次元と手のひらの幾何学が生まれる。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="theory/XYZ-pi.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>空間単位系</h3>
-        <p>位置の3軸X, Y, Zと、それを閉じる回転軸πによる単位条件 XYZπ=1。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="theory/OOO-pi.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>エネルギー単位系</h3>
-        <p>3つのスピンO, O, Oと回転軸πによる単位条件 OOOπ=1。4つの柱のエネルギーと対応する。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="theory/euler-connection.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>オイラー公式との接続</h3>
-        <p>e^(iπ)=-1を双極の誕生、e^(i・2π)=1を顕在化の周期として読み解く、数学的な裏付け。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="theory/cell-division.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>細胞分裂の幾何学</h3>
-        <p>メタン分子（5→15→30→15+15）と「2・3・4・5」という数の並びで、理論全体を閉じる。</p>
-        <span class="open">開く →</span>
-      </a>
-
+    <div class="card">
+      <h4>教育者・平和活動家</h4>
+      <p>「位置と方向」のワークショップ設計。子どもから専門家まで、誰もが「鍵」を持てる教育プログラム。</p>
     </div>
-  </section>
+  </div>
 
-  <section class="list">
-    <div class="section-head">
-      <span class="label">Four Pillars</span>
-      <h2>4つの柱と感謝の循環</h2>
-      <p>三四式を人の役割・労働に適用した章。図解版は <a href="TTT_4pillars_repository.html">TTT_4pillars_repository.html</a> をご覧ください。</p>
-    </div>
-    <div class="grid grid-compact">
+  <div class="btn-group">
+    <a href="https://github.com/kiki054-n/cnt34" class="btn" target="_blank" rel="noopener">GitHub リポジトリ &rarr;</a>
+    <a href="https://doi.org/10.5281/zenodo.21271597" class="btn btn-secondary" target="_blank" rel="noopener">論文 DOI</a>
+    <a href="https://orcid.org/0009-0009-2972-6511" class="btn btn-secondary" target="_blank" rel="noopener">ORCID</a>
+  </div>
+</section>
 
-      <a class="card card-compact" href="docs/pillars/pillar-01-create.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>第1柱・作る労働</h3>
-        <p>双極の間に線を張り、形を与える。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="docs/pillars/pillar-02-support.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>第2柱・支える労働</h3>
-        <p>傾いた極を立て直す。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="docs/pillars/pillar-03-govern.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>第3柱・管理労働</h3>
-        <p>4つの柱のバランスを見渡し、全体のテンセグリティを保つ。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="docs/pillars/pillar-04-invent.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>第4柱・創造労働</h3>
-        <p>既存の双極に新しい方向を与え、社会の回転軸を更新する。</p>
-        <span class="open">開く →</span>
-      </a>
-
-      <a class="card card-compact" href="docs/pillars/gratitude.md">
-        <div class="card-tags">
-          <span class="tag">MD</span>
-        </div>
-        <h3>感謝の循環プロトコル</h3>
-        <p>4柱間を流れるエネルギーとしての感謝。</p>
-        <span class="open">開く →</span>
-      </a>
-
-    </div>
-  </section>
+<!-- TAGS -->
+<section class="reveal" style="text-align: center;">
+  <div style="margin-top: 1rem;">
+    <span class="tag tag-accent">Higgs 125.25 GeV</span>
+    <span class="tag">p/e 1836.15</span>
+    <span class="tag tag-accent">SM 17 particles</span>
+    <span class="tag">3 Generations</span>
+    <span class="tag tag-accent">T<sub>n</sub> = 2&times;3<sup>n&minus;1</sup></span>
+    <span class="tag">37 = 36 + 1</span>
+    <span class="tag tag-accent">486 GeV Prediction</span>
+    <span class="tag">XYZ&pi; = 1</span>
+    <span class="tag">Open Source</span>
+    <span class="tag tag-accent">World Peace</span>
+    <span class="tag">四神</span>
+    <span class="tag tag-accent">悉皆成仏</span>
+    <span class="tag">社会のテンセグリティ</span>
+  </div>
+</section>
 
 </main>
 
 <footer>
-  <div class="footer-links">
-    <a href="https://github.com/kiki054-n/cnt34" target="_blank" rel="noopener">GitHub</a>
-    <a href="docs/Governance/governance.md">思想の核（governance.md）</a>
-    <a href="docs/Governance/5W1H.md">実装設計図（5W1H.md）</a>
-    <a href="https://doi.org/10.5281/zenodo.19704117" target="_blank" rel="noopener">DOI (Zenodo)</a>
-  </div>
-  <div>© cnt34 — 川上真潔 &nbsp;|&nbsp; Code: MIT License &nbsp;/&nbsp; Content: CC BY-NC-SA 4.0</div>
+  <p>
+    CNT34 / Tri-Tetra Theory &mdash; 川上真潔<br>
+    <a href="https://github.com/kiki054-n/cnt34" target="_blank" rel="noopener">github.com/kiki054-n/cnt34</a> &nbsp;|&nbsp;
+    DOI: <a href="https://doi.org/10.5281/zenodo.19704117" target="_blank" rel="noopener">10.5281/zenodo.19704117</a> &nbsp;|&nbsp;
+    <a href="https://orcid.org/0009-0009-2972-6511" target="_blank" rel="noopener">ORCID</a>
+  </p>
+  <p style="margin-top: 1rem; font-size: var(--step--2); color: var(--ink-dim);">
+    位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ
+  </p>
 </footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
