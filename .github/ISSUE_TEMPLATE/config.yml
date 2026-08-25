@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+ contact_links:
+   - name: TTT理論について学ぶ
+     url: https://github.com/kiki054-n/cnt34/blob/main/docs/theory/README.md
+     about: 三四式（TTT理論）の基本概念についてはこちら
+   - name: 感謝ログを見る
+     url: https://github.com/kiki054-n/cnt34/tree/main/contrib/gratitude-log
+     about: これまでに送られた感謝の記録を閲覧する

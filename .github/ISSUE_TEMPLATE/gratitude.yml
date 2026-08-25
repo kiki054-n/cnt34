@@ -1,0 +1,84 @@
+name: 感謝を送る
+ description: 他の柱の貢献に感謝を送る
+title: "[Gratitude] 〇〇柱の□□さんへ"
+labels: ["gratitude"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 感謝の循環
+        トリテトラ理論において、4つの柱の間を流れる感謝は、社会のテンセグリティ構造を安定させるエネルギーです。
+        具体的な行為と、それがもたらした還流を記述してください。
+
+  - type: dropdown
+    id: from-pillar
+    attributes:
+      label: 送り元の柱
+      description: あなたが所属する柱または感謝を送る立場の柱）
+      options:
+        - 第1柱・作る労働（農業・工業・サービス）
+        - 第2柱・支える労働（介護・教育・医療）
+        - 第3柱・管理労働（管理職・公務・治安）
+        - 第4柱・創造労働（芸術・研究・思想）
+    validations:
+      required: true
+
+  - type: dropdown
+    id: to-pillar
+    attributes:
+      label: 送り先の柱
+      description: 感謝を送る相手の柱
+      options:
+        - 第1柱・作る労働（農業・工業・サービス）
+        - 第2柱・支える労働（介護・教育・医療）
+        - 第3柱・管理労働（管理職・公務・治安）
+        - 第4柱・創造労働（芸術・研究・思想）
+    validations:
+      required: true
+
+  - type: input
+    id: to-whom
+    attributes:
+      label: 感謝の相手（任意）
+      description: 個人名、団体名、または「すべての〇〇の方々」など
+      placeholder: "例：すべての農家の方々、〇〇病院の看護師さん、など"
+
+  - type: textarea
+    id: gratitude-message
+    attributes:
+      label: 感謝の言葉
+      description: 具体的な行為と、それがもたらした影響を記述してください
+      placeholder: |
+        例：
+        第1柱の農家の方々が作られたお米で、第2柱の介護現場で入所者の命を日々養っています。
+        その食のおかげで、私たちは安心して創造の軸を回すことができます。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: energy-type
+    attributes:
+      label: 還流の種類
+      description: この感謝に伴う還流の層を選んでください（複数選択可）
+      multiple: true
+      options:
+        - 物質的還流（食料、製品、サービスの提供など）
+        - 情報的還流（称賛、評価、記事の執筆など）
+        - 関係的還流（紹介、継続的な協力の約束など）
+
+  - type: textarea
+    id: energy-detail
+    attributes:
+      label: 還流の詳細（任意）
+      description: 具体的な還流行為があれば記述してください
+      placeholder: "例：地元農家の々に感謝の品を贈呈しました。"
+
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: 確認
+      options:
+        - label: この感謝は、虚偽ではなく、実際の労働と還流に基づいています
+          required: true
+        - label: 可能であれば、相手にもこの感謝を直接伝えます
+          required: false

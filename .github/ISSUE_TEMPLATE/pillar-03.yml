@@ -1,0 +1,60 @@
+name: 第3柱・管理労働
+ description: 管理職・公務・治安など「管理労働」に関する議論提案
+title: "[Pillar-03] "
+labels: ["pillar-03", "govern"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 第3柱・管理労働（Pillar of Governance）
+        社会の秩序、安全、調整、公正を維持し、4つの柱が調和して機能するための労働。
+        トリテトラ理論において、w軸（Z軸）のスピンに対応します。
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      options:
+        - プロジェクト提案
+        - 知見の共有
+        - 問い・議論
+        - 課題の報告
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 内容
+      description: 管理労働に関する提案、経験、問いを記述してください
+      placeholder: |
+        例：
+        4つの柱のバランスを「見える化」するダッシュボードの構想を提案します。
+        管理労働の役割は「支配」ではなく「風を読む」こと——
+        各柱のエネルギー蓄ネルギー蓄積と還流の状態を可視化し、崩壊前に調整を促すシステムです。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: 分野（任意）
+      multiple: true
+      options:
+        - 公共安全（警察・消防・自衛）
+        - 法と秩序（裁判・検察・法執行）
+        - 行政・公務
+        - 組織管理
+        - 危機管理
+        - その他
+
+  - type: textarea
+    id: ttt-connection
+    attributes:
+      label: TTT理論との接続（任意）
+      description: この内容がトリテトラ理論のどの概念と接続するか
+      placeholder: |
+        例：
+        - 「7節点4辺の構造が崩れないよう風を読む」ことの実装方法
+        - 管理エネルギー（O₃）の適正な還流の形

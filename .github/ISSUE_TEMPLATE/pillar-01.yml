@@ -1,0 +1,54 @@
+name: 第1柱・作る労働
+ description: 農業・工業・サービスなど「作る労働」に関する議論・提案
+title: "[Pillar-01] "
+labels: ["pillar-01", "create"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 第1柱・作る労働（Pillar of Creation）
+        大地の資源や素材を受け取り、命や生活に必要な形を与える方向の労働。
+        トリテトラ理論において、u軸（X軸）のスピンに対応します。
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      options:
+        - プロジェクト提案
+        - 知見の共有
+        - 問い・議論
+        - 課題の報告
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 内容
+      description: 作る労働に関する提案、経験、問いを記述してください
+      placeholder: |
+        例：
+        地元の農家と介護施設を直接つなぐ「食のテンセグリティ」プロジェクトを考えています。
+        作る労働（第1柱）と支える労働（第2柱）の間の感謝の循環を、
+        実際の物流と情報流で可視化する試みです。
+    validations:
+      required: true
+
+  - type: textarea
+    id: ttt-connection
+    attributes:
+      label: TTT理論との接続（任意）
+      description: この内容がトリテトラ理論のどの概念と接続するか
+      placeholder: |
+        例：
+        - 第1柱のエネルギー（O₁）が第2柱への「引き合い」として機能する構造
+        - 農産物の流通が「4辺の曲面」に相当する理由
+
+  - type: input
+    id: location
+    attributes:
+      label: 地域・場所（任意）
+      description: プロジェクトや経験の場所
+      placeholder: "例：〇〇県〇〇市、オンライン、など"

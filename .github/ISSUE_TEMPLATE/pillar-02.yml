@@ -1,0 +1,60 @@
+name: 第2柱・支える労働
+ description: 介護・教育・医療など「支える労働」に関する議論・提案
+title: "[Pillar-02] "
+labels: ["pillar-02", "support"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 第2柱・支える労働（Pillar of Support）
+        人の命、尊厳、可能性を直接守り、育み、回復させる方向の労働。
+        トリテトラ理論において、v軸（Y軸）のスピンに対応します。
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      options:
+        - プロジェクト提案
+        - 知見の共有
+        - 問い・議論
+        - 課題の報告
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 内容
+      description: 支える労働に関する提案、経験、問いを記述してください
+      placeholder: |
+        例：
+        介護現場で感じた「支える」ことの重さについて記録したいです。
+        作る労働からの食の支えがなければ、支える労働はただの棒になってしまう——
+        その「張力材」としての自覚と、他の柱への感謝の還流について考えています。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: 分野（任意）
+      multiple: true
+      options:
+        - 医療・保健
+        - 介護・福祉
+        - 教育・保育
+        - 心理・相談
+        - 地域・コミュニティ
+        - その他
+
+  - type: textarea
+    id: ttt-connection
+    attributes:
+      label: TTT理論との接続（任意）
+      description: この内容がトリテトラ理論のどの概念と接続するか
+      placeholder: |
+        例：
+        - ケアの量がエネルギー（O₂）として蓄積され、他の柱へ還流する造
+        - 「傾いた双極を立て直す」ことの幾何学的意味
