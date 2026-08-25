@@ -17,6 +17,14 @@
 
 > **〜 位置（3）と方向（4）がつむぐ、より良き世界へのオープンソース研究イニシアチブ 〜**
 
+## 📛 名前の由来 — 「三四式」とは
+
+明治〜昭和初期、日本軍は制式採用年（元号や皇紀の下2桁）を「式」に冠して兵器を命名しました（三八式歩兵銃、零式艦上戦闘機など）。
+
+CNT34の「三四式」は、この命名法を踏まえつつ、まったく別の意味を重ねています。Tri-Tetra Theory（TTT）の頭文字と、理論の中核「位置3 + 方向4」を縮約した象徴的な名称です。
+
+兵器が「対立と殺戮」の象徴であったように、三四式は「接続と調和」の象徴を目指します。この理論が、幾何学の言葉で描く平和論であり、日本文化に根ざした「中心のない調和」のモデルであることは、[`06_GOVERNANCE/four-gods-and-tensegrity.md`](06_GOVERNANCE/four-gods-and-tensegrity.md) で詳しく扱っています。
+
 ## 🌟 プロジェクトのビジョン
 
 自然界や生命、そして宇宙に宿る「幾何学的な調和」を読み解くための、新しい思考の枠組み——それが「三四式（TTT理論）」です。
@@ -91,6 +99,11 @@ $$P = xX + yY + zZ + uU + vV + wW$$
 三四式の数理的な土台となる文書群です。双極（2）→ 位置（3）→ 方向（4）→ 顕在化した自律体（5）という数の並びを、5本のドキュメントで1つずつ辿ります。
 
 - [`theory/00-dual-pole.md`](01_FOUNDATION/00-dual-pole.md) - 双極の原理 — なぜ「1」ではなく「2」から始まるのか。00という最小の区別から、次元と手のひらの幾何学が生まれる
+- [`theory/01-basic-equation.md`](01_FOUNDATION/01-basic-equation.md) - 基本方程式 — $P=xX+yY+zZ+rR+iI+jJ$ という6次元ベクトル方程式と、クォータニオンとの異同
+- [`theory/02-dynamic-model.md`](01_FOUNDATION/02-dynamic-model.md) - 動的記述 — 物理（$p$軌道）と精神（$d/f$軌道）の対応、テンソル積による時間発展方程式
+- [`theory/03-cosmic-sphere-model.md`](01_FOUNDATION/03-cosmic-sphere-model.md) - 全体均衡モデル — 境界づけられた球体と、零点収束の公理
+- [`theory/04-genesis-and-time.md`](01_FOUNDATION/04-genesis-and-time.md) - 時間の起源 — 双極の運動から事後的に定義される時間
+- [`theory/05-lattice-and-existence.md`](01_FOUNDATION/05-lattice-and-existence.md) - ラティスと存在 — $\pi$（軌道）がラティスの基であること
 - [`theory/XYZ-pi.md`](02_MATHEMATICS/XYZ-pi.md) - 空間単位系 — 位置の3軸 X, Y, Z と、それを閉じる回転軸πによる単位条件 $XYZ\pi=1$
 - [`theory/OOO-pi.md`](02_MATHEMATICS/OOO-pi.md) - エネルギー単位系 — 3つのスピン O, O, O と回転軸πによる単位条件 $OOO\pi=1$。4つの柱のエネルギーと対応する
 - [`theory/euler-connection.md`](02_MATHEMATICS/euler-connection.md) - オイラー公式との接続 — $e^{i\pi}=-1$ を双極の誕生、$e^{i\cdot2\pi}=1$ を顕在化の周期として読み解く
