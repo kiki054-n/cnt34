@@ -14,12 +14,13 @@
     overflow-x: hidden;
   }
 
-  /* 背景の星空 */
-  .stars {
+  /* 動く星空（宇宙を夢見る背景） */
+  canvas#space {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 50% 20%, #223355 0%, #050814 40%, #000 100%);
     z-index: -1;
   }
 
@@ -41,6 +42,7 @@
     transform: translateY(40px);
     transition: all 1.2s ease;
     letter-spacing: 0.12em;
+    text-shadow: 0 0 12px rgba(255,255,255,0.4);
   }
 
   .msg.visible {
@@ -57,6 +59,7 @@
     opacity: 0;
     transform: translateY(40px);
     transition: all 1.2s ease;
+    text-shadow: 0 0 8px rgba(255,255,255,0.3);
   }
 
   .explain.visible {
@@ -84,7 +87,8 @@
 
 <body>
 
-<div class="stars"></div>
+<!-- 宇宙を夢見ている星空 -->
+<canvas id="space"></canvas>
 
 <!-- 1行目 -->
 <section>
@@ -115,18 +119,51 @@
 </section>
 
 <script>
-  // スクロールで要素を浮かび上がらせる
+  /* スクロールで浮かび上がる */
   const targets = document.querySelectorAll('.msg, .explain');
-
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.3 });
-
   targets.forEach(t => observer.observe(t));
+
+  /* 宇宙を夢見る星空アニメーション */
+  const canvas = document.getElementById('space');
+  const ctx = canvas.getContext('2d');
+  let w, h, stars;
+
+  function init() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+
+    stars = Array.from({ length: 300 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      z: Math.random() * 2 + 0.2,
+      r: Math.random() * 1.2,
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "white";
+
+    stars.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      s.y += s.z;
+      if (s.y > h) s.y = 0;
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  init();
+  draw();
+  window.onresize = init;
 </script>
 
 </body>
