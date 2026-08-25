@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>FryFarawey 起動儀式 — Logo + Shepard Tone</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: "Noto Sans JP", system-ui, sans-serif;
+      color: #fff;
+    }
+    #stage {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    #logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 260px;
+      height: 260px;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    #code {
+      position: absolute;
+      bottom: 8%;
+      width: 100%;
+      text-align: center;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    #control {
+      position: absolute;
+      top: 6%;
+      width: 100%;
+      text-align: center;
+    }
+    #control button {
+      padding: 0.8rem 2.4rem;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #4fd1c5, #805ad5);
+      color: #000;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 宇宙を夢見る星空 -->
+  <canvas id="stage"></canvas>
+
+  <!-- 起動ボタン -->
+  <div id="control">
+    <button onclick="fryfaraweySync()">FryFarawey 起動儀式を開始</button>
+  </div>
+
+  <!-- FryFarawey ロゴ -->
+  <div id="logo">
+    <svg width="260" height="260" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+      <rect width="260" height="260" fill="#050505"/>
+      <defs>
+        <linearGradient id="blueMoment" x1="0" y1="260" x2="0" y2="0">
+          <stop offset="0%" stop-color="#050505"/>
+          <stop offset="40%" stop-color="#0a1a33"/>
+          <stop offset="100%" stop-color="#1e3a5f"/>
+        </linearGradient>
+      </defs>
+      <rect width="260" height="260" fill="url(#blueMoment)" opacity="0.55"/>
+      <g fill="#ffffff" opacity="0.7">
+        <circle cx="40" cy="60" r="1.2"/>
+        <circle cx="120" cy="30" r="1.4"/>
+        <circle cx="200" cy="80" r="1.1"/>
+        <circle cx="180" cy="150" r="1.3"/>
+        <circle cx="70" cy="180" r="1.0"/>
+        <circle cx="220" cy="200" r="1.2"/>
+      </g>
+      <line x1="90" y1="170" x2="190" y2="70"
+            stroke="#7fa8ff" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="190" cy="70" r="7" fill="#f6e05e"/>
+      <line x1="30" y1="200" x2="230" y2="200"
+            stroke="#ffffff" stroke-width="1" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <!-- 文明コード -->
+  <div id="code">
+    Open Source We Use.<br>
+    then Make Something.<br>
+    then fryfarawey The Future！
+  </div>
+
+  <script>
+    /* 星空アニメーション */
+    const canvas = document.getElementById('stage');
+    const ctx2d = canvas.getContext('2d');
+    let w, h, stars;
+
+    function initStars() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      stars = Array.from({ length: 400 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random() * 2 + 0.2,
+        r: Math.random() * 1.2,
+      }));
+    }
+
+    function drawStars() {
+      ctx2d.clearRect(0, 0, w, h);
+      ctx2d.fillStyle = "white";
+      stars.forEach(s => {
+        ctx2d.beginPath();
+        ctx2d.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx2d.fill();
+        s.y += s.z;
+        if (s.y > h) s.y = 0;
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    initStars();
+    drawStars();
+    window.onresize = initStars;
+
+    /* AudioContext */
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function tone(freq, start, duration, type="sine", volume=0.3) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = type;
+      osc.frequency.value = freq;
+
+      gain.gain.setValueAtTime(0, start);
+      gain.gain.linearRampToValueAtTime(volume, start + 0.2);
+      gain.gain.linearRampToValueAtTime(0, start + duration);
+
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + duration + 0.2);
+    }
+
+    /* シェパードトーン（無限上昇） */
+    function shepard(startTime, duration) {
+      const layers = 6;
+      for (let i = 0; i < layers; i++) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        const baseFreq = 110 * Math.pow(2, i);
+        osc.frequency.setValueAtTime(baseFreq, startTime);
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 2, startTime + duration);
+
+        gain.gain.setValueAtTime(0.05, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      }
+    }
+
+    /* FryFarawey 起動儀式（ロゴ＋音楽完全同期） */
+    function fryfaraweySync() {
+      const now = ctx.currentTime;
+
+      // 1. 静かな始まり（炭の黒）
+      tone(110, now + 0.5, 3.5, "sine", 0.05);
+
+      // 2. 星が灯る（自分磁億）
+      tone(880, now + 2.0, 0.8, "sine", 0.15);
+      tone(932, now + 3.0, 0.8, "sine", 0.15);
+
+      // 心拍のような低音
+      for (let i = 0; i < 4; i++) {
+        tone(60, now + 2.5 + i * 1.2, 0.4, "triangle", 0.12);
+      }
+
+      // 3. 宇宙が開く（ブルーモーメント）
+      tone(220, now + 5.0, 1.5, "sawtooth", 0.2);
+      tone(330, now + 6.0, 1.5, "sawtooth", 0.25);
+      tone(440, now + 7.0, 1.5, "sawtooth", 0.3);
+
+      // 4. シェパードトーン（無限上昇）
+      shepard(now + 6.0, 3.0);
+
+      // 5. ジャジャ〜ン（未来文明のゲート）
+      tone(523, now + 8.5, 2.0, "square", 0.35);
+      tone(659, now + 8.5, 2.0, "square", 0.35);
+      tone(784, now + 8.5, 2.0, "square", 0.35);
+
+      // ロゴ表示
+      setTimeout(() => {
+        document.getElementById("logo").style.opacity = 1;
+      }, 8500);
+
+      // 文明コード表示
+      setTimeout(() => {
+        document.getElementById("code").style.opacity = 1;
+      }, 10500);
+    }
+  </script>
+
+</body>
+</html>
