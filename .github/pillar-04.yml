@@ -1,0 +1,67 @@
+name: 第4柱・創造労働
+ description: 芸術・研究・思想など「創造労働」に関する議論・提案
+title: "[Pillar-04] "
+labels: ["pillar-04", "invent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 第4柱・創造労働（Pillar of Invention）
+        新しい視点、美、物語、知識、技術を生み出し、社会の方向性を更新する労働。
+        トリテトラ理論において、π（回転軸）そのものに対応します。
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: カテゴリ
+      options:
+        - プロジェクト提案
+        - 知見の共有
+        - 作品・表現の共有
+        - 問い・議論
+        - その他
+    validations:
+      required: true
+
+  - type: textarea
+    id: content
+    attributes:
+      label: 内容
+      description: 創造労働に関する提案、作品、経験、問いを記述してください
+      placeholder: |
+        例：
+        TTT理論を音楽で表現する試みを共有します。
+        4つの柱を4つの音階に応させ、感謝の循環を旋律の還流として作曲しました。
+        回転軸πを拍子の中心に置き、細胞分裂の瞬間をクライマックスとして設計しています。
+    validations:
+      required: true
+
+  - type: dropdown
+    id: field
+    attributes:
+      label: 分野（任意）
+      multiple: true
+      options:
+        - 芸術（絵画・彫刻・音楽・舞踊）
+        - 表現（演技・配信・パフォーマンス）
+        - 研究（科学・社会・人文）
+        - 設計（建築・ファッション・UI/UX）
+        - 発明・起業
+        - その他
+
+  - type: textarea
+    id: ttt-connection
+    attributes:
+      label: TTT理論との接続（任意）
+      description: この内容がトリテトラ理論のどの概念と接続するか
+      placeholder: |
+        例：
+        - 回転軸πの更新が、社会の「次の1」を生み出すプロセス
+        - 創造エネルギー（O₄）の他柱への還流の最適な形
+
+  - type: input
+    id: link
+    attributes:
+      label: 作品・資料へのリンク任意）
+      description: GitHubリポジトリ、Webサイト、SNSなど
+      placeholder: "https://..."
