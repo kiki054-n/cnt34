@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>FryFarawey — 未来へ飛べ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* 背景の星空 */
+  .stars {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 20%, #223355 0%, #050814 40%, #000 100%);
+    z-index: -1;
+  }
+
+  /* セクション共通 */
+  section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  /* 三行のメッセージ */
+  .msg {
+    font-size: 3rem;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.2s ease;
+    letter-spacing: 0.12em;
+  }
+
+  .msg.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 説明セクション */
+  .explain {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    line-height: 2;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1.2s ease;
+  }
+
+  .explain.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* CTA */
+  .cta {
+    margin-top: 3rem;
+  }
+
+  .cta button {
+    padding: 1rem 2.8rem;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, #4fd1c5, #805ad5);
+    color: #000;
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="stars"></div>
+
+<!-- 1行目 -->
+<section>
+  <div class="msg" id="msg1">未来へ飛べ。</div>
+</section>
+
+<!-- 2行目 -->
+<section>
+  <div class="msg" id="msg2">自分の方向へ飛べ。</div>
+</section>
+
+<!-- 3行目 -->
+<section>
+  <div class="msg" id="msg3">恐怖文明を離れ、未来文明へ向かえ。</div>
+</section>
+
+<!-- 説明セクション -->
+<section>
+  <div class="explain" id="exp">
+    FryFarawey は、CNT34 の未来文明起動コードです。<br>
+    あなたが自分の軸を知り、自分磁億を理解し、興味を燃料にし、学びを続けるとき、<br>
+    未来へ飛ぶ準備が整います。<br><br>
+    このページは、その「飛行の始まり」を視覚化したものです。
+    <div class="cta">
+      <button>FryFarawey を始動する</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // スクロールで要素を浮かび上がらせる
+  const targets = document.querySelectorAll('.msg, .explain');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  targets.forEach(t => observer.observe(t));
+</script>
+
+</body>
+</html>
