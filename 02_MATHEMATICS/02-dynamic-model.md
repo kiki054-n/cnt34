@@ -1,10 +1,10 @@
 # 動的記述 — 空間座標と高次元ダイナミクスによる総合状態記述
 
-*理論ドキュメント 02 — 物理空間（$X,Y,Z$）と精神世界（$R,I,J$）を統合した6自由度の動的モデル。[`01-basic-equation.md`](01-basic-equation.md) の静的記述に、時間発展を導入する。*
+*理論ドキュメント 02 — 物理空間（$X,Y,Z$）と精神世界（$R,I,J$）を統合した6自由度の動的モデル。[`01-basic-equation.md`](../01_FOUNDATION/01-basic-equation.md) の静的記述に、時間発展を導入する。*
 
 ## 0. 位置づけ
 
-[`01-basic-equation.md`](01-basic-equation.md) では、あらゆる存在 $P$ を6次元ベクトル方程式
+[`01-basic-equation.md`](../01_FOUNDATION/01-basic-equation.md) では、あらゆる存在 $P$ を6次元ベクトル方程式
 
 $$P = xX + yY + zZ + rR + iI + jJ$$
 
@@ -23,7 +23,7 @@ $X,Y,Z$（位置の3次元）を「物理世界・外的自由度」、$R,I,J$�
 | | $i I$ | 関係性・共感 | 他者との結びつき、共感、非線形な相互理解 |
 | | $j J$ | 倫理・全体貢献 | 全体への調和、エコシステムへの最適化、使命感 |
 
-これは [`01-basic-equation.md`](01-basic-equation.md) の1.2節で示した、$R,I,J$ が「クォータニオンの器を借りて中身は独自に定義する」ことの、具体的な中身にあたる。
+これは [`01-basic-equation.md`](../01_FOUNDATION/01-basic-equation.md) の1.2節で示した、$R,I,J$ が「クォータニオンの器を借りて中身は独自に定義する」ことの、具体的な中身にあたる。
 
 ### 自然界（原子軌道）とのアナロジー
 
@@ -80,8 +80,9 @@ $$\frac{d\mathbf{E}}{dt} = \left( \frac{\partial \mathbf{r}_{phys}}{\partial t} 
 
 | ドキュメント | 扱う範囲 |
 | :--- | :--- |
-| [`01-basic-equation.md`](01-basic-equation.md) | 静的記述 — $P=xX+yY+zZ+rR+iI+jJ$ とR,I,Jの表記の由来 |
-| [`00-dual-pole.md`](00-dual-pole.md) | 双極の原理 — なぜ2から始まるのか |
+| [`01-basic-equation.md`](../01_FOUNDATION/01-basic-equation.md) | 静的記述 — $P=xX+yY+zZ+rR+iI+jJ$ とR,I,Jの表記の由来 |
+| [`03-cosmic-sphere-model.md`](../03_PHYSICS/03-cosmic-sphere-model.md) | 全体均衡モデル — 境界づけられた球体、零点収束の公理 |
+| [`00-dual-pole.md`](../01_FOUNDATION/00-dual-pole.md) | 双極の原理 — なぜ2から始まるのか |
 | [`euler-connection.md`](../02_MATHEMATICS/euler-connection.md) | オイラーの公式との数学的な接続 |
 | [`OOO-pi.md`](../02_MATHEMATICS/OOO-pi.md) | エネルギー単位系 $OOO\pi=1$ |
 
