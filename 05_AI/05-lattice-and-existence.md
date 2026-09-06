@@ -4,7 +4,7 @@
 
 ## 0. 位置づけ
 
-[`04-genesis-and-time.md`](04-genesis-and-time.md) では、時間を「双極の運動から事後的に定義される派生量」とした。本稿ではその続きとして、$\text{dual-point-cosmology}$ の世代progression（1個の双極から2, 6, 18, 54, 162…と増えていく過程）を一旦区切り、その上で「空間がなぜ格子として区切られるのか」を、[`OOO-pi.md`](../02_MATHEMATICS/OOO-pi.md) のエネルギー単位系から導く。
+[`04-genesis-and-time.md`](../04_LIFE/04-genesis-and-time.md) では、時間を「双極の運動から事後的に定義される派生量」とした。本稿ではその続きとして、$\text{dual-point-cosmology}$ の世代progression（1個の双極から2, 6, 18, 54, 162…と増えていく過程）を一旦区切り、その上で「空間がなぜ格子として区切られるのか」を、[`OOO-pi.md`](../02_MATHEMATICS/OOO-pi.md) のエネルギー単位系から導く。
 
 ## 1. 空間の確定 — 第5世代、37の余剰
 
@@ -38,7 +38,7 @@ $O\pi O$ が存在し続けるためには、動かなければならない。�
 
 多数の $O$ がそれぞれの $\pi$（軌道）を持ち、それらがつながることで、ラティス（格子）ができる。**ラティスとは、$\pi$ の軌道網そのものである。**
 
-つながったラティスの中でだけ $O$ は動くことができ、動けるからこそ存在でき、存在できるからこそ双極（[`00-dual-pole.md`](00-dual-pole.md)）としての極も生まれる。
+つながったラティスの中でだけ $O$ は動くことができ、動けるからこそ存在でき、存在できるからこそ双極（[`00-dual-pole.md`](../01_FOUNDATION/00-dual-pole.md)）としての極も生まれる。
 
 まとめると、次の連鎖になる。
 
@@ -57,8 +57,8 @@ $$O\pi O\text{が存在する} \;\Rightarrow\; \text{動かなければならな
 | ドキュメント | 扱う範囲 |
 | :--- | :--- |
 | [`OOO-pi.md`](../02_MATHEMATICS/OOO-pi.md) | エネルギー単位系 $OOO\pi=1$ — O（スピン）とπ（回転軸）の定義 |
-| [`04-genesis-and-time.md`](04-genesis-and-time.md) | 時間の起源 — 運動から事後的に定義される時間 |
-| [`00-dual-pole.md`](00-dual-pole.md) | 双極の原理 — 極の誕生 |
+| [`04-genesis-and-time.md`](../04_LIFE/04-genesis-and-time.md) | 時間の起源 — 運動から事後的に定義される時間 |
+| [`00-dual-pole.md`](../01_FOUNDATION/00-dual-pole.md) | 双極の原理 — 極の誕生 |
 | [`dual-point-cosmology`](https://github.com/kiki054-n/dual-point-cosmology) | 宇宙創世の全31ステップ・世代ごとの数の由来 |
 
 ---
