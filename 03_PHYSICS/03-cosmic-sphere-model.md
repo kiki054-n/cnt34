@@ -1,10 +1,10 @@
 # 全体均衡モデル — 境界づけられた球体と零点収束
 
-*理論ドキュメント 03 — 物理と精神の6軸ベクトル場を、境界を持つ1つの球体として統合し、その内部での動的な均衡を記述する。[`02-dynamic-model.md`](02-dynamic-model.md) の動的記述を、系全体のスケールに拡張したもの。*
+*理論ドキュメント 03 — 物理と精神の6軸ベクトル場を、境界を持つ1つの球体として統合し、その内部での動的な均衡を記述する。[`02-dynamic-model.md`](../02_MATHEMATICS/02-dynamic-model.md) の動的記述を、系全体のスケールに拡張したもの。*
 
 ## 0. 位置づけ
 
-[`01-basic-equation.md`](01-basic-equation.md) で $P=xX+yY+zZ+rR+iI+jJ$ という静的記述を、[`02-dynamic-model.md`](02-dynamic-model.md) でその時間発展を扱った。本稿では視点をさらに広げ、無数の $P$（あるいは $\mathbf{E}$）が1つの閉じた系の中でどう釣り合うかを扱う。
+[`01-basic-equation.md`](../01_FOUNDATION/01-basic-equation.md) で $P=xX+yY+zZ+rR+iI+jJ$ という静的記述を、[`02-dynamic-model.md`](../02_MATHEMATICS/02-dynamic-model.md) でその時間発展を扱った。本稿では視点をさらに広げ、無数の $P$（あるいは $\mathbf{E}$）が1つの閉じた系の中でどう釣り合うかを扱う。
 
 本稿の内容は現時点でいくつかの点が未証明の**仮説・公理**であり、そのことを本文中で明示する。数学的な厳密化はまだ途上にある。
 
@@ -35,7 +35,7 @@ $$\sum \mathbf{V} = \mathbf{0}$$
 ```
 
 * **境界（Boundary）**: 外部と内部を分かち、動的なエネルギーや意識を球体内部に留める領域。
-* **内部空間（Interior）**: 物理的自由度（$p$ 軌道）と精神的自由度（$d/f$ 軌道）が交錯する、[`02-dynamic-model.md`](02-dynamic-model.md) の6次元構造。
+* **内部空間（Interior）**: 物理的自由度（$p$ 軌道）と精神的自由度（$d/f$ 軌道）が交錯する、[`02-dynamic-model.md`](../02_MATHEMATICS/02-dynamic-model.md) の6次元構造。
 * **中心・原点（Origin 0）**: すべての力・運動・情念が打ち消し合い、調和（零点）へと戻ると仮定する平衡点。
 
 ### 「$S^3$」という言葉について
@@ -46,13 +46,13 @@ $$\sum \mathbf{V} = \mathbf{0}$$
 
 ## 3. 6軸の対応
 
-軸の意味（$X,Y,Z$＝物理、$R,I,J$＝精神）と、$p$軌道／$d,f$軌道とのアナロジーは [`02-dynamic-model.md`](02-dynamic-model.md) の1章で定義した通りである。本稿ではこれをそのまま用いる。
+軸の意味（$X,Y,Z$＝物理、$R,I,J$＝精神）と、$p$軌道／$d,f$軌道とのアナロジーは [`02-dynamic-model.md`](../02_MATHEMATICS/02-dynamic-model.md) の1章で定義した通りである。本稿ではこれをそのまま用いる。
 
 ## 4. 運動方程式とゼロへの収束
 
 ### 4.1 全状態のテンソル表現
 
-物理項（[`02-dynamic-model.md`](02-dynamic-model.md) で定義した $\mathbf{r}_{phys}\otimes\boldsymbol{\omega}$）と精神項 $\mathbf{m}_{psych}=r\mathbf{R}+i\mathbf{I}+j\mathbf{J}$ を合わせて、系全体の状態を次のように表す。
+物理項（[`02-dynamic-model.md`](../02_MATHEMATICS/02-dynamic-model.md) で定義した $\mathbf{r}_{phys}\otimes\boldsymbol{\omega}$）と精神項 $\mathbf{m}_{psych}=r\mathbf{R}+i\mathbf{I}+j\mathbf{J}$ を合わせて、系全体の状態を次のように表す。
 
 $$\mathbf{E}_{total} = \underbrace{\left( \mathbf{r}_{phys} \otimes \boldsymbol{\omega} \right)}_{\text{物理行動 ⊗ 回転}} \;\oplus\; \underbrace{\mathbf{m}_{psych}}_{\text{精神的深層ベクトル}}$$
 
@@ -84,15 +84,16 @@ $$\oint_{\text{境界}} \mathbf{E}_{total} \cdot d\mathbf{A} = \mathbf{0} \qquad
 ## 今後の課題
 
 - 零点収束の公理を、より基礎的な原理から導出する、あるいは反証可能な形に具体化する
-- クォータニオンと時間軸の関係を明確にする（回転の「向き」と「速さ」の区別、時間 $t$ を6軸の外の独立パラメータとするか7つ目の軸とするか）— 次稿で扱う
+- クォータニオンと時間軸の関係（回転の「向き」と「速さ」の区別、時間 $t$ の位置づけ）は [`04-genesis-and-time.md`](../04_LIFE/04-genesis-and-time.md) で扱った——時間は独立パラメータでも7つ目の軸でもなく、双極の運動から事後的に定義される派生量である、という立場を取る
 
 ## 関連ドキュメント
 
 | ドキュメント | 扱う範囲 |
 | :--- | :--- |
-| [`02-dynamic-model.md`](02-dynamic-model.md) | 動的記述 — テンソル積・時間発展方程式、6軸の対応表 |
-| [`01-basic-equation.md`](01-basic-equation.md) | 静的記述 — $P=xX+yY+zZ+rR+iI+jJ$ |
-| [`00-dual-pole.md`](00-dual-pole.md) | 双極の原理 |
+| [`04-genesis-and-time.md`](../04_LIFE/04-genesis-and-time.md) | 時間の起源 — 生成論から時間を定義する |
+| [`02-dynamic-model.md`](../02_MATHEMATICS/02-dynamic-model.md) | 動的記述 — テンソル積・時間発展方程式、6軸の対応表 |
+| [`01-basic-equation.md`](../01_FOUNDATION/01-basic-equation.md) | 静的記述 — $P=xX+yY+zZ+rR+iI+jJ$ |
+| [`00-dual-pole.md`](../01_FOUNDATION/00-dual-pole.md) | 双極の原理 |
 | [`euler-connection.md`](../02_MATHEMATICS/euler-connection.md) | オイラーの公式との数学的な接続 |
 
 ---
