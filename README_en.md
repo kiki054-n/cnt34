@@ -9,13 +9,21 @@
 
 [![Author](https://img.shields.io/badge/Author-Naoyuki_Kawakami-f39c12?style=for-the-badge)](https://orcid.org/0009-0009-2972-6511)
 
-📄 [Introduction page (CNT34_TriTetra_Introduction.html)](https://kiki054-n.github.io/cnt34/CNT34_TriTetra_Introduction.html) — a one-page overview covering the big picture, the key derivations, and how to get involved. (Japanese only.)
+📖 [Definitions of symbols and terms](01_FOUNDATION/definitions.md) ・ 🤝 [How to contribute](CONTRIBUTING.md) ・ 🌐 [日本語](./README.md)
 
 ---
 
 # Sanshi-shiki (三四式) — TTT Theory / Triple-Tetra Theory
 
 > **〜 An open-source research initiative weaving position (3) and orientation (4) toward a better world 〜**
+
+## 📛 Where the name comes from
+
+From the Meiji era into the early Shōwa period, the Japanese military named its weapons by prefixing the adoption year to *shiki* ("type") — the Type 38 rifle, the Type 0 carrier fighter.
+
+"Sanshi-shiki" (三四式, "Type 3-4") borrows that naming convention and inverts its meaning. It compresses the initials of Tri-Tetra Theory (TTT) together with the core of the theory: position 3 + orientation 4.
+
+Where those weapons were symbols of conflict and killing, Sanshi-shiki aims to be a symbol of connection and harmony — a peace argument written in the language of geometry, and a model of "harmony without a center" rooted in Japanese culture. See [`four-gods-and-tensegrity.md`](06_GOVERNANCE/four-gods-and-tensegrity.md) (Japanese).
 
 ## 🌟 Project Vision
 
@@ -29,23 +37,44 @@ This repository is not simply a place to store mathematical or physical formulas
 
 ## 💡 What Is TTT Theory (Sanshi-shiki)?
 
-TTT is a unified state-space model integrating position vectors and orientation vectors, built around the interaction between "3 (spatial position)" and "4 (orientation / rotation, a quaternion-like state)."
+TTT is a state-space model integrating position vectors and orientation vectors, built around the interaction between "3 (spatial position)" and "4 (orientation / rotation)."
 
 $$P = xX + yY + zZ + uU + vV + wW$$
 
 * **3 dimensions of position** ($xX, yY, zZ$): where matter is
-* **4/3 dimensions of orientation** ($uU, vV, wW$): which way it faces (polarity, rotation, the tilt of the field)
+* **3 dimensions of orientation** ($uU, vV, wW$): which way it faces (polarity, rotation, the tilt of the field)
 
 When the interaction of "orientation" is added to "position," the system autonomously forms stable tensegrity structures and membranes, giving rise to spontaneous symmetry breaking — much like life itself.
+
+### How the "three" and the "four" are counted
+
+The "4" in the name is *not* a component count of the equation above. It is the three orientation axes ($U, V, W$) **plus the rotation axis $\pi$ that binds and closes them**.
+
+$$XYZ\pi = 1 \qquad OOO\pi = 1$$
+
+So: **3 position axes + 3 orientation axes = 6 components**, and counting the closing rotation axis $\pi$ in each system gives the "three and four." See [`XYZ-pi.md`](02_MATHEMATICS/XYZ-pi.md) (space side) and [`OOO-pi.md`](02_MATHEMATICS/OOO-pi.md) (energy side).
+
+### On the notations $U,V,W$ and $R,I,J$
+
+Two notations for the orientation components appear across this repository. They denote **the same three components**, not different quantities.
+
+| Notation | Used in | Source |
+| :--- | :--- | :--- |
+| $uU + vV + wW$ | the geometric introduction (how axes are born from the dual pole) | [`00-dual-pole.md`](01_FOUNDATION/00-dual-pole.md) |
+| $rR + iI + jJ$ | the formulation that assigns concrete meaning to each component | [`01-basic-equation.md`](01_FOUNDATION/01-basic-equation.md) |
+
+A rigorous derivation of the correspondence between them is **open** — see item O-1 in [`definitions.md`](01_FOUNDATION/definitions.md).
 
 ---
 
 ## 🚀 Prospective Application Fields
 
-* 🧬 **Artificial Life & Biotechnology**: Simulating the autonomous division and self-organization of synthetic cells
-* 🤖 **Autonomous Distributed Robotics**: Swarm control and swarm intelligence
-* 🌌 **Advanced Materials & Architectural Topology**: Tensegrity structures and metamaterials
-* 💻 **Next-Generation AI & Vector Representation**: High-dimensional embeddings
+* 🧬 **Artificial Life & Biotechnology**: simulating the autonomous division and self-organization of synthetic cells
+* 🤖 **Autonomous Distributed Robotics**: swarm control and swarm intelligence
+* 🌌 **Advanced Materials & Architectural Topology**: tensegrity structures and metamaterials
+* 💻 **Next-Generation AI & Vector Representation**: high-dimensional embeddings
+
+All of these are **at the concept stage**. Nothing here has been implemented or validated yet. This is a list of what we would like to try, not of what has been done.
 
 ---
 
@@ -53,11 +82,31 @@ When the interaction of "orientation" is added to "position," the system autonom
 
 We don't consider this theory finished. If anything, this is only the starting point.
 
+**Agreeing with TTT is not a condition for taking part.** What is being invited is interest in the questions, not assent to the answers. Refutations, alternative readings, and "this part is wrong" are as welcome as agreement — often more so.
+
 * **If you love math or physics:** rigorous formalization, including approaches via quaternions
 * **If you're a programmer:** Python and 3D visualization / simulation code
 * **If you're a thinker, artist, or poet:** discussion and documentation of the new worldview this model opens up
 
+New here? Start with [**CONTRIBUTING.md**](CONTRIBUTING.md). It lists the questions that are currently open, and explains the confidence labels attached to every claim in this repository.
+
 > **"A dream one person tries to see alone is just a dream. A dream many people try to see together becomes reality."**
+
+---
+
+## 📍 Where we actually are
+
+This project makes a point of printing **what is written and what is still missing in the same size type.**
+
+| Status | Meaning |
+| :--- | :--- |
+| ✅ Written | readable end to end: 00-dual-pole, 01-basic-equation, 02-dynamic-model, 03-cosmic-sphere-model, 04-genesis-and-time, 05-lattice-and-existence, XYZ-pi, OOO-pi, euler-connection, the Four Pillars, governance |
+| 🚧 Stub | heading only, content to come: [`2-to-5.md`](01_FOUNDATION/2-to-5.md), [`cell-division.md`](04_LIFE/cell-division.md) |
+| ❓ Open | unanswered questions inside the theory: the "Open items" section of [`definitions.md`](01_FOUNDATION/definitions.md) (O-1 … O-5) |
+
+[`cell-division.md`](04_LIFE/cell-division.md) is the **largest single gap**: nine other documents cite it as if it existed. We are looking for someone who can write it.
+
+Note: most theory documents are currently Japanese-only. Translation is itself a welcome contribution — see CONTRIBUTING.md.
 
 ---
 
@@ -67,9 +116,9 @@ We don't consider this theory finished. If anything, this is only the starting p
 
 A chapter applying TTT Theory to social institutions.
 
-- **Core idea**: [`docs/Governance/Governance-En.md`](06_GOVERNANCE/Governance-En.md) - 3 branches of government + popular sovereignty + AI = a 5th autonomous body, the "verifiable consensus cell"
-- **Implementation blueprint**: [`docs/Governance/5W1H-En.md`](06_GOVERNANCE/5W1H-En.md) - the consensus cell's design, unfolded across the 5W1H
-- **Interactive demo**: [`06_GOVERNANCE/Governance-5w1h.html`](https://kiki054-n.github.io/cnt34/06_GOVERNANCE/Governance-5w1h.html) - visualizing the birth and division of the membrane
+- **Core idea**: [`Governance-En.md`](06_GOVERNANCE/Governance-En.md) — 3 branches of government + popular sovereignty + AI = a 5th autonomous body, the "verifiable consensus cell"
+- **Implementation blueprint**: [`5W1H-En.md`](06_GOVERNANCE/5W1H-En.md) — the consensus cell's design, unfolded across the 5W1H
+- **Interactive demo**: [Governance-5w1h.html](https://kiki054-n.github.io/cnt34/06_GOVERNANCE/Governance-5w1h.html) — visualizing the birth and division of the membrane
 - JA: [`governance.md`](06_GOVERNANCE/governance.md) / [`5W1H.md`](06_GOVERNANCE/5W1H.md)
 
 [![Open in Browser](https://img.shields.io/badge/Demo-Governance%20Cell-blue?style=for-the-badge)](https://kiki054-n.github.io/cnt34/06_GOVERNANCE/Governance-5w1h.html)
@@ -78,39 +127,54 @@ A chapter applying TTT Theory to social institutions.
 
 | 5W1H | TTT | Role |
 | :--- | :--- | :--- |
-| Where, What, When | xX, yY, zZ | Position - the coordinates of fact |
-| Why, How | uU, vV, wW | Orientation - popular sovereignty and the field of AI knowledge |
-| Who | P5 | Autonomous body - the verifiable consensus cell |
+| Where, What, When | xX, yY, zZ | Position — the coordinates of fact |
+| Why, How | uU, vV, wW | Orientation — popular sovereignty and the field of AI knowledge |
+| Who | P5 | Autonomous body — the verifiable consensus cell |
 
 ---
 
 ## 📚 Theory Documents
 
-The mathematical foundation of TTT Theory, traced across five documents that follow one sequence of numbers: dual pole (2) → position (3) → orientation (4) → a manifested autonomous unit (5). These are currently Japanese-only.
+The sequence: dual pole (2) → position (3) → orientation (4) → a manifested autonomous unit (5).
 
-- [`theory/00-dual-pole.md`](01_FOUNDATION/00-dual-pole.md) - The Principle of Dual Poles — why everything starts from "2," not "1." From the minimal distinction "00," dimensions and the geometry of the palm are born
-- [`theory/XYZ-pi.md`](02_MATHEMATICS/XYZ-pi.md) - The Spatial Unit System — the three positional axes X, Y, Z and the unit condition $XYZ\pi=1$ that closes them via the rotation axis π
-- [`theory/OOO-pi.md`](02_MATHEMATICS/OOO-pi.md) - The Energy Unit System — three spins O, O, O and the unit condition $OOO\pi=1$; maps onto the energy of the Four Pillars
-- [`theory/euler-connection.md`](02_MATHEMATICS/euler-connection.md) - Connection to Euler's Formula — reading $e^{i\pi}=-1$ as the birth of the dual pole and $e^{i\cdot2\pi}=1$ as the completed cycle of manifestation
-- [`theory/cell-division.md`](04_LIFE/cell-division.md) - The Geometry of Cell Division — a methane molecule (5 → 15 → 30 → 15+15) and the sequence "2·3·4·5" that closes the theory as a whole
+**01_FOUNDATION**
+- [`00-dual-pole.md`](01_FOUNDATION/00-dual-pole.md) — the Principle of Dual Poles: why everything starts from "2," not "1"
+- [`01-basic-equation.md`](01_FOUNDATION/01-basic-equation.md) — the fundamental equation, and how it differs from quaternions
+- [`definitions.md`](01_FOUNDATION/definitions.md) — symbols, terms, and the list of open items
+- [`2-to-5.md`](01_FOUNDATION/2-to-5.md) 🚧 — the unfolding from "2" to "5"
+
+**02_MATHEMATICS**
+- [`XYZ-pi.md`](02_MATHEMATICS/XYZ-pi.md) — the spatial unit system, $XYZ\pi=1$
+- [`OOO-pi.md`](02_MATHEMATICS/OOO-pi.md) — the energy unit system, $OOO\pi=1$
+- [`euler-connection.md`](02_MATHEMATICS/euler-connection.md) — reading $e^{i\pi}=-1$ as the birth of the dual pole
+- [`02-dynamic-model.md`](02_MATHEMATICS/02-dynamic-model.md) — time evolution via a tensor product
+- [Simulation (EN)](https://kiki054-n.github.io/cnt34/02_MATHEMATICS/TTT_theory_simulation_en.html)
+
+**03_PHYSICS**
+- [`03-cosmic-sphere-model.md`](03_PHYSICS/03-cosmic-sphere-model.md) — the bounded sphere and the zero-convergence axiom
+
+**04_LIFE**
+- [`04-genesis-and-time.md`](04_LIFE/04-genesis-and-time.md) — time as a derived quantity, defined after the motion of the dual pole
+- [`four-gods-and-tensegrity.md`](04_LIFE/four-gods-and-tensegrity.md) — harmony without a center
+- [`cell-division.md`](04_LIFE/cell-division.md) 🚧 — the geometry of cell division
+
+**05_AI**
+- [`05-lattice-and-existence.md`](05_AI/05-lattice-and-existence.md) — $\pi$ as the basis of the lattice
+
+**06_GOVERNANCE / 07_WCCC**
+- [`governance.md`](06_GOVERNANCE/governance.md) ・ [`gratitude.md`](07_WCCC/gratitude.md) — the Gratitude Circulation Protocol
 
 ---
 
 ## 🏛️ The Four Pillars & the Circulation of Gratitude
 
-TTT Theory applied to human roles and labor. These are currently Japanese-only; see [`TTT_theory_simulation_en.html`](https://kiki054-n.github.io/cnt34/02_MATHEMATICS/TTT_theory_simulation_en.html) for the English simulation.
+TTT applied to human roles and labor. Illustrated version: [TTT_4pillars_repository.html](https://kiki054-n.github.io/cnt34/06_GOVERNANCE/pillars/TTT_4pillars_repository.html)
 
-- [`docs/pillars/pillar-01-create.md`](06_GOVERNANCE/pillars/pillar-01-create.md) - Pillar 1: Creative Labor
-- [`docs/pillars/pillar-02-support.md`](06_GOVERNANCE/pillars/pillar-02-support.md) - Pillar 2: Support Labor
-- [`docs/pillars/pillar-03-govern.md`](06_GOVERNANCE/pillars/pillar-03-govern.md) - Pillar 3: Governance Labor
-- [`docs/pillars/pillar-04-invent.md`](06_GOVERNANCE/pillars/pillar-04-invent.md) - Pillar 4: Invention Labor
-- [`docs/pillars/gratitude.md`](07_WCCC/gratitude.md) - The Gratitude Circulation Protocol
-
----
-
-## 🌐 日本語
-
-For the Japanese version → [README.md](./README.md)
+- [`pillar-01-create.md`](06_GOVERNANCE/pillars/pillar-01-create.md) — Pillar 1: Creative Labor (spin on the $u$ axis)
+- [`pillar-02-support.md`](06_GOVERNANCE/pillars/pillar-02-support.md) — Pillar 2: Support Labor (spin on the $v$ axis)
+- [`pillar-03-govern.md`](06_GOVERNANCE/pillars/pillar-03-govern.md) — Pillar 3: Governance Labor (spin on the $w$ axis)
+- [`pillar-04-invent.md`](06_GOVERNANCE/pillars/pillar-04-invent.md) — Pillar 4: Invention Labor (the rotation axis $\pi$ itself)
+- [`gratitude.md`](07_WCCC/gratitude.md) — the Gratitude Circulation Protocol
 
 ---
 
