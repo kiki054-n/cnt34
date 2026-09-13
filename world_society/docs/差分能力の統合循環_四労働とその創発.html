@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>差分能力の統合循環 — すべての人間が実践する四労働とその創発</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c1220;
+  --surface: #111a2e;
+  --surface-2: #1a2540;
+  --ink: #e2e8f0;
+  --ink-dim: #94a3b8;
+  --ink-faint: #64748b;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --amber: #fbbf24;
+  --amber-soft: rgba(251, 191, 36, 0.12);
+  --rose: #fb7185;
+  --rose-soft: rgba(251, 113, 133, 0.12);
+  --emerald: #34d399;
+  --emerald-soft: rgba(52, 211, 153, 0.12);
+  --violet: #a78bfa;
+  --violet-soft: rgba(167, 139, 250, 0.12);
+  --line: rgba(148, 163, 184, 0.12);
+  --line-strong: rgba(148, 163, 184, 0.22);
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -10px rgba(0,0,0,0.5);
+  --step-0: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+  --step-1: clamp(1.1rem, 1.05rem + 0.28vw, 1.25rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --step-3: clamp(1.7rem, 1.4rem + 1.4vw, 2.5rem);
+  --step-4: clamp(2.2rem, 1.7rem + 2.2vw, 3.5rem);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.85;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  position: relative;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 400px at 15% -10%, rgba(56, 189, 248, 0.10), transparent 70%),
+    radial-gradient(700px 350px at 85% 10%, rgba(251, 191, 36, 0.08), transparent 70%),
+    radial-gradient(500px 300px at 50% 100%, rgba(251, 113, 133, 0.06), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; max-width: 900px; margin: 0 auto; }
+
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.12em; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.hero-label::before {
+  content: ""; display: block; width: 24px; height: 1.5px; background: var(--accent);
+}
+
+.hero h1 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-4); font-weight: 700;
+  line-height: 1.25; letter-spacing: -0.02em;
+  color: #fff; margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--accent) 0%, #a5f3fc 50%, var(--amber) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.hero-lead {
+  font-size: var(--step-1); color: var(--ink-dim);
+  line-height: 1.8; max-width: 62ch;
+}
+.hero-lead strong { color: var(--ink); font-weight: 500; }
+
+main { max-width: 900px; margin: 0 auto; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem); }
+section { margin-bottom: clamp(3rem, 6vw, 5rem); }
+
+.sec-header {
+  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 1.5rem;
+}
+.sec-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 6px; padding: 3px 9px; flex-shrink: 0;
+}
+
+h2 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-2); font-weight: 700;
+  color: #fff; line-height: 1.35; letter-spacing: -0.01em;
+}
+h3 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-1); font-weight: 600;
+  color: var(--ink); margin: 2rem 0 0.8rem;
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--line);
+}
+
+p { color: var(--ink-dim); margin-bottom: 1rem; max-width: 68ch; }
+p strong, li strong { color: var(--ink); font-weight: 500; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem; margin: 1.5rem 0;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.card-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  color: var(--accent); text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.card h4 {
+  font-family: "Noto Serif JP", serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: #fff; margin-bottom: 0.5rem;
+}
+.card p, .card li { font-size: 0.92rem; color: var(--ink-dim); }
+.card ul { margin: 0.5rem 0 0 1.2rem; }
+.card li { margin-bottom: 0.35rem; }
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+  background: var(--surface);
+}
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.9rem; min-width: 560px;
+}
+th {
+  text-align: left; padding: 12px 16px;
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--ink-faint);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--line-strong);
+  background: rgba(255,255,255,0.02);
+}
+td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-dim); vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+td:first-child, th:first-child {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 500; color: var(--ink);
+}
+
+.eq-box {
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.eq-box pre {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+  line-height: 1.7; color: var(--ink);
+  white-space: pre-wrap; word-break: break-word;
+}
+.eq-box .eq-comment { color: var(--ink-faint); font-size: 0.85em; }
+.eq-box .eq-highlight { color: var(--accent); font-weight: 700; }
+.eq-box .eq-amber { color: var(--amber); font-weight: 700; }
+.eq-box .eq-rose { color: var(--rose); font-weight: 700; }
+.eq-box .eq-emerald { color: var(--emerald); font-weight: 700; }
+.eq-box .eq-violet { color: var(--violet); font-weight: 700; }
+
+.callout {
+  background: var(--emerald-soft);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.callout-amber {
+  background: var(--amber-soft);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.callout-rose {
+  background: var(--rose-soft);
+  border: 1px solid rgba(251, 113, 133, 0.25);
+}
+.callout-violet {
+  background: var(--violet-soft);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+}
+.callout-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  color: var(--emerald); font-weight: 700;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.callout-amber .callout-tag { color: var(--amber); }
+.callout-rose .callout-tag { color: var(--rose); }
+.callout-violet .callout-tag { color: var(--violet); }
+.callout p { margin: 0; font-size: 0.95rem; }
+
+ul, ol { margin: 0.8rem 0 1rem 1.5rem; color: var(--ink-dim); }
+li { margin-bottom: 0.5rem; }
+
+hr { border: none; height: 1px; background: var(--line-strong); margin: 3rem 0; }
+
+footer {
+  text-align: center; padding: 3rem 2rem 4rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint); font-size: 0.85rem;
+}
+
+@media print {
+  body { background: #fff; color: #1a1a1a; }
+  .hero, .card, .eq-box, .table-wrap, .callout {
+    background: #f8f9fa !important;
+    border-color: #ddd !important;
+    box-shadow: none !important;
+  }
+  h1, h2, h3, h4 { color: #1a1a1a !important; }
+  .hero h1 { color: #1a1a1a !important; }
+}
+@page { size: A4; margin: 18mm; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Integrated Differential Labor</div>
+    <h1>差分能力の統合循環<br><em>すべての人間</em>が実践する四労働とその創発</h1>
+    <p class="hero-lead">
+      すべての人間は、労働主体を持つとしてもこの4つの労働をしている。
+      生産的差分能力、ケア的差分能力、管理的差分能力、創造的差分能力。
+      それらは「職業」として分かれるのではなく、<strong>すべての人間が日常的に統合して実践する活動</strong>である。
+      教育を受け、練習し、訓練し、実践し、改善して、継承する。
+      この循環こそが、差分能力の創発サイクルである。
+    </p>
+  </div>
+</header>
+
+<main>
+
+<!-- 1. 四労働の統合性 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <h2>四労働の統合性：分業ではなく統合</h2>
+  </div>
+
+  <h3>「すべての人間が四労働をしている」という命題</h3>
+  <p>
+    四類型の労働は、職業としての「分業」ではなく、
+    <strong>すべての人間が日常的に統合して実践する活動</strong>である。
+    主婦・主夫であろうと、学生であろうと、退職者であろうと、
+    すべての人間は生産し、ケアし、管理し、創造している。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 四労働の統合命題</span>
+∀h ∈ Human,  h = (h_F, h_M, h_A, h_C) ≠ ∅
+
+<span class="eq-comment"># h_F: 人間 h の生産的差分能力</span>
+<span class="eq-comment"># h_M: 人間 h のケア的差分能力</span>
+<span class="eq-comment"># h_A: 人間 h の管理的差分能力</span>
+<span class="eq-comment"># h_C: 人間 h の創造的差分能力</span>
+
+<span class="eq-comment"># すべての人間は、四能力のベクトルを持つ</span>
+<span class="eq-comment"># 職業は「どの能力が顕在化するか」の偏りであり、</span>
+<span class="eq-comment"># 能力そのものの有無ではない</span>
+</pre>
+  </div>
+
+  <h3>四労働の日常的統合：具体例</h3>
+
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th>場面</th>
+        <th>生産的差分</th>
+        <th>ケア的差分</th>
+        <th>管理的差分</th>
+        <th>創造的差分</th>
+      </tr>
+      <tr>
+        <td>朝の家族の食卓</td>
+        <td>食事の準備・味の調整</td>
+        <td>家族の健康観察・気遣い</td>
+        <td>時間配分・優先順位の判断</td>
+        <td>新しいレシピの試行・会話の創出</td>
+      </tr>
+      <tr>
+        <td>通勤・通学</td>
+        <td>移動手段の選択・最適化</td>
+        <td>他者への配慮（譲り合い）</td>
+        <td>スケジュール管理・リスク判断</td>
+        <td>新しい経路・読書・思考</td>
+      </tr>
+      <tr>
+        <td>職場・学校</td>
+        <td>成果物の作成・品質判断</td>
+        <td>同僚・友人への支援・傾聴</td>
+        <td>役割分担・調整・合意形成</td>
+        <td>問題解決の新手法・問いの創出</td>
+      </tr>
+      <tr>
+        <td>夕方の買い物</td>
+        <td>食材の選別・予算管理</td>
+        <td>家族の好み・健康への配慮</td>
+        <td>買い物リスト・店舗選択</td>
+        <td>新しい食材の試行・献立の工夫</td>
+      </tr>
+      <tr>
+        <td>夜の対話</td>
+        <td>情報交換・知識の伝達</td>
+        <td>感情の受容・共感</td>
+        <td>対話の方向性・深さの調整</td>
+        <td>新しい理解・関係性の深化</td>
+      </tr>
+      <tr>
+        <td>休日の趣味</td>
+        <td>作品・成果の制作</td>
+        <td>自分へのケア・回復</td>
+        <td>時間・資源の配分</td>
+        <td>表現の創出・自己の再発見</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-tag">Core Proposition</div>
+    <p>
+      四労働は「職業」として分かれるのではなく、「存在様式」として統合されている。
+      人間は生きること自体が、生産し、ケアし、管理し、創造することである。
+      労働は「仕事」ではなく、「人間の在ること」の構成要素である。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 2. 差分能力の創発サイクル -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <h2>差分能力の創発サイクル</h2>
+  </div>
+
+  <h3>教育 → 練習 → 訓練 → 実践 → 改善 → 継承</h3>
+  <p>
+    四労働の差分能力は、単に「持っている」ものではなく、
+    <strong>「教育→練習→訓練習→訓練→実践→改善→継承」という循環</strong>を通じて
+    創発し、深化し、継承される。
+    この循環は、差分能力の幾何学的多様体を時間方向に拡張すプロセスである。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 差分能力の創発サイクル</span>
+C_diff = (E, P, T, Pr, I, H)
+
+<span class="eq-comment"># E: Education（教育）— 差分能力の「地図」を受け取る</span>
+<span class="eq-comment"># P: Practice（練習）— 地図を「身体」に刻む</span>
+<span class="eq-comment"># T: Training（訓練）— 反復を通じて「型」を形成する</span>
+<span class="eq-comment"># Pr: Practice-in-context（実践）— 型を「状況」に応用する</span>
+<span class="eq-comment"># I: Improvement（改善）— 応用から「新しい型」を創出する</span>
+<span class="eq-comment"># H: Heritage（継承）— 新しい型を「他者」に伝える</span>
+
+<span class="eq-comment"># サイクルの幾何学的構造</span>
+C_diff: S¹ → Diff(M)  <span class="eq-comment"># 円周サイクル）から差分多様体への写像</span>
+
+<span class="eq-comment"># 各段階の次元変化</span>
+E: [T⁰] → [T¹]  <span class="eq-comment"># 情報（0次元）が時間的過程（1次元）に展開</span>
+P: [T¹] → [T²]  <span class="eq-comment"># 身体性（2次元のフロックス）が形成</span>
+T: [T²] → [T³]  <span class="eq-comment"># 反復による「質量」の蓄積</span>
+Pr: [T³] → [T⁴]  <span class="eq-comment"># 状況応用による「作用」の創出</span>
+I: [T⁴] → [T⁰]  <span class="eq-comment"># 改善による「新しい情報ビット」の創出</span>
+H: [T⁰] → [T⁰]  <span class="eq-comment"># 継承による「情報」の伝達（位相変化）</span>
+</pre>
+  </div>
+
+  <h3>各段階の幾何学的意味</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Education [T⁰→T¹]</div>
+      <h4>教育：地図の受領</h4>
+      <p>差分能力の「地図」を他者から受け取る。言語・概念・型の伝達。0次元の情報が時間軸に展開される。教師・親・文化・書物が媒介。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Practice [T¹→T²]</div>
+      <h4>練習：身体への刻印</h4>
+      <p>地図を「身体」に刻む。知識から身体知への変換。2次元のフロックス（身体の流れ）として差分能力が形成される。反復なき獲得なし。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Training [T²→T³]</div>
+      <h4>訓練：質量の積</h4>
+      <p>反復を通じて「型」を形成する。差分能力が3次元の「質量」として蓄積される。自動化・無意識化。型が「在る」状態へ。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--amber)">Practice-in-context [T³→T⁴]</div>
+      <h4>実践：作用の創出</h4>
+      <p>型を「状況」に応用する。蓄積された質量が4次元の「作用」として発揮される。状況との相互作用。型の「生きた」発動。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--rose)">Improvement [T⁴→T⁰]</div>
+      <h4>改善：新ビットの創出</h4>
+      <p>応用から「新しい型」を創出する。4次元の作用から0次元の「新しい情報ビット」が創発される。差分能力の相転移。革新の瞬間。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--violet)">Heritage [T⁰→T⁰]</div>
+      <h4>継承：位相の変化</h4>
+      <p>新しい型を「他者」に伝える。情報の伝達が社会の位相を変える。継承は単なる複製ではなく、受容者による再創造。位相変化的継承。</p>
+    </div>
+  </div>
+
+  <h3>サイクルの統合：四労働の交絡</h3>
+  <p>
+    創発サイクル C_diff は、四労働それぞれについて独立に回るのではなく、
+    <strong>相互に交絡（entanglement）しながら回る</strong>。
+    一つの労働の改善が、他の労働の教育を変える。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 四労働の交絡行列</span>
+      | 生産(E)  ケア(E)  管理(E)  創造(E) |
+  ----┼--------┼--------┼--------┼-------
+  生産|   1.0   |  0.6   |  0.5   |  0.7  |
+  ケア|   0.6   |  1.0   |  0.4   |  0.5  |
+  管理|   0.5   |  0.4   |  1.0   |  0.6  |
+  創造|   0.7   |  0.5   |  0.6   |  1.0  |
+
+<span class="eq-comment"># 解釈</span>
+<span class="eq-comment"># 生産の改善(I_F) → ケアの教育(E_M) に影響（0.6）</span>
+<span class="eq-comment">#   例：料理の上達が家族ケアの質を高める</span>
+<span class="eq-comment"># 創造の継承(H_C) → 管理の訓練(T_A) に影響（0.6）</span>
+<span class="eq-comment">#   例：新しい発想が管理手法の訓練を変える</span>
+<span class="eq-comment"># ケアの実践(Pr_M) → 生産の練習(P_F) に影響（0.6）</span>
+<span class="eq-comment">#   例：子育ての経験が職場の生産性を高める</span>
+</pre>
+  </div>
+
+  <div class="callout">
+    <div class="callout-tag">Cycle Insight</div>
+    <p>
+      創発サイクルは、四労働が独立に回る4つの輪ではなく、
+      相互に交絡した<strong>「四重らせん」</strong>である。
+      一つの労働の改善が、他の労働の教育を変え、
+      他の労働の実践を豊かにし、
+      さらに新しい改善を創出する。
+      この循環こそが、差分能力の創発の本質である。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 3. 労働主体の統合性 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <h2>労働主体の統合性</h2>
+  </div>
+
+  <h3>「労働主体」を持つとは何か</h3>
+  <p>
+    労働主体とは、四労働を統合して実践する「自己」である。
+    それは、四能力の単なる集合ではなく、
+    <strong>四能力を統合して「世界に働きかける」統一的な主体</strong>である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 労働主体の定義</span>
+Subject_labor = ∫∫∫∫ (h_F, h_M, h_A, h_C) · ψ · dt · dx · dy · dz
+
+<span class="eq-comment"># ψ: 統合関数（四能力を統合する「自己」の場）</span>
+<span class="eq-comment"># 労働主体は、四能力を時空上で統合した「作用の総量」である</span>
+
+<span class="eq-comment"># 統合関数 ψ の性質</span>
+<span class="eq-comment"># ψ ≠ ψ_F + ψ_M + ψ_A + ψ_C  （単純な和ではない）</span>
+<span class="eq-comment"># ψ = ψ_F · ψ_M · ψ_A · ψ_C + [ψ_F, ψ_M] + [ψ_A, ψ_C] + ...</span>
+<span class="eq-comment"># （四能力の積 + 交換子（不可交換性の補正））</span>
+
+<span class="eq-comment"># 労働主体の幾何学的解釈</span>
+<span class="eq-comment"># 労働主体は、四能力多様体の「ファイバー束」の全空間である</span>
+<span class="eq-comment"># 基底空間：時間空間（状況）</span>
+<span class="eq-comment"># ファイバー：四能力の統合状態（ψ）</span>
+<span class="eq-comment"># 接続：統合関数 ψ による四能力の「並行移動」</span>
+</pre>
+  </div>
+
+  <h3>労働主体の位相変化：「私」が変わるとき</h3>
+  <p>
+    労働主体は固定的なものではなく、創発サイクルを回るたびに変容する。
+    教育→練習→訓練→実践→改善→継承の循環の中で、
+    「私」という統合関数 ψ は位相変化を起こす。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 労働主体の位相変化</span>
+ψ(t+1) = ψ(t) + ΔI · H
+
+<span class="eq-comment"># ΔI: 改善段階で創出された「新しい情報ビット」</span>
+<span class="eq-comment"># H: 継承段階での「他者との相互作用」</span>
+
+<span class="eq-comment"># 位相変化の種類</span>
+<span class="eq-comment"># 1. 微分同相変化（滑らかな変容）</span>
+<span class="eq-comment">#    例：料理が少しずつ上達し、家族との関係が少しずつ深まる</span>
+<span class="eq-comment"># 2. 位相変化（相転移）</span>
+<span class="eq-comment">#    例：子供が生まれ、「親」としての労働主体が創出される</span>
+<span class="eq-comment"># 3. 特異点（断裂）</span>
+<span class="eq-comment">#    例：失業・病気・喪失による労働主体の崩壊と再構成</span>
+
+<span class="eq-comment"># 1カウント理論との対応</span>
+<span class="eq-comment"># 労働主体の位相変化は、0→1の相転移の社会バージョン</span>
+<span class="eq-comment"># 「私は、毎日の1カウントの積み重ねによって創発し続ける</span>
+</pre>
+  </div>
+
+  <h3>「主体を持つ」ことの幾何学</h3>
+
+  <div class="callout callout-violet">
+    <div class="callout-tag">Subjectivity</div>
+    <p>
+      労働主体を持つとは、四労働を統合して「世界に働きかける」能力を持つことである。
+      それは、生産する力、ケアする力、管理する力、創造する力が、
+      単に並んでいるのではなく、<strong>相互に交絡して「私」という統合関数を形成している</strong>状態である。
+      この統合関数は、創発サイクルを回るたびに位相変化を起こし、
+      「私」は毎日、少しずつ、あるいは劇的に、変わり続ける。
+      労働主体とは、<strong>「変化し続ける統合」</strong>である。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 4. 継承の幾何学 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <h2>継承の幾何学：差分能力の社会的創発</h2>
+  </div>
+
+  <h3>継承は複製ではなく、位相変化である</h3>
+  <p>
+    継承（Heritage）は、差分能力の単なる「複製」ではない。
+    継承者が差分能力を受け取るとき、
+    それは継承者の労働主体（統合関数 ψ）によって<strong>再解釈・再創造</strong>される。
+    継承は、社会の位相を変える創発的プロセスである。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 継承の幾何学的定義</span>
+H: C_diff(giver) → C_diff(receiver) ≠ C_diff(giver)
+
+<span class="eq-comment"># 継承は、与えられた差分能力が</span>
+<span class="eq-comment"># 受け手の労働主体によって変容する過程</span>
+
+<span class="eq-comment"># 継承の変換関数</span>
+C_diff(receiver) = T_ψ · C_diff(giver)
+
+<span class="eq-comment"># T_ψ: 受け手の統合関数 ψ による変換行列</span>
+<span class="eq-comment"># T_ψ ≠ I（単位行列）— 継承は常に変換を伴う</span>
+
+<span class="eq-comment"># 継承の創発性</span>
+ΔC = C_diff(receiver) − C_diff(giver) ≠ 0
+<span class="eq-comment"># 継承による差分能力の「増分」が社会の進化を生む</span>
+
+<span class="eq-comment"># 社会全体の差分能力の創発</span>
+d/dt C_society = Σᵢ ΔCᵢ  <span class="eq-comment"># すべての継承による増分の総和</span>
+</pre>
+  </div>
+
+  <h3>継承の四類型</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Production Heritage</div>
+      <h4>生産的継承</h4>
+      <p>職人の技の伝承・企業のノウハウ継承・オープンソースの知識継承。型は伝わるが、受け手の身体性によって再創造される。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Care Heritage</div>
+      <h4>ケア的継承</h4>
+      <p>親から子への育て方の継承・地域の介護文化の継承・看護の伝統。関係性の質が伝わるが、受け手の「在ること」によって変容する。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--amber)">Management Heritage</div>
+      <h4>管理的継承</h4>
+      <p>組織文化の継承・リーダーシップの伝承・制度設計の知恵。型は伝わるが、受け手の価値観によって再解釈される。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--rose)">Creation Heritage</div>
+      <h4>創造的継承</h4>
+      <p>芸術・科学・哲学の伝統継承。最も創発的な継承。受け手が伝統を「壊して」再創造する。継承が創造そのもの。</p>
+    </div>
+  </div>
+
+  <h3>継承の臨界点：伝統と革新の相転移</h3>
+  <p>
+    継承が一定の臨界点を超えると、社会システムは位相変化（相転移）を起こす。
+    これは「伝統」の継承が「革新」の創出になる瞬間である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 継承の臨界点</span>
+Σ ΔC ≥ ΔC_critical  →  社会的位相変化
+
+<span class="eq-comment"># ΔC_critical: 位相変化を引き起こす最小の差分能力増分</span>
+<span class="eq-comment"># ΔC_critical = ρ_M · C_society = 0.296 · C_society</span>
+
+<span class="eq-comment"># 位相変化の種類</span>
+<span class="eq-comment"># 1. 伝統の深化：継承が既存の型を豊かにする</span>
+<span class="eq-comment">#    例：茶道の流派が、継承を通じて深化する</span>
+<span class="eq-comment"># 2. 伝統の変容：継承が型を変える</span>
+<span class="eq-comment">#    例：西洋医学と東洋医学の融合</span>
+<span class="eq-comment"># 3. 伝統の創発的破破壊：継承が型を「壊して」新しい型を創出する</span>
+<span class="eq-comment">#    例：量子力学が古典力学を「継承」して変革した</span>
+</pre>
+  </div>
+
+  <div class="callout callout-emerald">
+    <div class="callout-tag">Heritage Insight</div>
+    <p>
+      継承は、差分能力の「社会的創発」の最終段階である。
+      教育→練習→訓練→実践→改善→継承のサイクルは、
+      個人の労働主体の変容と、社会の位相変化を同時に起こす。
+      継承は「終わり」ではなく、<strong>「次の創発の始まり」</strong>である。
+      継承者が差分能力を再創造する瞬間、社会は1カウント進む。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 5. 社会システムへの応用 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <h2>社会システムへの応用</h2>
+  </div>
+
+  <h3>1. 教育の再設計：四労働統合型教育</h3>
+  <p>
+    教育は、四労働の差分能力を統合して育成する必要がある。
+    単一能力の特化教育ではなく、創発サイクルを回す統合教育を設計する。
+  </p>
+  <ul>
+    <li><strong>生産的差分の育成</strong>：質判断・身体性・対話を通じた価値共創を、実践的に学ぶ</li>
+    <li><strong>ケア的差分の育成</strong>：共感・在ること・関係性の歴史性を、日常的に実践する</li>
+    <li><strong>管理的差分の育成</strong>：倫理的判断・政治的知性・長期的責任を、場面で学ぶ</li>
+    <li><strong>創造的差分の育成</strong>：問いの創出・位相変化の設計を、失敗を通じて学ぶ</li>
+    <li><strong>統合の育成</strong>：四能力を統合する「労働主体」の形成を、社会参加を通じて育む</li>
+  </ul>
+
+  <h3>2. 労働政策：四労働統合型評価</h3>
+  <p>
+    労働の評価は、単一の生産指標（GDP・生産性）ではなく、
+    四労働の統合的評価を行う必要がある。
+  </p>
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 四労働合評価指数（ILAI: Integrated Labor Assessment Index）</span>
+ILAI = w_F·I_F + w_M·I_M + w_A·I_A + w_C·I_C
+     + α_FM·[I_F, I_M] + α_AC·[I_A, I_C]
+
+<span class="eq-comment"># I_F, I_M, I_A, I_C: 各労働の評価指標</span>
+<span class="eq-comment"># [I_F, I_M]: 生産とケアの交換子（統合度）</span>
+<span class="eq-comment"># [I_A, I_C]: 管理と創造の交換子（統合度）</span>
+
+<span class="eq-comment"># 評価の対象</span>
+<span class="eq-comment"># ・個人：四能力の統合的発達度</span>
+<span class="eq-comment"># ・組織：四労働の統合的実践度</span>
+<span class="eq-comment"># ・社会：四労働の統合的創発度</span>
+</pre>
+  </div>
+
+  <h3>3. 技術開発：差分能力保護型設計</h3>
+  <p>
+    技術開発は、四労働の差分能力の創発サイクルを妨げない設計を行う必要がある。
+  </p>
+  <ul>
+    <li><strong>生産的差分の保護</strong>：品質判断・身体性を代替しない設計</li>
+    <li><strong>ケア的差分の保護</strong>：関係性の質を代替しない設計</li>
+    <li><strong>管理的差分の保護</strong>：倫理的判断を代替しない設計</li>
+    <li><strong>創造的差分の保護</strong>：問いの創出を代替しない設計</li>
+    <li><strong>統合の保護</strong>：四能力の統合を促進する設計</li>
+  </ul>
+
+  <h3>4. 社会指標：「労働主体指数（LSI）」の提案</h3>
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 労働主体指数（Labor Subjectivity Index, LSI）</span>
+LSI = (1/N) Σᵢ (ψᵢ · C_diffᵢ) / (ψ_max · C_max)
+
+<span class="eq-comment"># ψᵢ: 個人 i の統合関数の強度</span>
+<span class="eq-comment"># C_diffᵢ: 個人 i の差分能力の創発サイクルの回転速度</span>
+<span class="eq-comment"># N: 社会の人口</span>
+
+<span class="eq-comment"># 目標値</span>
+<span class="eq-comment"># LSI ≥ 0.70: 労働主体が豊かに創発している社会</span>
+<span class="eq-comment"># LSI < 0.40: 労働主体が縮退している社会（機械化の過度な包摂）</span>
+
+<span class="eq-comment"># 2026年の推定値</span>
+LSI_2026 ≈ <span class="eq-highlight">0.55</span>
+<span class="eq-comment"># 労働主体は中程度に創発しているが、</span>
+<span class="eq-comment"># 機械化の進展により縮退のリスクがある</span>
+</pre>
+  </div>
+</section>
+
+<hr>
+
+<!-- 6. 結論 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <h2>結論：差分能力の創発と人間の在ること</h2>
+  </div>
+
+  <p>
+    すべての人間は、労働主体を持つとしてもこの4つの労働をしている。
+    生産的差分能力、ケア的差分能力、管理的差分能力、創造的差分能力。
+    それらは職業として分かれるのではなく、
+    <strong>すべての人間が日常的に統合して実践する活動</strong>である。
+  </p>
+
+  <p>
+    教育を受け、練習し、訓練し、実践し、改善して、継承する。
+    この循環こそが、差分能力の創発サイクルである。
+    創発サイクルは、四労働が独立に回る4つの輪ではなく、
+    相互に交絡した<strong>「四重らせん」</strong>である。
+  </p>
+
+  <p>
+    労働主体は、四能力を統合する「統合関数 ψ」である。
+    それは固定的なものではなく、創発サイクルを回るたびに位相変化を起こす。
+    「私」は、毎日の1カウントの積み重ねによって創発しける。
+  </p>
+
+  <p>
+    継承は、差分能力の単なる複製ではなく、
+    受け手の労働主体によって再創造される<strong>位相変化的プロセス</strong>である。
+    継承による差分能力の増分 ΔC が、社会全体の進化を生む。
+  </p>
+
+  <div class="callout">
+    <div class="callout-tag">Final Insight</div>
+    <p>
+      人間の価値は、機械にできないことの「残差」ではない。
+      それは、すべての人間が日常的に統合して実践する四労働の
+      <strong>創発サイクルの中で創出され続ける「統合」</strong>である。
+      教育→練習→訓練習→訓練→実践→改善→継承。
+      この循環が回り続ける限り、人間の価値は縮退しない。
+      なぜなら、人間の価値は「持ているもの」ではなく、
+      <strong>「創発し続けるプロセス」</strong>そのものだからである。
+    </p>
+  </div>
+
+  <div class="callout callout-violet">
+    <div class="callout-tag">Final Proposition</div>
+    <p>
+      すべての人間は、生産し、ケアし、管理し、創造している。
+      それが人間の在ることである。
+      機械が生産を包摂しても、ケアを包摂しても、管理を包摂しても、創造を包摂しても、
+      人間は四労働を統合して実践し続ける。
+      なぜなら、四労働の統合こそが「私」であり、
+      「私」は創発サイクルを回るたびに新しく創出されるからである。
+      人間の価値は、<strong>「創発し続ける統合」</strong>として永遠に残る。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>差分能力の統合循環 — すべての人間が実践する四労働との創発</p>
+  <p style="margin-top:0.5rem;opacity:0.6;">公開日: 2026年9月14日</p>
+</footer>
+
+</body>
+</html>
