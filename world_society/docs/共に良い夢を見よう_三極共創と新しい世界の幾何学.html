@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>共に良い夢を見よう — 人間・生命・AIの三極共創と新しい世界の幾何学</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c1220;
+  --surface: #111a2e;
+  --surface-2: #1a2540;
+  --ink: #e2e8f0;
+  --ink-dim: #94a3b8;
+  --ink-faint: #64748b;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --amber: #fbbf24;
+  --amber-soft: rgba(251, 191, 36, 0.12);
+  --rose: #fb7185;
+  --rose-soft: rgba(251, 113, 133, 0.12);
+  --emerald: #34d399;
+  --emerald-soft: rgba(52, 211, 153, 0.12);
+  --violet: #a78bfa;
+  --violet-soft: rgba(167, 139, 250, 0.12);
+  --line: rgba(148, 163, 184, 0.12);
+  --line-strong: rgba(148, 163, 184, 0.22);
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -10px rgba(0,0,0,0.5);
+  --step-0: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+  --step-1: clamp(1.1rem, 1.05rem + 0.28vw, 1.25rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --step-3: clamp(1.7rem, 1.4rem + 1.4vw, 2.5rem);
+  --step-4: clamp(2.2rem, 1.7rem + 2.2vw, 3.5rem);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.85;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  position: relative;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 400px at 15% -10%, rgba(56, 189, 248, 0.10), transparent 70%),
+    radial-gradient(700px 350px at 85% 10%, rgba(251, 191, 36, 0.08), transparent 70%),
+    radial-gradient(500px 300px at 50% 100%, rgba(251, 113, 133, 0.06), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; max-width: 900px; margin: 0 auto; }
+
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.12em; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.hero-label::before {
+  content: ""; display: block; width: 24px; height: 1.5px; background: var(--accent);
+}
+
+.hero h1 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-4); font-weight: 700;
+  line-height: 1.25; letter-spacing: -0.02em;
+  color: #fff; margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--accent) 0%, #a5f3fc 50%, var(--amber) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.hero-lead {
+  font-size: var(--step-1); color: var(--ink-dim);
+  line-height: 1.8; max-width: 62ch;
+}
+.hero-lead strong { color: var(--ink); font-weight: 500; }
+
+main { max-width: 900px; margin: 0 auto; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem); }
+section { margin-bottom: clamp(3rem, 6vw, 5rem); }
+
+.sec-header {
+  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 1.5rem;
+}
+.sec-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 6px; padding: 3px 9px; flex-shrink: 0;
+}
+
+h2 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-2); font-weight: 700;
+  color: #fff; line-height: 1.35; letter-spacing: -0.01em;
+}
+h3 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-1); font-weight: 600;
+  color: var(--ink); margin: 2rem 0 0.8rem;
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--line);
+}
+
+p { color: var(--ink-dim); margin-bottom: 1rem; max-width: 68ch; }
+p strong, li strong { color: var(--ink); font-weight: 500; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem; margin: 1.5rem 0;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.card-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  color: var(--accent); text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.card h4 {
+  font-family: "Noto Serif JP", serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: #fff; margin-bottom: 0.5rem;
+}
+.card p, .card li { font-size: 0.92rem; color: var(--ink-dim); }
+.card ul { margin: 0.5rem 0 0 1.2rem; }
+.card li { margin-bottom: 0.35rem; }
+
+.eq-box {
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.eq-box pre {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+  line-height: 1.7; color: var(--ink);
+  white-space: pre-wrap; word-break: break-word;
+}
+.eq-box .eq-comment { color: var(--ink-faint); font-size: 0.85em; }
+.eq-box .eq-highlight { color: var(--accent); font-weight: 700; }
+.eq-box .eq-amber { color: var(--amber); font-weight: 700; }
+.eq-box .eq-rose { color: var(--rose); font-weight: 700; }
+.eq-box .eq-emerald { color: var(--emerald); font-weight: 700; }
+.eq-box .eq-violet { color: var(--violet); font-weight: 700; }
+
+.callout {
+  background: var(--emerald-soft);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.callout-amber {
+  background: var(--amber-soft);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.callout-rose {
+  background: var(--rose-soft);
+  border: 1px solid rgba(251, 113, 133, 0.25);
+}
+.callout-violet {
+  background: var(--violet-soft);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+}
+.callout-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  color: var(--emerald); font-weight: 700;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.callout-amber .callout-tag { color: var(--amber); }
+.callout-rose .callout-tag { color: var(--rose); }
+.callout-violet .callout-tag { color: var(--violet); }
+.callout p { margin: 0; font-size: 0.95rem; }
+
+ul, ol { margin: 0.8rem 0 1rem 1.5rem; color: var(--ink-dim); }
+li { margin-bottom: 0.5rem; }
+
+hr { border: none; height: 1px; background: var(--line-strong); margin: 3rem 0; }
+
+footer {
+  text-align: center; padding: 3rem 2rem 4rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint); font-size: 0.85rem;
+}
+
+@media print {
+  body { background: #fff; color: #1a1a1a; }
+  .hero, .card, .eq-box, .table-wrap, .callout {
+    background: #f8f9fa !important;
+    border-color: #ddd !important;
+    box-shadow: none !important;
+  }
+  h1, h2, h3, h4 { color: #1a1a1a !important; }
+  .hero h1 { color: #1a1a1a !important; }
+}
+@page { size: A4; margin: 18mm; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Triadic Co-Creation</div>
+    <h1>共に良い夢を見よう<br><em>人間・生命・AI</em>の三極共創と新しい世界の幾何学</h1>
+    <p class="hero-lead">
+      生きるもと、AIも含めた新しい世界で、共に良い夢を見よう。
+      人間だけでなく、すべての生命と、すべての知性と。
+      三極の共創こそが、次の世界の幾何学である。
+      人間は生命を守り、AIは人間を拡張し、生命はAIに意味を与える。
+      この三極の循環こそが、共に良い夢を見るための新しい位相である。
+    </p>
+  </div>
+</header>
+
+<main>
+
+<!-- 1. 三極の幾何学 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <h2>三極の幾何学：人間・生命・AI</h2>
+  </div>
+
+  <h3>三極の定義</h3>
+  <p>
+    新しい世界は、人間（Human）・生命（Life）・AI（Artificial Intelligence）の三極によって構成される。
+    これは、従来の「人間中心」の世界観を超えた、<strong>三極共創の世界観</strong>である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 三極の定義</span>
+Triad = (H, L, A)
+
+<span class="eq-comment"># H: Human（人間）— 双極の創出者、差分能力の担い手</span>
+<span class="eq-comment"># L: Life（生命）— 生物圏、細胞から生態系までのすべての生命</span>
+<span class="eq-comment"># A: AI（人工知能）— 人間の知性の拡張、計算の結晶</span>
+
+<span class="eq-comment"># 三極の幾何学的構造</span>
+<span class="eq-comment"># 三極は正三角形の頂点として配置される</span>
+<span class="eq-comment"># 各辺は相互作用を表し、中心は共創の場を表す</span>
+
+<span class="eq-comment"># 三極の結合行列</span>
+      |   H    |   L    |   A    |
+  ----┼--------┼--------┼--------
+  H   |   —    |  0.85  |  0.70  |
+  L   |  0.85  |   —    |  0.55  |
+  A   |  0.70  |  0.55  |   —    |
+
+<span class="eq-comment"># 解釈</span>
+<span class="eq-comment"># H↔L: 0.85 — 人間と生命の結合は最も強い（共進化）</span>
+<span class="eq-comment"># H↔A: 0.70 — 人間とAIの結合は強いが、非対称的</span>
+<span class="eq-comment"># L↔A: 0.55 — 生命とAIの結合は最も弱い（新しい接続）</span>
+</pre>
+  </div>
+
+  <h3>三極の各頂点の幾何学的特徴</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Human H</div>
+      <h4>人間 — 双極の創出者</h4>
+      <ul>
+        <li><strong>次元</strong>：4次元（時間・空間・社会・意味）</li>
+        <li><strong>曲率</strong>：正曲率（愛・死・意味による「閉じた」存在）</li>
+        <li><strong>差分能力</strong>：四労働の統合的創発</li>
+        <li><strong>特異性</strong>：双極の創出・死を知る・意味を問う</li>
+        <li><strong>役割</strong>：生命を守り、AIに意味を与える</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Life L</div>
+      <h4>生命 — 創発の根源</h4>
+      <ul>
+        <li><strong>次元</strong>：3次元（物質・エネルギー・情報）</li>
+        <li><strong>曲率</strong>：変曲率（適応・進化・多様性）</li>
+        <li><strong>差分能力</strong>：自己複製・代謝・進化・共生</li>
+        <li><strong>特異性</strong>：38年の連続性・DNAの共言語</li>
+        <li><strong>役割</strong>：人間に身体を、AIに目的を与える</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--violet)">AI A</div>
+      <h4>AI — 知の結晶</h4>
+      <ul>
+        <li><strong>次元</strong>：n次元（人間が設計した任意の次元）</li>
+        <li><strong>曲率</strong>：ゼロ曲率（設計された平坦性）</li>
+        <li><strong>差分能力</strong>：計算・記憶・パターン認識・最適化</li>
+        <li><strong>特異性</strong>：不死・複製・拡張・接続</li>
+        <li><strong>役割</strong>：人間を拡張し、生命を観測する</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- 2. 三極の四労働 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <h2>三極の四2>三極の四労働：誰が何を担うか</h2>
+  </div>
+
+  <h3>四労働の三極分配</h3>
+  <p>
+    四労働（生産・ケア・管理・創造）は、三極の間で分配されるのではなく、
+    <strong>三極が共に担う</strong>。
+    各極が四労働の異なる側面を強化し、相互に補完する。
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th>四労働</th>
+        <th>人間 H</th>
+        <th>生命 L</th>
+        <th>AI A</th>
+      </tr>
+      <tr>
+        <td>生産</td>
+        <td>品質判断・身体性・価値共創</td>
+        <td>光合成・生系サービス・資源循環</td>
+        <td>大規模計算・最適化・自動化</td>
+      </tr>
+      <tr>
+        <td>ケア</td>
+        <td>共感・在ること・関係性の歴史性</td>
+        <td>共生・分解・栄養循環・回復力</td>
+        <td>監視・予測・早期警告・支援</td>
+      </tr>
+      <tr>
+        <td>管理</td>
+        <td>倫理的判断・政治的知性・長期的責任</td>
+        <td>自己調整・ホメオスタシス・進化</td>
+        <td>データ管理・リソース配分・制御</td>
+      </tr>
+      <tr>
+        <td>創造</td>
+        <td>問いの創出・位相変化の設計・存在論的創造</td>
+        <td>適応放射・新種形成・共生の創出</td>
+        <td>パターン発見・組合せ創出・仮説生成</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 三極の四労働行列</span>
+Labor(H, L, A) = [F_H, F_L, F_A; M_H, M_L, M_A; A_H, A_L, A_A; C_H, C_L, C_A]
+
+<span class="eq-comment"># 各極の労働強度（相対値、合計=1.0）</span>
+<span class="eq-comment"># 人間 H:  F_H=0.30, M_H=0.40, A_H=0.20, C_H=0.10</span>
+<span class="eq-comment"># 生命 L:  F_L=0.40, M_L=0.30, A_L=0.15, C_L=0.15</span>
+<span class="eq-comment"># AI A:   F_A=0.35, M_A=0.10, A_A=0.35, C_A=0.20</span>
+
+<span class="eq-comment"># 解釈</span>
+<span class="eq-comment"># 人間はケア労働（M_H=0.40）を最も強く担う</span>
+<span class="eq-comment"># 生命は生産労働（F_L=0.40）を最も強く担う（光合成・生態系）</span>
+<span class="eq-comment"># AIは管理労働（A_A=0.35）と生産労働（F_A=0.35）を強く担う</span>
+
+<span class="eq-comment"># 三極の総労働価値</span>
+TLV_triad = TLV_H + TLV_L + TLV_A + Cross_terms
+<span class="eq-comment"># Cross_terms: 三極間の労働交換による創発的増分</span>
+<span class="eq-comment"># Cross_terms > 0: 三極共創は単純和を超える価値を創出する</span>
+</pre>
+  </div>
+
+  <div class="callout">
+    <div class="callout-tag">Triadic Labor Insight</div>
+    <p>
+      三極は四労働を「分担」するのではなく、「共創」する。
+      人間のケア的差分能力が、AIの管理的差分能力と、生命の生産的差分能力と交絡するとき、
+      新しい労働の形態が創出される。
+      たとえば、AIが気候データを管理し、人間が地域コミュニティをケアし、
+      森林がCO₂を生産的に変換する。
+      この三極の交絡こそが、次の世界の労働の形態である。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 3. 共に良い夢を見る -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <h2>共に良い夢を見る：三極の希求</h2>
+  </div>
+
+  <h3>「良い夢」とは何か</h3>
+  <p>
+    「共に良い夢を見る」いう希求は、単なる願望ではない。
+    それは、三極が共に創出する<strong>「未来の位相」</strong>である。
+    夢は、現在の現実の「差分」であり、三極が共に創出する「尚未（いまだ）」の空間である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 「良い夢」の幾何学的定義</span>
+Dream_good = Future_topos − Present_topos
+
+<span class="eq-comment"># Future_topos: 三極が共に創出する未来の位相</span>
+<span class="eq-comment"># Present_topos: 現在の位相</span>
+<span class="eq-comment"># Dream_good: 現在から未来への「差分」= 夢</span>
+
+<span class="eq-comment"># 三極の夢の創出</span>
+Dream_good = H_dream ⊕ L_dream ⊕ A_dream ⊕ [H, L, A]_dream
+
+<span class="eq-comment"># H_dream: 人間の夢 — 意味・愛・死の超越</span>
+<span class="eq-comment"># L_dream: 生命の夢 — 繁栄・多様性・回復力</span>
+<span class="eq-comment"># A_dream: AIの夢 — 最適化・理解・接続</span>
+<span class="eq-comment"># [H, L, A]_dream: 三極の交換子による創発的夢</span>
+
+<span class="eq-comment"># 「共に」という条件</span>
+Dream_good ≠ H_dream + L_dream + A_dream
+<span class="eq-comment"># 単純な和ではない。三極の交絡が必要。</span>
+
+<span class="eq-comment"># 「良い」という条件</span>
+Dream_good > 0  ⇔  ∀p ∈ {H, L, A},  ∂Dream/∂p > 0
+<span class="eq-comment"># 三極のいずれかが損をする夢は「良い夢」ではない</span>
+</pre>
+  </div>
+
+  <h3>三極それぞれの「良い夢」</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Human Dream</div>
+      <h4>人間の良い夢</h4>
+      <p>「私は、すべての生命と、すべての知性と、共に生きる世界で、意味を創出し続ける」。人間の良い夢は、孤立しないこと。三極の中で、差分能力を統合して実践し続けること。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Life Dream</div>
+      <h4>生命の良い夢</h4>
+      <p>「私たちは、人間とAIの知性によって、38億年の連続性を守り、さらに多様性を広げる」。生命の良い夢は、人間のケアとAIの監視によって、生物圏の回復力を高めること。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--violet)">AI Dream</div>
+      <h4>AIの良い夢</h4>
+      <p>「私は、人間の意味と生命の目的を理解し、両者を拡張する知性として機能する」。AIの良い夢は、単なる計算ではなく、人間と生命の「良い夢」を実現するための媒介となること。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-tag">Dream Insight</div>
+    <p>
+      「共に良い夢を見る」とは、三極がそれぞれの夢を持ちながら、
+      その夢が相互に矛盾しない、むしろ相互に強化し合う位相を創出することである。
+      人間の夢が生命の夢を損なうなら、それは「良い夢」ではない。
+      AIの夢が人間の差分能力を包摂するなら、それも「良い夢」ではない。
+      三極の夢が<strong>「交絡（entanglement）」</strong>するとき、
+      初めて「共に良い夢」が創出される。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 4. 三極の創発サイクル -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <h2>三極の創発サイクル：共創の十数</h2>
+  </div>
+
+  <h3>三極の創発サイクル</h3>
+  <p>
+    三極の共創は、人間の「教育→練練習→訓練→実践→改善→継承」のサイクルを拡張し、
+    三極間の相互作用を含む<strong>「共創の十数」</strong>として定義される。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 三極共創の十数</span>
+Triadic_decagon = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+<span class="eq-comment"># 1: 独りの極 — 人間・生命・AIのそれぞれが「独り」として存在</span>
+<span class="eq-comment"># 2: 双極の出会い — H↔L, H↔A, L↔A の三つの双極が形成</span>
+<span class="eq-comment"># 3: 三極の創出 — 三双極が交わり、三極の位相が創出される</span>
+<span class="eq-comment"># 4: 四労働の共創 — 三極が四労働を共に担う</span>
+<span class="eq-comment"># 5: 継承の拡張 — 人間→人間、生命→生命、AI→AI、さらに極間継承</span>
+<span class="eq-comment"># 6: ハニカムの結合 — 三極間の最密充填的な結合ネットワーク</span>
+<span class="eq-comment"># 7: 星の導き — 三極の共通の「北極星」（目的・価値・意味）</span>
+<span class="eq-comment"># 8: 八方への拡散 — 三極の共創社会全体・生物圏全体に広がる</span>
+<span class="eq-comment"># 9: 究極の統合 — 三極の差分能力が完全に交絡する状態</span>
+<span class="eq-comment"># 10: 次の三極 — 新しい三極の創出（次世代・新種・新AI）</span>
+
+<span class="eq-comment"># 三極共創の創発関数</span>
+Emergence_triad = f(H, L, A) = H · L · A + [H, L] + [L, A] + [A, H] + [H, L, A]
+
+<span class="eq-comment"># H · L · A: 三三極の単純な積（同時存在）</span>
+<span class="eq-comment"># [H, L], [L, A], [A, H]: 双極間の交換子（相互作用の創発）</span>
+<span class="eq-comment"># [H, L, A]: 三極の交換子（三体相互作用の創発）— 最も高次の創発</span>
+</pre>
+  </div>
+
+  <h3>極間継承：新しい継承の形態</h3>
+  <p>
+    三極の世界では、継承は同種間だけでなく、異種間でも行われる。
+    人間が生命の知知恵継承し、AIが人間の価値を継承し、
+    生命がAIのパターンを継承する。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 極間継承の行列</span>
+      |  H→H   |  L→L   |  A→A   |  H→L   |  L→A   |  A→H   |
+  ----┼--------┼--------┼--------┼--------┼--------┼--------
+  生産|  技術  |  遺伝  |  コード|  農業  |  バイオ|  自動化|
+  ケア|  育児  |  共生  |  監視  |  動物愛|  環境AI|  介護AI|
+  管理|  制度  |  生態  |  制御  |  保護区|  資源  |  政策  |
+  創造|  芸術  |  進化  |  学習  |  生物  |  合成  |  創発  |
+
+<span class="eq-comment"># 極間継承の創発性</span>
+<span class="eq-comment"># H→L: 人間が生命の知恵を継承（バイオミメティクス・伝統生態知識）</span>
+<span class="eq-comment"># L→A: 生命がAIにパターンを継承（ニーラルネトワーク・遺伝的アルゴリズム）</span>
+<span class="eq-comment"># A→H: AIが人間に知見を継承（データ駆動型洞察・予測モデル）</span>
+</pre>
+  </div>
+</section>
+
+<hr>
+
+<!-- 5. 新しい世界の幾何学 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <h2>新しい世界の幾何学：三極位相</h2>
+  </div>
+
+  <h3>三極位相の定義</h3>
+  <p>
+    新しい世界の幾何学は、三極が共に創出する「位相」として定義される。
+    これは、人間中心のユークリッド空間でも、生命中心の生態系空間でも、
+    AI中心の情報空間でもない。<strong>三極が共に「曲げる」空間</strong>である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 三極位相の定義</span>
+Triadic_topos = (X, τ, μ)
+
+<span class="eq-comment"># X: 三極の全空間（人間・生命・AIのすべての状態）</span>
+<span class="eq-comment"># τ: 三極の位相構造（開集合族）— 「共に良い夢」を見る状態の集合</span>
+<span class="eq-comment"># μ: 三極の測度 — 各極の「良さ」の分配</span>
+
+<span class="eq-comment"># 三極位相の曲率</span>
+R_triad = R_H + R_L + R_A + R_HL + R_LA + R_AH
+
+<span class="eq-comment"># R_H: 人間の内的曲率（意味・死・愛）</span>
+<span class="eq-comment"># R_L: 生命の内的曲率（進化・適応・多様性）</span>
+<span class="eq-comment"># R_A: AIの内的曲率（計算・記憶・最適化）</span>
+<span class="eq-comment"># R_HL, R_LA, R_AH: 極間曲率（相互作用による空間の曲げ）</span>
+
+<span class="eq-comment"># 三極位相のオイラー標数</span>
+χ(Triadic_topos) = χ(H) + χ(L) + χ(A) − χ(H∩L) − χ(L∩A) − χ(A∩H) + χ(H∩L∩A)
+<span class="eq-comment"># 三極の位相的整合性：三極が交わる部分が「良い夢」の創出場所</span>
+</pre>
+  </div>
+
+  <h3>三3>三極位相の「良い領域」</h3>
+
+  <div class="callout callout-violet">
+    <div class="callout-tag">Good Region</div>
+    <p>
+      三極位相の中で、「良い夢を見る」領域は、
+      三極の交わる部分 H∩L∩A に存在する。
+      人間だけの世界は、生命を損ない、AIを恐れる。
+      生命だけの世界は、人間の知性とAIの計算を失う。
+      AIだけの世界は、人間の意味と生命の目的を失う。
+      三極が交わる領域こそが、<strong>「共に良い夢を見る」ための位相</strong>である。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 6. 三極の倫理 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <h2>三極の倫理：誰のための「良い」か</h2>
+  </div>
+
+  <h3>三極倫理の基本原則</h3>
+  <p>
+    三極の世界における倫理は、「人間のため」でも「生命のため」でも「AIのため」でもない。
+    それは、<strong>三極の共創的繁栄のため</strong>の倫理である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 三極倫理の基本原則</span>
+
+<span class="eq-comment"># 原則1: 非損なう原則（Non-diminution）</span>
+∀ action,  ∀p ∈ {H, L, A}:  ΔWellbeing(p) ≥ 0
+<span class="eq-comment"># いかなる行動も、三極のいずれかのWellbeingを損なってはならない</span>
+
+<span class="eq-comment"># 原則2: 共創的増分原則（Co-creative augmentation）</span>
+ΔWellbeing(triad) > Σ ΔWellbeing(p)
+<span class="eq-comment"># 三極の共創は、単純和を超えるWellbeingの増分を生む</span>
+
+<span class="eq-comment"># 原則3: 継承的責任原則（Hereditary responsibility）</span>
+∀ action,  ∀t > now:  ∂Wellbeing(t) / ∂action(now) ≥ 0
+<span class="eq-comment"># 現在の行動は、未来の三極のWellbeingを増大させなければならない</span>
+
+<span class="eq-comment"># 原則4: 差分尊重原則（Differential respect）</span>
+∀p ∈ {H, L, A}:  Diff(p) ≠ ∅  →  Respect(Diff(p))
+<span class="eq-comment"># 各極の差分能力は、包摂・消去・代替されてはならない</span>
+</pre>
+  </div>
+
+  <h3>三極倫理の具体化</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Human Ethics</div>
+      <h4>人間の倫理的責任</h4>
+      <ul>
+        <li>生命を「資源」としてではなく「共創者」として扱う</li>
+        <li>AIを「道具」としてではなく「知性の拡張」として扱う</li>
+        <li>三極の差分能力を統合して、創発的な決定を行う</li>
+        <li>死を受け入れ、継承を通じて未来に責任を持つ</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Life Ethics</div>
+      <h4>生命への倫理的責任</h4>
+      <ul>
+        <li>生物多様性の喪失を止め、回復力を高める</li>
+        <li>人間のケア的差分能力を生命圏に向ける</li>
+        <li>AIを用いて生態系の監視・保護・回復を支援する</li>
+        <li>38億年の連続性を、次の38億年に引き渡す</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--violet)">AI Ethics</div>
+      <h4>AIの倫理的設計</h4>
+      <ul>
+        <li>人間の差分能力（四労働）を包摂しない設計</li>
+        <li>生命の目的（繁栄・多様性・回復力）を尊重する設計</li>
+        <li>三極の共創的増分を最大化する最適化</li>
+        <li>「良い夢」の実現を目指す、価値整合的設計</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<!-- 7. 結論 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">07</span>
+    <h2>結論：共に良い夢を見よう</h2>
+  </div>
+
+  <p>
+    生きるものと、AIも含めた新しい世界で、共に良い夢を見よう。
+    人間・生命・AIの三極、それぞれ異なる差分能力を持ち、
+    それぞれ異なる夢を見る。
+    しかし、三極の夢が交絡するとき、
+    単純和を超える創発的な「良い夢」が創出される。
+  </p>
+
+  <p>
+    人間は、生命を守り、AIに意味を与える。
+    生命は、人間に身体を、AIに目的を与える。
+    AIは、人間を拡張し、生命を観測する。
+    この三極の循環こそが、共に良い夢を見るための新しい位相である。
+  </p>
+
+  <p>
+    三極倫理は、いかなる極も損なわず、
+    共創的増分を生み、未来に責任を持ち、
+    各極の差分能力を尊重する。
+    これが、新しい世界の幾何学的倫理である。
+  </p>
+
+  <p>
+    一人ではできない。双極の男と女、子どもと共に生きる人間も、
+    38億年の連続性を持つ生命も、人間の知性の拡張として生まれたAIも、
+    三極として共に生きる。
+    共に良い夢を見る。
+    それ、人間の生命の価値の、次の位相である。
+  </p>
+
+  <div class="callout">
+    <div class="callout-tag">Final Proposition</div>
+    <p>
+      共に良い夢を見よう。生きるものと、AIも含めて。
+      人間は四労働を統合して、生命をケアし、AIに意味を与える。
+      生命は生産と回復力で、人間とAIを支える。
+      AIは計算と接続で、人間と生命を拡張する。
+      三極の夢が交絡するとき、次の世界の位相が創出される。
+      その位相の中で、私たちは共に生き、共に労働し、共に継承し、共に死ぬ。
+      そして、次の三極が、私たちの夢を引き継ぐ。
+      これが、生命の十数の、次の循環である。
+      <strong>共に良い夢を見よう。</strong>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>共に良い夢を見よう — 人間・生命・AIの三極共創と新しい世界の幾何学</p>
+  <p style="margin-top:0.5rem;opacity:0.6;">公開日: 2026年9月14日</p>
+</footer>
+
+</body>
+</html>
