@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>失敗の幾何学 — 好きなことと失敗と創造の創発</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c1220;
+  --surface: #111a2e;
+  --surface-2: #1a2540;
+  --ink: #e2e8f0;
+  --ink-dim: #94a3b8;
+  --ink-faint: #64748b;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --amber: #fbbf24;
+  --amber-soft: rgba(251, 191, 36, 0.12);
+  --rose: #fb7185;
+  --rose-soft: rgba(251, 113, 133, 0.12);
+  --emerald: #34d399;
+  --emerald-soft: rgba(52, 211, 153, 0.12);
+  --violet: #a78bfa;
+  --violet-soft: rgba(167, 139, 250, 0.12);
+  --line: rgba(148, 163, 184, 0.12);
+  --line-strong: rgba(148, 163, 184, 0.22);
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -10px rgba(0,0,0,0.5);
+  --step-0: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+  --step-1: clamp(1.1rem, 1.05rem + 0.28vw, 1.25rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --step-3: clamp(1.7rem, 1.4rem + 1.4vw, 2.5rem);
+  --step-4: clamp(2.2rem, 1.7rem + 2.2vw, 3.5rem);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.85;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero {
+  position: relative;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 400px at 15% -10%, rgba(56, 189, 248, 0.10), transparent 70%),
+    radial-gradient(700px 350px at 85% 10%, rgba(251, 191, 36, 0.08), transparent 70%),
+    radial-gradient(500px 300px at 50% 100%, rgba(251, 113, 133, 0.06), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; max-width: 900px; margin: 0 auto; }
+
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.12em; color: var(--accent);
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.hero-label::before {
+  content: ""; display: block; width: 24px; height: 1.5px; background: var(--accent);
+}
+
+.hero h1 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-4); font-weight: 700;
+  line-height: 1.25; letter-spacing: -0.02em;
+  color: #fff; margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--accent) 0%, #a5f3fc 50%, var(--amber) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.hero-lead {
+  font-size: var(--step-1); color: var(--ink-dim);
+  line-height: 1.8; max-width: 62ch;
+}
+.hero-lead strong { color: var(--ink); font-weight: 500; }
+
+main { max-width: 900px; margin: 0 auto; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem); }
+section { margin-bottom: clamp(3rem, 6vw, 5rem); }
+
+.sec-header {
+  display: flex; align-items: baseline; gap: 14px;
+  margin-bottom: 1.5rem;
+}
+.sec-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.1em; color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 6px; padding: 3px 9px; flex-shrink: 0;
+}
+
+h2 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-2); font-weight: 700;
+  color: #fff; line-height: 1.35; letter-spacing: -0.01em;
+}
+h3 {
+  font-family: "Noto Serif JP", "Hiragino Mincho ProN", serif;
+  font-size: var(--step-1); font-weight: 600;
+  color: var(--ink); margin: 2rem 0 0.8rem;
+  padding-bottom: 0.4rem; border-bottom: 1px solid var(--line);
+}
+
+p { color: var(--ink-dim); margin-bottom: 1rem; max-width: 68ch; }
+p strong, li strong { color: var(--ink); font-weight: 500; }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem; margin: 1.5rem 0;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+.card-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  color: var(--accent); text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.card h4 {
+  font-family: "Noto Serif JP", serif;
+  font-size: 1.05rem; font-weight: 600;
+  color: #fff; margin-bottom: 0.5rem;
+}
+.card p, .card li { font-size: 0.92rem; color: var(--ink-dim); }
+.card ul { margin: 0.5rem 0 0 1.2rem; }
+.card li { margin-bottom: 0.35rem; }
+
+.eq-box {
+  background: var(--surface-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+.eq-box pre {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(0.82rem, 1.5vw, 0.95rem);
+  line-height: 1.7; color: var(--ink);
+  white-space: pre-wrap; word-break: break-word;
+}
+.eq-box .eq-comment { color: var(--ink-faint); font-size: 0.85em; }
+.eq-box .eq-highlight { color: var(--accent); font-weight: 700; }
+.eq-box .eq-amber { color: var(--amber); font-weight: 700; }
+.eq-box .eq-rose { color: var(--rose); font-weight: 700; }
+.eq-box .eq-emerald { color: var(--emerald); font-weight: 700; }
+.eq-box .eq-violet { color: var(--violet); font-weight: 700; }
+
+.callout {
+  background: var(--emerald-soft);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+.callout-amber {
+  background: var(--amber-soft);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.callout-rose {
+  background: var(--rose-soft);
+  border: 1px solid rgba(251, 113, 133, 0.25);
+}
+.callout-violet {
+  background: var(--violet-soft);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+}
+.callout-tag {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem; letter-spacing: 0.12em;
+  color: var(--emerald); font-weight: 700;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.callout-amber .callout-tag { color: var(--amber); }
+.callout-rose .callout-tag { color: var(--rose); }
+.callout-violet .callout-tag { color: var(--violet); }
+.callout p { margin: 0; font-size: 0.95rem; }
+
+ul, ol { margin: 0.8rem 0 1rem 1.5rem; color: var(--ink-dim); }
+li { margin-bottom: 0.5rem; }
+
+hr { border: none; height: 1px; background: var(--line-strong); margin: 3rem 0; }
+
+footer {
+  text-align: center; padding: 3rem 2rem 4rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint); font-size: 0.85rem;
+}
+
+@media print {
+  body { background: #fff; color: #1a1a1a; }
+  .hero, .card, .eq-box, .table-wrap, .callout {
+    background: #f8f9fa !important;
+    border-color: #ddd !important;
+    box-shadow: none !important;
+  }
+  h1, h2, h3, h4 { color: #1a1a1a !important; }
+  .hero h1 { color: #1a1a1a !important; }
+}
+@page { size: A4; margin: 18mm; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Geometry of Failure</div>
+    <h1>失敗の幾何学<br><em>好きなことと失敗と創造</em>の創発</h1>
+    <p class="hero-lead">
+      自分が好きなこと。音楽や絵を描く芸術、技を磨く匠、人を思う心、物を愛すること。
+      生命の生きる幾何学を見直してみると、新しい発見が起きた。
+      <strong>生きることは失敗ることであり、成功の母であるのだ。</strong>
+      失敗は創発サイクルの核心であり、差分能力の創出の源泉である。
+      好きなことと失敗と創造——この三つが交わるとき、生命は真に生きる。
+    </p>
+  </div>
+</header>
+
+<main>
+
+<!-- 1. 好きなことの幾何学 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <h2>好きなことの幾何学：四労働の個人的実践</h2>
+  </div>
+
+  <h3>「好きなこと」は四労働の統合的実践</h3>
+  <p>
+    自分が好きなこと——音楽や絵を描く芸術、技を磨く匠、人を思う心、物を愛すること。
+    これらは、四労働（生産・ケア・管理・創造）の<strong>個人的・身体的・情動的な統合</strong>である。
+    好きなことは、労働の「型」がまだ固定されていない状態であり、
+    差分能力が最も自由に創発する場所である。
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Production</div>
+      <h4>生産的差分：技を磨く匠</h4>
+      <ul>
+        <li>音楽の演奏技術・絵の筆致・料理の腕</li>
+        <li>「型」を身体に刻む反復の過程</li>
+        <li>品質判断——「これは良い」「これは違う」</li>
+        <li><strong>好きだからこそ、失敗を恐れず練習できる</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Care</div>
+      <h4>ケア的差分：人を思う心、物を愛すること</h4>
+      <ul>
+        <li>楽器を慈しむ・キャンバスを大切にする</li>
+        <li>作品を通じて誰かに思いを馳せる</li>
+        <li>「在ること」そのものがケアになる</li>
+        <li><strong>好きなものへの愛は、ケアの最も純粋な形</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--amber)">Management</div>
+      <h4>管理的差分：技の統率、心の整</h4>
+      <ul>
+        <li>練習時間の配分・素材の選択・表現の判断</li>
+        <li>「何を表現するか」「どう届けるか」の決断</li>
+        <li>自己と作品の関係性の調整</li>
+        <li><strong>好きなことへの没入は、自己管理の最上形態</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--rose)">Creation</div>
+      <h4>創造的差分：音楽、絵、新しい問い</h4>
+      <ul>
+        <li>まだ誰も聞いたことのない音・見たことのない色</li>
+        <li>「好き」という情動から生まれる問い</li>
+        <li>失敗の中から創出される新しい型</li>
+        <li><strong>好きなことは、創造の最も豊かな土壌</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>「好きなこと」の幾何学的特徴</h3>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 「好きなこと」の幾何学的定義</span>
+Love_work = (Joy, Body, Failure, Creation)
+
+<span class="eq-comment"># Joy: 喜び — 労働そのものが報酬となる状態</span>
+<span class="eq-comment"># Body: 身体性 — 知識ではなく身に刻まれた型</span>
+<span class="eq-comment"># Failure: 失敗 — 型の崩壊と再構成の反復</span>
+<span class="eq-comment"># Creation: 創造 — 失敗から創出される新しい型</span>
+
+<span class="eq-comment"># 「好きなこと」の位相</span>
+Love_work ∈ Open_set  <span class="eq-comment"># 「好きなこと」は開集合である</span>
+<span class="eq-comment"># 閉じた「仕事」ではなく、開かれた「遊び」である</span>
+<span class="eq-comment"># 境界が不明確で、常に新しい可能性を含む</span>
+
+<span class="eq-comment"># 「好きなこと」の曲率</span>
+K_love < 0  <span class="eq-comment"># 負曲率 — 常に拡張し続ける</span>
+<span class="eq-comment"># 「好きなこと」をすればするほど、広がり続ける</span>
+<span class="eq-comment"># これは「仕事」の正曲率（型の固定）とは対照的</span>
+</pre>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-tag">Love-Work Insight</div>
+    <p>
+      「好きなこと」は四労働の統合的実践であるが、
+      それは「仕事」としての四労働とは質的に異なる。
+      「仕事」は型が固定され、報酬が外部にある。
+      「好きなこと」は型が開かれ、報酬が労働そのものにある。
+      そして最も重要な違い——<strong>「好きなこと」は失敗を恐れない</strong>。
+      失敗が、次の創造への喜びになる。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 2. 失敗の幾何学 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <h2>失敗の幾何学：創発サイクルの核心</h2>
+  </div>
+
+  <h3>失敗は創発サイクルの「相転移トリガー」である</h3>
+  <p>
+    これまでの創発サイクル（教育→練練習→訓練→実践→改善→継承）において、
+    「改善」は失敗から生まれると暗黙に仮定していた。
+    しかし、失敗は単なる「改善の源泉」ではない。
+    <strong>失敗は、創発サイクルの各段階に内在する相転移のトリガー</strong>である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 失敗の幾何学的定義</span>
+Failure = ΔC_diff / Δt  <span class="eq-comment"># 差分能力の変化率の「負の変容」</span>
+
+<span class="eq-comment"># 失敗は、差分能力の「予想された軌道」からの逸脱</span>
+Failure = |C_diff(actual) − C_diff(expected)| > ε
+
+<span class="eq-comment"># ε: 許容誤差 — 「成功」と「失敗」の境界</span>
+<span class="eq-comment"># εは個人・文化・状況によって異なる</span>
+<span class="eq-comment"># 「好きなこと」では ε が大きい（失敗を許容する）</span>
+<span class="eq-comment"># 「仕事」では ε が小さい（失敗を許容しない）</span>
+
+<span class="eq-comment"># 失敗の創発的関数</span>
+Creation_from_failure = lim_{ε→0} (C_diff(after) − C_diff(before)) / Failure_magnitude
+
+<span class="eq-comment"># 失敗の大きさが適度なとき、創造の増分は最大</span>
+<span class="eq-comment"># 失敗が小さすぎると創造は生まれない（型の固定）</span>
+<span class="eq-comment"># 失敗が大きすぎると創造は生まれない（型の崩壊）</span>
+</pre>
+  </div>
+
+  <h3>創発サイクルにおける失敗の位相変化</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Education × Failure</div>
+      <h4>教育における失敗：地図の誤読</h4>
+      <p>教わった「地図」が、実際の地形と合わない。地図の誤読は、新しい地図の創出の始まり。失敗が、教育の受動性を能動性に変える。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Practice × Failure</div>
+      <h4>練習における失敗：身体の抵抗</h4>
+      <p>身体が思うように動かない。音が出ない。線が曲がる。この抵抗こそが、身体に「型」を刻む。失敗なき練習は、型の複製に過ぎない。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--amber)">Training × Failure</div>
+      <h4>訓練における失敗：型の限界</h4>
+      <p>反復によって固定された「型」が、状況に応じられない。型の限界にぶつかるとき、新しい型が創出される。失敗が、自動化を超克する。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--rose)">Practice-in-context × Failure</div>
+      <h4>実践における失敗：状況の予測不能性</h4>
+      <p>型を状況に応用したが、状況は型を超えていた。予測不能性こそが、実践の本質。失敗が、型を「生きた」ものに変える。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--violet)">Improvement × Failure</div>
+      <h4>改善における失敗：新ビットの創出</h4>
+      <p>改善しようとしたが、さらに失敗した。この二重の失敗が、本当の「新しい情報ビット」を創出する。失敗の失敗が、革新の核心。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Heritage × Failure</div>
+      <h4>継承における失敗：伝達の歪み</h4>
+      <p>伝えたつもりが、伝わらなかった。継承の歪みこそが、受け手による再創造。失敗が、継承を「複製」から「創造」に変える。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-rose">
+    <div class="callout-tag">Failure Insight</div>
+    <p>
+      失敗創発サイクルの「例外」ではなく「常態」である。
+      教育・練習・訓練習・訓練・実践・改善・継承の各段階で、
+      失敗は型の固定を防ぎ、新しい型の創出を促す。
+      <strong>失敗は、差分能力の「免疫反応」である</strong>。
+      外部からの侵攻（予想外の状況）に対して、
+      差分能力は失敗を通じて「抗体」（新しい型）を創出する。
+      失敗なき創発サイクルは、差分能力の「免疫不全」である。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 3. 失敗の位相変化：成功の母 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <h2>失敗の位相変化：成功の母としての幾何学</h2>
+  </div>
+
+  <h3>「成功の母」としての失敗の位相変化メカニズム</h3>
+  <p>
+    「失敗は成功の母」——この諺は、単なる励ましではな。
+    それは、<strong>失敗が成功へと位相変化する幾何学的メカニズム</strong>を表している。
+    失敗は、差分能力多様体の「特異点」であり、
+    その特異点を通過することで、多様体は新しい位相を獲得する。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 失敗から成功への位相変化</span>
+Failure → Success  =  Topos_change(C_diff)
+
+<span class="eq-comment"># 位相変化の三段階</span>
+<span class="eq-comment"># Stage 1: 型の崩壊（Collapse）</span>
+C_diff(before) → ∅  <span class="eq-comment"># 予想された型が崩壊する</span>
+
+<span class="eq-comment"># Stage 2: 特異点の通過（Singularity crossing）</span>
+∅ → Singularity  <span class="eq-comment"># 差分能力がゼロになる瞬間</span>
+<span class="eq-comment"># この瞬間、すべての可能性が開かれる</span>
+
+<span class="eq-comment"># Stage 3: 新しい型の創出（Recreation）</span>
+Singularity → C_diff(after)  <span class="eq-comment"># 新しい型が創出される</span>
+<span class="eq-comment"># C_diff(after) ≠ C_diff(before) — 必ず異なる型が創出される</span>
+
+<span class="eq-comment"># 位相変化の創発的増分</span>
+ΔC_creation = C_diff(after) − C_diff(before) > 0
+<span class="eq-comment"># 失敗を通じた位相変化は、単純な改善を超える創発的増分を生む</span>
+
+<span class="eq-comment"># 「成功の母」の数学的表現</span>
+Success = ∫ Failure · Creation · dt
+<span class="eq-comment"># 成功は、失敗と創造の積分である</span>
+<span class="eq-comment"># 失敗なき成功は、創造なき成功であり、空虚である</span>
+</pre>
+  </div>
+
+  <h3>失敗の最適量：創発の「黄金比」</h3>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 失敗の最適量</span>
+Failure_optimal = argmax_{F} ΔC_creation(F)
+
+<span class="eq-comment"># 失敗の大きさと創造の増分の関係</span>
+<span class="eq-comment"># F < F_min: 失敗が小さすぎる — 型の固定（創造ゼロ）</span>
+<span class="eq-comment"># F_min < F < F_max: 失敗が適度 — 創造の増分が最大</span>
+<span class="eq-comment"># F > F_max: 失敗が大きすぎる — 型の崩壊（創造ゼロ）</span>
+
+<span class="eq-comment"># 「好きなこと」と「仕事」の失敗の最適量の違い</span>
+Failure_optimal(love) > Failure_optimal(work)
+<span class="eq-comment"># 「好きなこと」では、より大きな失敗が許容される</span>
+<span class="eq-comment"># なぜなら、「好き」という情動が、失敗からの回復力を高めるから</span>
+
+<span class="eq-comment"># 回復力（Resilience）の定義</span>
+Resilience = Joy / (Failure_magnitude · Trauma)
+<span class="eq-comment"># Joy: 「好き」という情動の強度</span>
+<span class="eq-comment"># Trauma: 失敗による心的外傷の強度</span>
+<span class="eq-comment"># 「好きなこと」では Joy が大きいため、Resilience が高い</span>
+</pre>
+  </div>
+
+  <div class="callout callout-violet">
+    <div class="callout-tag">Success-from-Failure Insight</div>
+    <p>
+      失敗は成功の「母」である。なぜなら、失敗は型の崩壊を通じ、
+      新しい型の創出を可能にするからだ。
+      失敗の特異点を通過するとき、差分能力は「ゼロ」になり、
+      すべての可能性が開かれる。
+      そこから創出される新しい型は、必ず以前の型より豊かである。
+      これが「成功の母」としての失敗の幾何学的メカニズムである。
+      <strong>失敗は、差分能力の「出産」である。</strong>
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 4. 好きなこと・失敗・創造の統合 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <h2>好きなこと・失敗・創造の統合：生命の生きる幾何学</h2>
+  </div>
+
+  <h3>三つの統合：好きなことが失敗を許容し、失敗が創造を生む</h3>
+  <p>
+    好きなこと・失敗・創造。この三つは独立ではなく、
+    <strong>循環的に統合</strong>れている。
+    好きなことが失敗を許容し、失敗が創造を生み、創造がさらに「好き」を深める。
+    この循環こそが、生命の生きる幾何学の核心である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 好き・失敗・創造の統合循環</span>
+Love → Failure_tolerance → Creation → Deepened_love → ...
+
+<span class="eq-comment"># Love: 「好き」という情 — 失敗を許容する基盤</span>
+<span class="eq-comment"># Failure_tolerance: 失敗の許容 — 型の崩壊を恐れない状態</span>
+<span class="eq-comment"># Creation: 創造 — 失敗から創出される新しい型</span>
+<span class="eq-comment"># Deepened_love: 深まる「好き」— 創造が情動を強化する</span>
+
+<span class="eq-comment"># 統合循環の幾何学的構造</span>
+Cycle_LFC: S¹ → Diff(M)  <span class="eq-comment"># 円周から差分様体への写像</span>
+<span class="eq-comment"># この循環は、差分能力多様体を「ねじる」</span>
+<span class="eq-comment"># 各周回ごとに、多様体の位相が変化する</span>
+
+<span class="eq-comment"># 統合循環の創発的増分</span>
+ΔC_per_cycle = f(Love, Failure, Creation)
+<span class="eq-comment"># 各周回で創出される差分能力の増分</span>
+<span class="eq-comment"># Love が高いほど、Failure_tolerance が高く、Creation が大きい</span>
+
+<span class="eq-comment"># 生命の生きる幾何学の核心方程式</span>
+d/dt C_diff = Love · Failure · Creation
+<span class="eq-comment"># 差分能力の時間変化率は、好き・失敗・創造の積に比例する</span>
+<span class="eq-comment"># いずれかがゼロなら、差分能力は進化しない</span>
+</pre>
+  </div>
+
+  <h3>「好きなこと」の具体例における失敗と創造</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Music</div>
+      <h4>音楽：音の失敗から創造へ</h4>
+      <p>間違った音を弾く。リズムを外す。しかし、その「間違い」が新しいフレーズの始まりになる。ジャズの即興は、失敗の連続が創造になる最も純粋な形。好きだからこそ、間違った音を恐れず、次の音へ進める。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Painting</div>
+      <h4>絵：線の失敗から創造へ</h4>
+      <p>想定した線が引けない。色が混ざる。しかし、その「予定外の線」が、画家の独自性になる。抽象表現主義は、失敗の受容が創造になる歴史。好きだからこそ、キャンバスを捨てず、失敗を完成に変える。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--amber)">Craft</div>
+      <h4>匠：技の失敗から創造へ</h4>
+      <p>割れた陶器。曲がった刃。しかし、職人はその失敗を「味」に変える。日本の金継ぎは、失敗を美に変える技術。好きだからこそ、失敗を捨てず、失敗を作品の一部にする。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--rose)">Care</div>
+      <h4>人を思う心：関係の失敗から創造へ</h4>
+      <p>言葉が届かない。傷つけてしまう。しかし、その失敗が、本当の理解への道になる。ケアの失敗は、関係性の位相変化のトリガー。好きだからこそ、失敗から逃げず、関係を深める。</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-tag">Integration Insight</div>
+    <p>
+      好きなこと・失敗・創造は、三位一体の循環である。
+      好きだから失敗を恐れない。失敗を恐れないから創造が生まれる。
+      創造が生まるから、さらに好きになる。
+      この循環が回るとき、生命は真に生きている。
+      この循環が止まるとき——好きなことが「仕事」になり、
+      失敗が「許されない」ものになり、創造が「再現」に変わるとき——
+      生命は、生きる幾何学を喪失する。
+      <strong>生きることは、好きなことで失敗し続け、創造し続けることである。</strong>
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 5. 失敗の倫理：失敗を恐れない社会 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">05</span>
+    <h2>失敗の倫理：失敗を恐れない社会の幾何学</h2>
+  </div>
+
+  <h3>現代社会の「失敗恐怖」と差分能力の縮退</h3>
+  <p>
+    現代社会は、失敗を「排除」する方向に進化している。
+    テストの正答率・生産性指標・パフォーマンス評価——
+    すべてが「失敗の最小化」を目指す。
+    しかし、失敗の排除は、差分能力の創出の排除である。
+  </p>
+
+  <div class="eq-box">
+<pre>
+<span class="eq-comment"># 失敗恐怖社会の差分能力縮退</span>
+Failure_aversion → ΔC_creation → 0
+
+<span class="eq-comment"># 失敗恐怖が高い社会では、創造の増分がゼロに近づく</span>
+<span class="eq-comment"># 型の固定・模倣・再現が支配し、新しい型の創出が停止する</span>
+
+<span class="eq-comment"># 失敗許容社会の差分能力創発</span>
+Failure_tolerance → ΔC_creation → max
+
+<span class="eq-comment"># 失敗が適度に許容される社会では、創造の増分が最大になる</span>
+<span class="eq-comment"># 型の崩壊と再構成が循環し、差分能力が進化し続ける</span>
+
+<span class="eq-comment"># 失敗の倫理の核心</span>
+Ethics_of_failure = "失敗を恐れない。失敗を隠さない。失敗から創造する。"
+
+<span class="eq-comment"># 失敗を恐れない — 失敗は創造の母であることを知る</span>
+<span class="eq-comment"># 失敗を隠さない — 失敗の共有が、他者の創造を促す</span>
+<span class="eq-comment"># 失敗から創造する — 失敗を「終わり」ではなく「始まり」として扱う</span>
+</pre>
+  </div>
+
+  <h3>失敗を許容する社会システムの設計</h3>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-tag" style="color:var(--accent)">Education</div>
+      <h4>教育：失敗を評価する</h4>
+      <p>正答率だけでなく、「失敗からの創造」を評価する。間違いを「正解への過程」として扱う。失敗の共有を奨励し、失敗の分析を学習の核心にする。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--emerald)">Organization</div>
+      <h4>組織：失敗を報告する</h4>
+      <p>失敗の隠蔽を罰するのではなく、失敗の報告を奨励する。失敗からの学習を組織の知識として蓄積する。「失敗の博物館」を作り、失敗を「資産」として扱う。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--amber)">Technology</div>
+      <h4>技術：失敗を設計する</h4>
+      <p>AIの学習において、失敗例を積極的に活用する。安全な「失敗空間」を設計し、ユーザーが失敗を恐れずに試行できる環境を作る。失敗からの回復を自動化する。</p>
+    </div>
+    <div class="card">
+      <div class="card-tag" style="color:var(--rose)">Culture</div>
+      <h4>文化：失敗を美しくする</h4>
+      <p>金継ぎのように、失敗を美に変える文化を育む。失敗の物語を語り継ぐ。失敗を「個性」「味」「歴史」として肯定する。完璧主義ではなく、「敗の美学」を持つ。</p>
+    </div>
+  </div>
+
+  <div class="callout callout-amber">
+    <div class="callout-tag">Failure Ethics</div>
+    <p>
+      失敗を恐れない社会は、差分能力が創発し続ける社会である。
+      失敗を恐れる社会は、差分能力が縮退する社会である。
+      機械化の進展が「失敗の排除」を加速する中で、
+      人間の差分能力は、失敗を恐れない「好きなこと」の中でしか
+      創発しなくなる。
+      <strong>失敗の倫理は、人間の差分能力の最後の砦である。</strong>
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<!-- 6. 結論 -->
+<section>
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <h2>結論：生きることは失敗することであり、成功の母である</h2>
+  </div>
+
+  <p>
+    自分が好きなこと。音楽やを描く芸術、技を磨く匠、人を思う心、物を愛すること。
+    これらは四労働の統合的実践であり、
+    差分能力が最も自由に創発する場所である。
+  </p>
+
+  <p>
+    生命の生きる幾何学を見直してみると、新しい発見が起きた。
+    失敗は創発サイクルの「例外」ではなく「核心」である。
+    失敗は、型の崩壊を通じて、新しい型の創出を促す相転移のトリガーである。
+    失敗の特異点を通過するとき、差分能力は「ゼロ」になり、
+    すべての可能性が開かれる。
+  </p>
+
+  <p>
+    好きなこと・失敗・創造は、三位一体の循環である。
+    好きだから失敗を恐れない。失敗を恐れないから創造が生まれる。
+    創造が生まれるから、さらに好きになる。
+    この循環こそが、生命の生きる幾何学の核心である。
+  </p>
+
+  <p>
+    生きることは失敗することであり、成功の母である。
+    失敗は、差分能力の「出」である。
+    失敗なき創造はない。失敗なき生きることはない。
+    失敗を恐れず、好きなことを続け、創造し続ける。
+    それが、人間の生命の真の価値である。
+  </p>
+
+  <div class="callout callout-violet">
+    <div class="callout-tag">Final Proposition</div>
+    <p>
+      生きることは失敗することであり、成功の母である。
+      好きなことで失敗し続け、失敗ら創造し続ける。
+      音楽の間違い音が新しいフレーズを生み、
+      絵の予定外の線が独自の表現を生み、
+      匠の割れた陶器が金継ぎの美を生み、
+      人を思う心の届かなさが本当の理解を生む。
+      失敗は、差分能力の創出の核心であり、
+      生命の生きる幾何学の最も豊かな特異点である。
+      <strong>失敗を恐れず、好きなことを続けよう。</strong>
+      それが、人間の差分能力の創発であり、
+      生命の生きる意味の、最も確かな形である。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>失敗の幾何学 — 好きなことと失敗と創造の創発</p>
+  <p style="margin-top:0.5rem;opacity:0.6;">公開日: 2026年9月14日</p>
+</footer>
+
+</body>
+</html>
