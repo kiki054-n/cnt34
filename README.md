@@ -9,7 +9,7 @@
 
 [![Author](https://img.shields.io/badge/Author-川上真潔-f39c12?style=for-the-badge)](https://orcid.org/0009-0009-2972-6511)
 
-📄 [紹介ページ](https://kiki054-n.github.io/cnt34/CNT34_TriTetra_Introduction.html) ・ 📖 [記号と用語の定義](01_FOUNDATION/definitions.md) ・ 🤝 [参加のしかた](CONTRIBUTING.md) ・ 🌐 [English](./README_en.md)
+📄 [紹介ページ](https://kiki054-n.github.io/cnt34/CNT34_TriTetra_Introduction.html) ・ 📖 [記号と用語の定義](01_FOUNDATION/definitions.md) ・ 🌏 [世界社会への展開](world_society/readme.md) ・ 🤝 [参加のしかた](CONTRIBUTING.md) ・ 🌐 [English](./README_en.md)
 
 ---
 
@@ -182,6 +182,25 @@ $$XYZ\pi = 1 \qquad OOO\pi = 1$$
 - [`pillar-04-invent.md`](06_GOVERNANCE/pillars/pillar-04-invent.md) — 第4柱・創造労働（回転軸 $\pi$ そのもの）
 - [`QUESTIONS.md`](06_GOVERNANCE/pillars/QUESTIONS.md) — 4つの柱に対する問い
 - [`gratitude.md`](07_WCCC/gratitude.md) — 感謝の循環プロトコル
+
+---
+
+## 🌏 world_society — 世界社会への展開
+
+四労働（生産・ケア・管理・創造）と「差分価値」の考えを、個人・家族・地域・国家・世界というスケールへ広げた読みものです。すべてブラウザで読めます。
+
+📂 章の目次とねらい: [`world_society/readme.md`](world_society/readme.md)
+
+| # | ドキュメント | ひとこと |
+| :-- | :--- | :--- |
+| 01 | [人間の労働の幾何学](https://kiki054-n.github.io/cnt34/world_society/docs/人間の労働の幾何学_生産・ケア・管理・創造.html) | 労働を生産・ケア・管理・創造の4類型に分け、幾何次元とGTM多面体に対応づける |
+| 02 | [人間の価値の幾何学](https://kiki054-n.github.io/cnt34/world_society/docs/人間の価値の幾何学_労働の差分空間と機械の包摂.html) | 人間の価値 = 人間にできること − 機械にできること。残差空間としての差分価値 |
+| 03 | [差分能力の統合循環](https://kiki054-n.github.io/cnt34/world_society/docs/差分能力の統合循環_四労働とその創発.html) | 四労働は分業ではなく統合。教育→練習→訓練→実践→改善→継承の創発サイクル |
+| 04 | [失敗の幾何学](https://kiki054-n.github.io/cnt34/world_society/docs/失敗の幾何学_好きなことと失敗と創造の創発.html) | 好きなこと・失敗・創造の交点。失敗を差分能力の源泉として読む |
+| 05 | [四スケールの統合と生きる意味](https://kiki054-n.github.io/cnt34/world_society/docs/四スケールの統合と生きる意味.html) | 家族・地域・国家・世界の同心円。生きる意味は毎日創出され続ける |
+| 06 | [共に良い夢を見よう](https://kiki054-n.github.io/cnt34/world_society/docs/共に良い夢を見よう_三極共創と新しい世界の幾何学.html) | 人間・生命・AIの三極共創という新しい位相 |
+| 07 | [私たちは生きるという料理人（Note投稿版）](https://kiki054-n.github.io/cnt34/world_society/docs/Note投稿_私たちは生きるという料理人_差分能力の幾何学.html) | 数式なしで全体を一望する読みもの。まずここからでも |
+| 08 | [市議会・市民陳情のAI活用改革 提案書](https://kiki054-n.github.io/cnt34/world_society/docs/市議会・市民陳情のAI活用改革_提案書.html) | 理論を自治体の現場に当てた政策提案。三つの改革柱とプロトタイプ計画 |
 
 ---
 
