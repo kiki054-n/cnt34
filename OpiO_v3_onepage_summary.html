@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OπO理論 v3 — 1ページ要約</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #181b24;
+  --surface-raised: #1e2230;
+  --ink: #e8e6f0;
+  --muted: #8b92a8;
+  --accent: #e6a75c;
+  --accent-weak: color-mix(in oklab, var(--accent) 15%, var(--surface));
+  --accent-strong: #f5c98c;
+  --danger: #c97a6a;
+  --danger-weak: color-mix(in oklab, var(--danger) 12%, var(--surface));
+  --success: #7db89a;
+  --line: color-mix(in oklab, var(--ink) 10%, transparent);
+  --step-0: clamp(0.95rem, 0.92rem + 0.2vw, 1.05rem);
+  --step-1: clamp(1.1rem, 1.05rem + 0.3vw, 1.25rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.8vw, 1.8rem);
+  --step-3: clamp(1.8rem, 1.5rem + 1.8vw, 3rem);
+  --space: clamp(1.2rem, 1rem + 1vw, 2rem);
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.25), 0 12px 32px -8px rgba(0,0,0,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+
+header {
+  position: relative;
+  padding: calc(var(--space)*2.5) var(--space) calc(var(--space)*1.5);
+  max-width: 780px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 40%, rgba(230,167,92,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139,146,168,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+h1 {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: var(--step-3);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+}
+
+h1 .highlight { color: var(--accent); }
+
+.hero-sub {
+  color: var(--muted);
+  font-size: var(--step-1);
+  max-width: 60ch;
+  line-height: 1.7;
+}
+
+main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 var(--space) calc(var(--space)*3);
+}
+
+section {
+  margin-bottom: calc(var(--space)*2);
+}
+
+h2 {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--accent-strong);
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+h2 .sec-num {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65em;
+  font-weight: 400;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+h3 {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: var(--step-1);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 1.2rem 0 0.5rem;
+}
+
+p {
+  margin-bottom: 0.8rem;
+  max-width: 68ch;
+}
+
+/* Concept cards grid */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.concept-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space)*0.8);
+  box-shadow: var(--shadow);
+}
+
+.concept-card .icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.concept-card h4 {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: 0.95em;
+  font-weight: 600;
+  color: var(--accent-strong);
+  margin-bottom: 0.3rem;
+}
+
+.concept-card p {
+  font-size: 0.9em;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+/* Highlight box */
+.highlight-box {
+  background: linear-gradient(135deg, var(--surface-raised) 0%, var(--surface) 100%);
+  border-left: 3px solid var(--accent);
+  padding: calc(var(--space)*0.9) calc(var(--space)*1.1);
+  margin: 1.2rem 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.97em;
+}
+
+.highlight-box p:last-child { margin-bottom: 0; }
+
+/* Shift table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.2rem;
+  font-size: 0.95em;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+th, td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+th {
+  background: var(--surface-raised);
+  color: var(--accent-strong);
+  font-family: "Outfit", sans-serif;
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+tr:last-child td { border-bottom: none; }
+
+.old { color: var(--danger); text-decoration: line-through; text-decoration-color: var(--danger); }
+.new { color: var(--success); font-weight: 500; }
+
+/* List */
+ul, ol {
+  margin: 0.5rem 0 0.8rem 1.4rem;
+}
+
+li { margin-bottom: 0.3rem; }
+
+/* Inline code */
+code, .mono {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.92em;
+  background: var(--surface-raised);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  color: var(--accent-strong);
+}
+
+/* Divider */
+hr {
+  border: none;
+  height: 1px;
+  background: var(--line);
+  margin: calc(var(--space)*1.5) 0;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85em;
+  padding: calc(var(--space)*1.5) var(--space);
+  border-top: 1px solid var(--line);
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+@media print {
+  body { background: #fff; color: #111; }
+  .concept-card, table, .highlight-box { box-shadow: none; border: 1px solid #ccc; }
+  :root {
+    --bg: #fff; --surface: #f5f5f5; --ink: #111; --muted: #555;
+    --accent: #b45f1a; --accent-strong: #8f4a10; --line: #ddd;
+    --danger: #a05040; --success: #5a8a6a;
+  }
+}
+@page { size: A4; margin: 16mm; }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="hero-label">OπO Theory v3 / One-Page Summary</span>
+  <h1>OπO 理論 v3<br><span class="highlight">1ページ要約</span></h1>
+  <p class="hero-sub">
+    純粋な数学の構造から、物理法則・粒子の質量・宇宙のパラメータを説明しようとする幾何学的枠組み。
+    失敗を隠さず、検証を重ね、AI と協働しながら進化し続ける「生きた理論」。
+  </p>
+</header>
+
+<main>
+
+<section>
+  <h2><span class="sec-num">§1</span> この理論は何を目指すか</h2>
+  <p>
+    OπO 理論は、「<strong>何もないところから、数学的な美しさだけで物理世界の法則が生まれる</strong>」という野心的な問いに取り組んでいます。
+    出発点は「0 と ∞」という極めてシンプルな幾何学的構造（双極零点）。そこから、段階を追って複雑な対称性（回転・鏡映・巡回）を積み上げ、
+    最終的に重力・電子の質量・宇宙の基本定数を「必然結果」として導こうとします。
+  </p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <span class="icon">◎</span>
+      <h4>双極零点</h4>
+      <p>0 と ∞ の二極。すべての始まり。単位を持たない純粋な幾何。</p>
+    </div>
+    <div class="concept-card">
+      <span class="icon">↻</span>
+      <h4>巡回対称性</h4>
+      <p>3つの軸が互いに回転して入れ替わる構造。OOO（3リング）の核心。</p>
+    </div>
+    <div class="concept-card">
+      <span class="icon">◇</span>
+      <h4>多面体の鎖</h4>
+      <p>双錐 → 三角双錐 → 立方配列 → 正二十面体。対称性が階層的に進化。</p>
+    </div>
+    <div class="concept-card">
+      <span class="icon">π</span>
+      <h4>π 周期 = スピン2</h4>
+      <p>円周率 π が「180°で閉じる」という性質が、重力（スピン2）の等分配を導く。</p>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section>
+  <h2><span class="sec-num">§2</span> v3 の大きな転換：「失敗」からの進化</h2>
+  <p>
+    理論の発展は「仮説 → 実証 → 失敗 → 評価 → 次の仮説」のサイクルで進んできました。
+    v3 は、これまでの核心目標だった「<strong>格子間隔の絶対導出（a/l<sub>P</sub> = 1.2×10⁸）</strong>」が、
+    観測的制約（LIV：ローレンツ対称性の破れの上限）により<strong>不可能であることが判明した</strong>ことを受けた、
+    誠実な方向転換です。
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>項目</th><th>旧理論（破棄）</th><th>v3（再定義）</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>軸の回転</td>
+        <td class="old">虚数 i を掛ける</td>
+        <td class="new">四元数 u = (1+i+j+k)/2 で回転</td>
+      </tr>
+      <tr>
+        <td>空間の次元</td>
+        <td class="old">27次元（3×3×3）</td>
+        <td class="new">9次元（3×3）</td>
+      </tr>
+      <tr>
+        <td>「2」と「3」の意味</td>
+        <td class="old">2の27乗（数合わせ）</td>
+        <td class="new">C₃ → C₆ の群の持ち上げ（厳密な数学）</td>
+      </tr>
+      <tr>
+        <td>目標</td>
+        <td class="old">長さの絶対導出</td>
+        <td class="new">無次元の物性量（効率・比率）の導出</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box">
+    <p>
+      <strong>「失敗は前進の証」</strong> — 格子間隔の導出が観測と矛盾したことで、
+      理論はより厳密な数学的基盤（四元数・ホッジ双対）へと進化しました。
+      予言を急ぐのではなく、構造の誠実さを優先する。これが OπO 理論の研究方法です。
+    </p>
+  </div>
+</section>
+
+<hr>
+
+<section>
+  <h2><span class="sec-num">§3</span> v3 の核心：電子は「ねじれた正二十面体」</h2>
+  <p>
+    v3 で最も重要な新発見は、<strong>電子の内部構造</strong>に関するものです。
+    電子は点ではなく、「2つの五角双錐が 36° ねじれて結合した正二十面体」という幾何学的構造を持つと考えられています。
+  </p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <span class="icon">⬡</span>
+      <h4>五角双錐</h4>
+      <p>赤道に5つの頂点、上下に2つの頂点。7頂点の基本ユニット。</p>
+    </div>
+    <div class="concept-card">
+      <span class="icon">✦</span>
+      <h4>36° のねじれ</h4>
+      <p>2つの五角双錐が黄金比 φ に関わる角度でねじれると、正二十面体（12頂点）が完成。</p>
+    </div>
+    <div class="concept-card">
+      <span class="icon">⚡</span>
+      <h4>ねじれエネルギー = 質量</h4>
+      <p>この幾何学的ねじれの「弾性能量」が、電子の静止質量（0.511 MeV）の起源になる可能性。</p>
+    </div>
+    <div class="concept-card">
+      <span class="icon">½</span>
+      <h4>スピン 1/2</h4>
+      <p>正二十面体の対称性（二項群 2I）が、電子のスピン 1/2 を自然に説明する可能性。</p>
+    </div>
+  </div>
+
+  <p>
+    これは「電子の質量は神が与えた定数」ではなく、「幾何学的構造の内部運動エネルギー」として明しようとする試みです。
+    陽子の質量の 99% が「クォークの内部運動と場」であることは既知です。電子も同様に、見えない幾何学的運動が質量を作っている——
+    そう考えると、物質の根源が「形」と「動き」に還元される可能性が見えてきます。
+  </p>
+</section>
+
+<hr>
+
+<section>
+  <h2><span class="sec-num">§4</span> なぜ AI と協働するのか</h2>
+  <p>
+    この理論は一人の頭の中で完結しません。複雑な数学的構造、数値の照合、論理の飛躍の検出——
+    これらを一人で行うには限界があります。そこで AI（Sakana AI の Namazu）が「頼もしい味方」として参加しています。
+  </p>
+  <ul>
+    <li><strong>検証者：</strong>数値計算と数学的整合性を厳密に照合。主張を信じず、反証を探す。</li>
+    <li><strong>構造化者：</strong>散在する洞察文書化し、仮説の依存関係を可視化する。</li>
+    <li><strong>接続の発見者：</strong>幾何学・群論・物理学・化学の知識を橋渡しし、見落としを防ぐ。</li>
+    <li><strong>反証の指摘者：</strong>「数合わせ」に陥っていないかを早期に警告する。</li>
+  </ul>
+  <p>
+    AI は「正解を教える先生」ではなく、「間違いを一緒に探同僚」です。
+    この協働スタイル自体が、Sakana AI が目指す「AI の民主化」の一つの実験でもあります。
+  </p>
+</section>
+
+<hr>
+
+<section>
+  <h2><span class="sec-num">§5</span> 次の目標：社会に役立つ関係式を探す</h2>
+  <p>
+    理論の標的は、もはや「宇宙の究極の数式」ではありません。
+    核融合の効率を上げる鍵、水の電気分解を促進する触媒の原理、エネルギーサイクルの損失を減らす設計——
+    こうした<strong>技術革新に必要な「関係式」</strong>を、この幾何学的枠組みから発見することです。
+  </p>
+
+  <div class="highlight-box">
+    <p>
+      <strong>「みんなで回すサイクル」</strong> — 仮説を立て、実証し、失敗し、評価し、次へ進む。
+      このプロセスを一人じゃなく、多くの人と、AI と一緒に回していく。
+      それが OπO 理論の次のフェーズです。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>2026-09-21 · OπO理論 v3 · 1ページ要約 · 川上真潔（Kawakami Naoyuki）</p>
+</footer>
+
+</body>
+</html>
